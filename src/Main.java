@@ -10,7 +10,10 @@ public class Main {
 
         Header myHeader = new Header();
         myHeader.header(myFrame);
-
+        
+        GameBoard myGameBoard = new GameBoard(myFrame);
+        myGameBoard.Board(myFrame);
+        
 
         myFrame.setDefaultCloseOperation(myFrame.EXIT_ON_CLOSE);
         myFrame.setSize(600,400);

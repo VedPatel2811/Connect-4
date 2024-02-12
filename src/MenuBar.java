@@ -3,7 +3,7 @@ import java.awt.*;
 
 import static java.awt.Frame.NORMAL;
 
-public class MenuBar extends JFrame{
+public class MenuBar {
     MenuBar(){
     }
     public void menuBar(JFrame myFrame){
