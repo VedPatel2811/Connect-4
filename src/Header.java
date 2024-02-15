@@ -10,7 +10,7 @@ public class Header {
     public void header(JFrame myFrame){
         JLabel title = new JLabel();
         title.setText("CONNECT 4");
-        title.setBorder(BorderFactory.createEmptyBorder(35,0,5,0));
+        title.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalAlignment(JLabel.TOP);
         title.setForeground(new Color(53,90,155));

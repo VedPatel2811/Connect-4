@@ -1,45 +1,61 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 import static java.awt.Frame.NORMAL;
 
 public class MenuBar extends JFrame{
     MenuBar(){
     }
-    public void menuBar(JFrame myFrame){
-        JPanel menuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        menuPanel.setBackground(new Color(180,199,231));
-        menuPanel.setBounds(0,0,1920,30);
-        myFrame.add(menuPanel);
+    public void Menu(JFrame myFrame){
 
-        JButton file = new JButton(" File |");
-        myButton(file);
+        JMenuBar jMenuBar = new JMenuBar();
 
-        JButton game = new JButton(" Game |");
-        myButton(game);
+        JMenu fileMenu = new JMenu("File");
+        JMenu gameMenu = new JMenu("Game");
+        JMenu networkMenu = new JMenu("Network");
+        JMenu languageMenu = new JMenu("Language");
+        JMenu helpMenu = new JMenu("Help");
 
-        JButton network = new JButton(" Network |");
-        myButton(network);
+        JMenuItem saveItem = new JMenuItem("Save");
+        JMenuItem loadItem = new JMenuItem("Load");
+        JMenuItem exitItem = new JMenuItem("Exit");
+        JMenuItem endGameItem = new JMenuItem("End Game");
+        JMenuItem rulesItem = new JMenuItem("Rules");
+        JMenuItem connectItem = new JMenuItem("Connect player");
+        JMenuItem frenchItem = new JMenuItem("French");
+        JMenuItem englishItem = new JMenuItem("English");
+        JMenuItem updateItem = new JMenuItem("check update");
+        JMenuItem infoItem = new JMenuItem("Info");
 
-        JButton language = new JButton(" Language |");
-        myButton(language);
 
-        JButton help = new JButton(" Help");
-        myButton(help);
+        fileMenu.add(saveItem);
+        fileMenu.add(loadItem);
+        fileMenu.add(exitItem);
+        gameMenu.add(endGameItem);
+        gameMenu.add(rulesItem);
+        networkMenu.add(connectItem);
+        languageMenu.add(frenchItem);
+        languageMenu.add(englishItem);
+        helpMenu.add(updateItem);
+        helpMenu.add(infoItem);
 
-        menuPanel.add(file);
-        menuPanel.add(game);
-        menuPanel.add(network);
-        menuPanel.add(language);
-        menuPanel.add(help);
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        gameMenu.setMnemonic(KeyEvent.VK_G);
+        networkMenu.setMnemonic(KeyEvent.VK_N);
+        languageMenu.setMnemonic(KeyEvent.VK_L);
+        helpMenu.setMnemonic(KeyEvent.VK_H);
 
-        myFrame.add(menuPanel);
-    }
 
-    private void myButton(JButton myButton){
-        myButton.setBorder(null);
-        myButton.setFont(new Font("Calibri", NORMAL,20));
-        myButton.setForeground(new Color(0,0,0));
-        myButton.setBackground(new Color(180,199,231));
+        jMenuBar.add(fileMenu);
+        jMenuBar.add(gameMenu);
+        jMenuBar.add(networkMenu);
+        jMenuBar.add(languageMenu);
+        jMenuBar.add(helpMenu);
+
+
+
+
+        myFrame.setJMenuBar(jMenuBar);
     }
 }
