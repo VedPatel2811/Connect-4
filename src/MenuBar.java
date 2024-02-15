@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 
 import static java.awt.Frame.NORMAL;
 
-public class MenuBar extends JFrame{
+public class MenuBar {
     MenuBar(){
     }
     public void Menu(JFrame myFrame){
