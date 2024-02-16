@@ -14,7 +14,7 @@ public class Main {
         Header myHeader = new Header();
         myHeader.header(myFrame);
         
-       GameBoard myGameBoard = new GameBoard(myFrame);
+        GameBoard myGameBoard = new GameBoard(myFrame);
         myGameBoard.Board(myFrame);
         
 

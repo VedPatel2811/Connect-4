@@ -1,13 +1,10 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
-
-import static java.awt.Frame.NORMAL;
 
 public class MenuBar {
     MenuBar(){
     }
-    public void Menu(JFrame myFrame){
+    public JMenuBar Menu(){
 
         JMenuBar jMenuBar = new JMenuBar();
 
@@ -56,6 +53,7 @@ public class MenuBar {
 
 
 
-        myFrame.setJMenuBar(jMenuBar);
+        //myFrame.setJMenuBar(jMenuBar);
+        return jMenuBar;
     }
 }
