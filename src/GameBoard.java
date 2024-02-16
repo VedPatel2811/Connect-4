@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class GameBoard {
@@ -9,8 +10,10 @@ public class GameBoard {
         JPanel basePanel = new JPanel();
         basePanel.setLayout(new GridLayout(6,7));
 
-        basePanel.setBounds(480, 125, 1000, 865);
+        //basePanel.setBounds(480, 125,1000, 865 );
+        basePanel.setPreferredSize(new Dimension(1000, 800));
         basePanel.setBackground(new Color(68,114,196));
+        basePanel.setBorder(new EmptyBorder(0,25,0,0));
 
         /*for (int i = 0; i < 42 ; i++){
             JButton gameCoins = new JButton();

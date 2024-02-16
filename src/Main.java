@@ -12,14 +12,27 @@ public class Main {
         JFrame myFrame = new JFrame();
         myFrame.setLayout(new BorderLayout());
 
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
+        topPanel.setBackground(new Color(143,170,220));
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout());
+        bottomPanel.setBackground(new Color(143,170,220));
 
 
+        bottomPanel.add(gameInfo.GameInfoPanel());
+        bottomPanel.add(myBoard.MainGameBoard());
+        bottomPanel.add(myChat.MainChatBox());
+        //bottomPanel.add(emptyPanel,BorderLayout.SOUTH);
 
-        myFrame.add(gameInfo.GameInfoPanel(), BorderLayout.WEST);
-        myFrame.add(myBoard.MainGameBoard(),BorderLayout.CENTER);
-        myFrame.add(myChat.MainChatBox(), BorderLayout.EAST);
-        myFrame.add(connect4.ConnectHeader());
-        myFrame.add(myBar.Menu(),BorderLayout.NORTH);
+
+        topPanel.add(connect4.ConnectHeader());
+        topPanel.add(myBar.Menu(),BorderLayout.NORTH);
+        myFrame.add(topPanel, BorderLayout.NORTH);
+        myFrame.add(bottomPanel);
+
+
 
 
 
