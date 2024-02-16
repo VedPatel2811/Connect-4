@@ -27,7 +27,7 @@ class SlotPanel extends JPanel {
         // The circle will be as large as the panel minus the border
         int padding = 5;
         int diameter = Math.min(getWidth(), getHeight()) - padding * 2;
-       
+
         g2d.fillOval(padding, padding, diameter, diameter);
         g2d.dispose();
         //g2d.fill(new Ellipse2D.Double(2, 2, getWidth() - 4, getHeight() - 4));
@@ -42,21 +42,21 @@ public class GameBoard {
     private JPanel containerPanel;
     private Color darkBlue = new Color(21, 101, 192);
     private Color panelBackground = new Color(41, 128, 185); // This is the darker layer behind the slots
-    
+
     GameBoard(JFrame myFrame) {
         Board(myFrame);
     }
 
     public void Board(JFrame myFrame) {
-    	JPanel containerPanel = new JPanel(new BorderLayout());
+        JPanel containerPanel = new JPanel(new BorderLayout());
         containerPanel.setBackground(panelBackground); // Set the background to the darker color
-        containerPanel.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100)); // Top, left, bottom, 
-       
+        containerPanel.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100)); // Top, left, bottom,
+
         gameBoardPanel = new JPanel();
         gameBoardPanel.setLayout(new GridLayout(row, col));
         gameBoardPanel.setBackground(darkBlue); // Set the background to dark blue
 
-        
+
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 SlotPanel slotPanel = new SlotPanel();
@@ -65,7 +65,7 @@ public class GameBoard {
                 gameBoardPanel.add(slotPanel);
             }
         }
-        
+
         containerPanel.add(gameBoardPanel, BorderLayout.CENTER);
 
         myFrame.add(gameBoardPanel, BorderLayout.CENTER);
