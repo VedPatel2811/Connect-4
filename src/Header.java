@@ -14,7 +14,7 @@ public class Header {
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalAlignment(JLabel.TOP);
         title.setForeground(new Color(53,90,155));
-        title.setFont(new Font("Calibri", BOLD,80));
+        title.setFont(new Font("Calibri", BOLD,90));
         //myFrame.add(title, BorderLayout.NORTH);
         return title;
     }
