@@ -1,8 +1,6 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import static java.awt.Frame.NORMAL;
 
 public class MenuBar {
     MenuBar(){
