@@ -10,18 +10,25 @@ public class GameBoard {
         JPanel basePanel = new JPanel();
         basePanel.setLayout(new GridLayout(6,7));
 
-        //basePanel.setBounds(480, 125,1000, 865 );
         basePanel.setPreferredSize(new Dimension(1000, 800));
         basePanel.setBackground(new Color(68,114,196));
         basePanel.setBorder(new EmptyBorder(0,25,0,0));
+        basePanel.setBorder(BorderFactory.createLineBorder(new Color(53,90,156),2));
 
-        /*for (int i = 0; i < 42 ; i++){
+
+
+        for (int i = 0; i < 42 ; i++){
             JButton gameCoins = new JButton();
-            gameCoins.setPreferredSize(new Dimension(140, 140));
-            gameCoins.setBackground(new Color(143,170,220));
-            gameCoins.setBorder(BorderFactory.createLineBorder(new Color(20,40,76),1));
+            gameCoins.setLayout(new BorderLayout());
+            gameCoins.setBackground(new Color(68,114,196));
+            gameCoins.setBorder(null);
+            ImageIcon image = new ImageIcon("A12Blank.png");
+            JLabel imageLabel = new JLabel();
+            imageLabel.setIcon(image);
+            gameCoins.add(imageLabel, BorderLayout.CENTER);
+
             basePanel.add(gameCoins);
-        }*/
+        }
 
         return basePanel;
     }
