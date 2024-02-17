@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+import static java.awt.Font.BOLD;
+
 public class GameInfo extends JPanel {
 
     public GameInfo() {
@@ -40,6 +42,31 @@ public class GameInfo extends JPanel {
         player1.setBackground(new Color(32,56,100));
         player1.setPreferredSize(new Dimension(175,250));
 
+        ImageIcon myImage = new ImageIcon("A12Red2.png");
+
+        JLabel imageLabel = new JLabel();
+        imageLabel.setIcon(myImage);
+
+        JLabel player1Label = new JLabel();
+        player1Label.setIcon(myImage);
+
+        JLabel nameLabel = new JLabel("Steve");
+        nameLabel.setForeground(new Color(124, 150, 199));
+        nameLabel.setFont(new Font("Calibri", Font.BOLD, 50));
+
+        JLabel winLabel = new JLabel("0 Win");
+        winLabel.setForeground(new Color(124, 150, 199));
+        winLabel.setFont(new Font("Calibri", Font.BOLD, 35));
+
+        JLabel turnLabel = new JLabel("Your Turn");
+        turnLabel.setForeground(Color.YELLOW);
+        turnLabel.setFont(new Font("Calibri", Font.BOLD, 30));
+
+        player1.add(imageLabel);
+        player1.add(nameLabel);
+        player1.add(winLabel);
+        player1.add(turnLabel);
+
         return player1;
     }
 
@@ -47,15 +74,75 @@ public class GameInfo extends JPanel {
         JPanel player2 = new JPanel();
         player2.setBackground(new Color(32,56,100));
         player2.setPreferredSize(new Dimension(175,250));
+        ImageIcon myImage = new ImageIcon("A12Black2.png");
+
+        JLabel imageLabel = new JLabel();
+        imageLabel.setIcon(myImage);
+
+        JLabel player1Label = new JLabel();
+        player1Label.setIcon(myImage);
+
+        JLabel nameLabel = new JLabel("Ved");
+        nameLabel.setVerticalTextPosition(JLabel.BOTTOM);
+        nameLabel.setForeground(new Color(124, 150, 199));
+        nameLabel.setFont(new Font("Calibri", Font.BOLD, 50));
+
+        JLabel winLabel = new JLabel("0 Win");
+        winLabel.setForeground(new Color(124, 150, 199));
+        winLabel.setFont(new Font("Calibri", Font.BOLD, 35));
+
+        JLabel turnLabel = new JLabel("Your Turn");
+        turnLabel.setForeground(Color.YELLOW);
+        turnLabel.setFont(new Font("Calibri", Font.BOLD, 30));
+
+        player2.add(imageLabel);
+        player2.add(nameLabel);
+        player2.add(winLabel);
+        player2.add(turnLabel);
+
         return player2;
     }
 
     private JPanel TimeInfo(){
         JPanel timeInfo = new JPanel();
         timeInfo.setBackground(new Color(32,56,100));
-        timeInfo.setPreferredSize(new Dimension(360, 250));
+        timeInfo.setPreferredSize(new Dimension(355, 250));
+
+        JLabel round = new JLabel();
+        round.setText("Round 1.");
+        round.setHorizontalAlignment(JLabel.LEFT);
+        round.setForeground(new Color(124, 150, 199));
+        round.setFont(new Font("Calibri", Font.BOLD, 40));
+
+
+        JLabel instruction = new JLabel();
+        instruction.setText("Click on a column to make your move.");
+        instruction.setForeground(new Color(124, 150, 199));
+        instruction.setFont(new Font("Calibri", Font.BOLD, 20));
+        instruction.setHorizontalAlignment(SwingConstants.LEFT);
+
+        JLabel timer1 = new JLabel();
+        timer1.setText("Timer: 22s");
+        timer1.setForeground(new Color(124, 150, 199));
+        timer1.setFont(new Font("Calibri", Font.BOLD, 40));
+        timer1.setHorizontalAlignment(SwingConstants.LEFT);
+
+        JLabel timer2 = new JLabel();
+        timer2.setText("Game time: 3m 11s");
+        timer2.setForeground(new Color(124, 150, 199));
+        timer2.setFont(new Font("Calibri", Font.BOLD, 30));
+        timer2.setHorizontalAlignment(SwingConstants.LEFT);
+
+
+        timeInfo.add(round);
+        timeInfo.add(instruction);
+        timeInfo.add(Box.createRigidArea(new Dimension(350,50)));
+        timeInfo.add(timer1);
+        timeInfo.add(timer2);
+
         return timeInfo;
     }
+
 
 
 

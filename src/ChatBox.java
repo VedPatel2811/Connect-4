@@ -20,7 +20,10 @@ public class ChatBox {
         JPanel savedChatPanel = new JPanel();
         savedChatPanel.setPreferredSize(new Dimension(385, 535));
         savedChatPanel.setBackground(new Color(143,170,220));
-        //savedChatPanel.setBorder(BorderFactory.createLineBorder(new Color(68,114,196),5));
+
+        JLabel textArea = new JLabel();
+        textArea.setText("<html>Steve had played column 3. <br> Ved had played column 4.</html>");
+        savedChatPanel.add(textArea);
 
         JTextArea chatBox = new JTextArea("Chat");
         chatBox.setPreferredSize(new Dimension(305,50));
