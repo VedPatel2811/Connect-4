@@ -4,11 +4,28 @@ import java.awt.*;
 
 import static java.awt.Font.BOLD;
 
+/**
+ * GameInfo class is a part of the Connect-4 game UI, responsible for displaying
+ * player information, game time, and other relevant game status information.
+ * This class extends JPanel and creates a layered layout to organize this information.
+ */
 public class GameInfo extends JPanel {
+
+    /**
+     * Constructor for GameInfo.
+     */
 
     public GameInfo() {
 
     }
+
+
+    /**
+     * Creates and returns a JLayeredPane which contains the main components of game info.
+     * This includes panels for player information, game time, and other status elements.
+     *
+     * @return JLayeredPane The main layered panel containing game info components.
+     */
 
     public JLayeredPane GameInfoPanel(){
         JLayeredPane baseLayer = new JLayeredPane();
@@ -22,6 +39,13 @@ public class GameInfo extends JPanel {
         baseLayer.add(basePanel);
         return baseLayer;
     }
+
+    /**
+     * Creates and returns the base panel for game information.
+     * This panel includes other sub-panels for individual player info and time information.
+     *
+     * @return JPanel The base panel containing all sub-panels for game info.
+     */
     private JPanel BasePanel(){
         JPanel basePanel = new JPanel();
         basePanel.setPreferredSize(new Dimension(425, 560));
@@ -37,6 +61,13 @@ public class GameInfo extends JPanel {
         basePanel.add(timeInfo);
         return basePanel;
     }
+
+    /**
+     * Creates and returns a JPanel containing information about Player 1.
+     * This includes the player's image, name, win count, and turn status.
+     *
+     * @return JPanel The panel containing Player 1's information.
+     */
     private JPanel Player1(){
         JPanel player1 = new JPanel();
         player1.setBackground(new Color(32,56,100));
@@ -70,6 +101,12 @@ public class GameInfo extends JPanel {
         return player1;
     }
 
+    /**
+     * Creates and returns a JPanel containing information about Player 2.
+     * This includes the player's image, name, win count, and turn status.
+     *
+     * @return JPanel The panel containing Player 2's information.
+     */
     private JPanel Player2(){
         JPanel player2 = new JPanel();
         player2.setBackground(new Color(32,56,100));
@@ -103,6 +140,12 @@ public class GameInfo extends JPanel {
         return player2;
     }
 
+    /**
+     * Creates and returns a JPanel containing the game time information.
+     * This includes round number, instructions, and timers.
+     *
+     * @return JPanel The panel containing the time information for the game.
+     */
     private JPanel TimeInfo(){
         JPanel timeInfo = new JPanel();
         timeInfo.setBackground(new Color(32,56,100));

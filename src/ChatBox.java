@@ -2,10 +2,28 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * ChatBox class is part of the Connect-4 game UI, dedicated to providing a chat interface.
+ * This class allows players to view messages and send new ones during the game.
+ * It uses a JLayeredPane to arrange the chat components.
+ */
+
 public class ChatBox {
+
+    /**
+     * Constructor for ChatBox.
+     */
     ChatBox(){
 
     }
+
+    /**
+     * Creates and returns the main chat box as a JLayeredPane.
+     * This chat box includes areas for displaying saved chat messages and for typing new messages,
+     * along with a send button.
+     *
+     * @return JLayeredPane The main layered pane containing chat components.
+     */
     public JLayeredPane MainChatBox(){
 
         JLayeredPane baseChatLayer = new JLayeredPane();

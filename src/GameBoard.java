@@ -2,10 +2,29 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * GameBoard class for creating the main game board for a Connect-4 game UI.
+ * This class is responsible for setting up the game grid, which includes
+ * the layout, background, borders, and individual game cells.
+ */
+
 public class GameBoard {
+
+    /**
+     * Constructor for GameBoard.
+     * It calls the MainGameBoard method to initialize the game board.
+     */
     GameBoard(){
         MainGameBoard();
     }
+
+    /**
+     * Creates and returns a JPanel object configured as the main game board for Connect-4.
+     * The method sets up a grid layout for the game, customizes its appearance,
+     * and populates it with buttons representing the game coins.
+     *
+     * @return JPanel The main game board panel with all game cells added.
+     */
     public JPanel MainGameBoard(){
         JPanel basePanel = new JPanel();
         basePanel.setLayout(new GridLayout(6,7));
