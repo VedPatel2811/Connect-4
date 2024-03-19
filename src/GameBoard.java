@@ -55,7 +55,7 @@ public class GameBoard {
             gameCoins.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Action handled by Controller
+
                 }
             });
 
