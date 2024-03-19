@@ -13,13 +13,13 @@ public class Main {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
+        GameInfo gameInfo = new GameInfo();
         Model model = new Model(); // Create instance of the Connect4Model
         GameBoard myBoard = new GameBoard(model); // Pass the model to GameBoard
-        Controller controller = new Controller(model, myBoard); // Create instance of the Connect4Controller
+        Controller controller = new Controller(model, myBoard, gameInfo); // Create instance of the Connect4Controller
 
         MenuBar myBar = new MenuBar();
         Header connect4 = new Header();
-        GameInfo gameInfo = new GameInfo();
         ChatBox myChat = new ChatBox();
 
         // Set up the main window
@@ -49,8 +49,7 @@ public class Main {
         myFrame.setPreferredSize(new Dimension(930, 540));
         myFrame.setTitle("CONNECT 4");
         myFrame.getContentPane().setBackground(new Color(143, 170, 220));
-        ImageIcon image = new ImageIcon("A12logo.png");
-        // Pack the components and make the frame visible
+        ImageIcon image = new ImageIcon("A12Logo.png");
         myFrame.setIconImage(image.getImage());
         myFrame.pack();
         myFrame.setVisible(true);

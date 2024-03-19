@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Model {
     private final int ROWS = 6;
     private final int COLUMNS = 7;

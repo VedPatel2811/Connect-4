@@ -1,16 +1,16 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-
-import static java.awt.Font.BOLD;
-
 /**
  * GameInfo class is a part of the Connect-4 game UI, responsible for displaying
  * player information, game time, and other relevant game status information.
  * This class extends JPanel and creates a layered layout to organize this information.
  */
 public class GameInfo extends JPanel {
-
+    public Color player1Color = Color.YELLOW;
+    public Color player2Color = new Color(32,56,100);
+    private JLabel player1TurnLabel;
+    private JLabel player2TurnLabel;
     /**
      * Constructor for GameInfo.
      */
@@ -31,7 +31,7 @@ public class GameInfo extends JPanel {
         JLayeredPane baseLayer = new JLayeredPane();
         baseLayer.setBorder(new EmptyBorder(0,25,0,50));
 
-        JPanel basePanel = BasePanel();
+        JPanel basePanel = BasePanel(player1Color, player2Color);
 
         baseLayer.setLayout(new FlowLayout());
         baseLayer.setPreferredSize(new Dimension(425, 610));
@@ -46,14 +46,14 @@ public class GameInfo extends JPanel {
      *
      * @return JPanel The base panel containing all sub-panels for game info.
      */
-    private JPanel BasePanel(){
+    private JPanel BasePanel(Color color, Color color2){
         JPanel basePanel = new JPanel();
         basePanel.setPreferredSize(new Dimension(425, 560));
         basePanel.setBackground(new Color(68,114,196));
         basePanel.setBorder(new EmptyBorder(25,25,25,25));
 
-        JPanel player1 = Player1();
-        JPanel player2 = Player2();
+        JPanel player1 = Player1(color);
+        JPanel player2 = Player2(color2);
         JPanel timeInfo = TimeInfo();
 
         basePanel.add(player1);
@@ -68,7 +68,7 @@ public class GameInfo extends JPanel {
      *
      * @return JPanel The panel containing Player 1's information.
      */
-    private JPanel Player1(){
+    private JPanel Player1(Color color){
         JPanel player1 = new JPanel();
         player1.setBackground(new Color(32,56,100));
         player1.setPreferredSize(new Dimension(175,250));
@@ -90,13 +90,14 @@ public class GameInfo extends JPanel {
         winLabel.setFont(new Font("Calibri", Font.BOLD, 35));
 
         JLabel turnLabel = new JLabel("Your Turn");
-        turnLabel.setForeground(Color.YELLOW);
+        turnLabel.setForeground(color);
         turnLabel.setFont(new Font("Calibri", Font.BOLD, 30));
 
         player1.add(imageLabel);
         player1.add(nameLabel);
         player1.add(winLabel);
         player1.add(turnLabel);
+        player1TurnLabel = turnLabel;
 
         return player1;
     }
@@ -107,7 +108,7 @@ public class GameInfo extends JPanel {
      *
      * @return JPanel The panel containing Player 2's information.
      */
-    private JPanel Player2(){
+    private JPanel Player2(Color color){
         JPanel player2 = new JPanel();
         player2.setBackground(new Color(32,56,100));
         player2.setPreferredSize(new Dimension(175,250));
@@ -129,13 +130,14 @@ public class GameInfo extends JPanel {
         winLabel.setFont(new Font("Calibri", Font.BOLD, 35));
 
         JLabel turnLabel = new JLabel("Your Turn");
-        turnLabel.setForeground(Color.YELLOW);
+        turnLabel.setForeground(color);
         turnLabel.setFont(new Font("Calibri", Font.BOLD, 30));
 
         player2.add(imageLabel);
         player2.add(nameLabel);
         player2.add(winLabel);
         player2.add(turnLabel);
+        player2TurnLabel = turnLabel;
 
         return player2;
     }
@@ -186,7 +188,11 @@ public class GameInfo extends JPanel {
         return timeInfo;
     }
 
-
-
+    public JLabel getPlayer1TurnLabel() {
+        return player1TurnLabel;
+    }
+    public JLabel getPlayer2TurnLabel() {
+        return player2TurnLabel;
+    }
 
 }

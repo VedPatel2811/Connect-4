@@ -39,7 +39,7 @@ public class MenuBar {
         JMenuItem saveItem = new JMenuItem("Save");
         JMenuItem loadItem = new JMenuItem("Load");
         JMenuItem exitItem = new JMenuItem("Exit");
-        JMenuItem endGameItem = new JMenuItem("End Game");
+        JMenuItem resetGameItem = new JMenuItem("Reset Game");
         JMenuItem rulesItem = new JMenuItem("Rules");
         JMenuItem connectItem = new JMenuItem("Connect player");
         JMenuItem frenchItem = new JMenuItem("French");
@@ -51,7 +51,7 @@ public class MenuBar {
         fileMenu.add(saveItem);
         fileMenu.add(loadItem);
         fileMenu.add(exitItem);
-        gameMenu.add(endGameItem);
+        gameMenu.add(resetGameItem);
         gameMenu.add(rulesItem);
         networkMenu.add(connectItem);
         languageMenu.add(frenchItem);

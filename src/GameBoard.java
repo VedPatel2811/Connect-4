@@ -11,10 +11,10 @@ import java.awt.event.ActionListener;
  */
 
 public class GameBoard {
-    private Model model;
-    private JPanel basePanel; // Define basePanel here
-    private ImageIcon player1Icon; // Icon for Player 1
-    private ImageIcon player2Icon; // Icon for Player 2
+    private final Model model;
+    private final JPanel basePanel; // Define basePanel here
+    private final ImageIcon player1Icon; // Icon for Player 1
+    private final ImageIcon player2Icon; // Icon for Player 2
 
     /**
      * Constructor for GameBoard.
@@ -52,12 +52,7 @@ public class GameBoard {
             imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
             imageLabel.setVerticalAlignment(SwingConstants.CENTER);
             gameCoins.add(imageLabel, BorderLayout.CENTER);
-            gameCoins.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
 
-                }
-            });
 
             basePanel.add(gameCoins);
         }
@@ -109,15 +104,19 @@ public class GameBoard {
     }
 
     public void showWinner(int player) {
-        // Show winner dialog
+        String message = player + " Wins the game!";
+        JOptionPane.showMessageDialog(null, message, "Winner", JOptionPane.INFORMATION_MESSAGE);
+        resetBoard();
     }
 
     public void showDraw() {
-        // Show draw dialog
+        String message = "The Game is Draw!";
+        JOptionPane.showMessageDialog(null, message, "Draw", JOptionPane.INFORMATION_MESSAGE);
+        resetBoard();
     }
 
     public void resetBoard() {
-        // Reset UI board to initial state
+        model.resetBoard();
         for (Component component : basePanel.getComponents()) {
             if (component instanceof JButton) {
                 JButton button = (JButton) component;
