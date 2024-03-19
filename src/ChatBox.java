@@ -25,7 +25,6 @@ public class ChatBox {
      * @return JLayeredPane The main layered pane containing chat components.
      */
     public JLayeredPane MainChatBox(){
-
         JLayeredPane baseChatLayer = new JLayeredPane();
         baseChatLayer.setLayout(new FlowLayout());
         baseChatLayer.setPreferredSize(new Dimension(420,620));

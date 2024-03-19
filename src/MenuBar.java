@@ -65,17 +65,12 @@ public class MenuBar {
         languageMenu.setMnemonic(KeyEvent.VK_L);
         helpMenu.setMnemonic(KeyEvent.VK_H);
 
-
         jMenuBar.add(fileMenu);
         jMenuBar.add(gameMenu);
         jMenuBar.add(networkMenu);
         jMenuBar.add(languageMenu);
         jMenuBar.add(helpMenu);
 
-
-
-
-        //myFrame.setJMenuBar(jMenuBar);
         return jMenuBar;
     }
 }
