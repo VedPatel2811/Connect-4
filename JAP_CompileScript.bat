@@ -23,9 +23,9 @@ SET JARNAME=JAPLabsSwing.jar
 SET JAROUT=labs-jar.out
 SET JARERR=labs-jar.err
 SET DOCDIR=doc
-SET DOCPACK=CST8221
+SET DOCPACK=driver
 SET DOCERR=labs-javadoc.err
-SET MAINCLASSSRC=C:\Users\Siavash\Connect-4\src\Main.java
+SET MAINCLASSSRC=src\Main.java
 SET MAINCLASSBIN=Main
 
 @echo off

@@ -12,10 +12,12 @@ import java.awt.event.KeyEvent;
 
 public class MenuBar {
 
+    private final GameInfo gameInfo;
     /**
      * Constructor for MenuBar.
      */
-    MenuBar(){
+    MenuBar(GameInfo gameInfo){
+        this.gameInfo = gameInfo;
     }
 
 
@@ -64,6 +66,11 @@ public class MenuBar {
         networkMenu.setMnemonic(KeyEvent.VK_N);
         languageMenu.setMnemonic(KeyEvent.VK_L);
         helpMenu.setMnemonic(KeyEvent.VK_H);
+
+        // Add action listeners for language switch
+        englishItem.addActionListener(e -> gameInfo.switchLanguage("en", "CA"));
+
+        frenchItem.addActionListener(e -> gameInfo.switchLanguage("fr", "CA"));
 
         jMenuBar.add(fileMenu);
         jMenuBar.add(gameMenu);

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
+
 /**
  * The Main class sets up the main window for the Connect 4 game.
  * It integrates various components such as the menu bar, header, game information,
@@ -16,10 +17,10 @@ public class Main {
         Model model = new Model(); // Create instance of the Connect4Model
         GameBoard myBoard = new GameBoard(model); // Pass the model to GameBoard
         Controller controller = new Controller(model, myBoard); // Create instance of the Connect4Controller
-
-        MenuBar myBar = new MenuBar();
-        Header connect4 = new Header();
         GameInfo gameInfo = new GameInfo();
+
+        MenuBar myBar = new MenuBar(gameInfo);
+        Header connect4 = new Header();
         ChatBox myChat = new ChatBox();
 
         // Set up the main window

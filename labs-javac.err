@@ -1,7 +1,7 @@
-C:\Users\Siavash\Connect-4\src\Main.java:36: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
+src\Main.java:52: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
         myFrame.setDefaultCloseOperation(myFrame.EXIT_ON_CLOSE);
                                                 ^
-C:\Users\Siavash\Connect-4\src\GameInfo.java:7: warning: [serial] serializable class GameInfo has no definition of serialVersionUID
+C:\Users\Siavash\Connect-4\src\GameInfo.java:12: warning: [serial] serializable class GameInfo has no definition of serialVersionUID
 public class GameInfo extends JPanel {
        ^
 2 warnings
