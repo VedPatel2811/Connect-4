@@ -37,12 +37,4 @@ public class Controller {
         }
     }
 
-
-    class ResetGame implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            model.resetBoard();
-            view.resetBoard();
-        }
-    }
 }

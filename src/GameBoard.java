@@ -20,11 +20,11 @@ public class GameBoard {
      * Constructor for GameBoard.
      * It calls the MainGameBoard method to initialize the game board.
      */
-    GameBoard(Model model) {
+    GameBoard(Model model,String player1Token, String player2Token) {
         this.model = model;
         this.basePanel = MainGameBoard(); // Initialize basePanel
-        this.player1Icon = new ImageIcon("A12Red.png"); // Load image for Player 1
-        this.player2Icon = new ImageIcon("A12Black.png"); // Load image for Player 2
+        this.player1Icon = new ImageIcon(imageCases(player1Token).getImage()); // Load image for Player 1
+        this.player2Icon = new ImageIcon(imageCases(player2Token).getImage()); // Load image for Player 2
     }
     /**
      * Creates and returns a JPanel object configured as the main game board for Connect-4.
@@ -124,5 +124,35 @@ public class GameBoard {
                 label.setIcon(new ImageIcon("A12Blank.png"));
             }
         }
+    }
+    private ImageIcon imageCases(String playerToken){
+        ImageIcon playerTokenImage = null;
+        switch (playerToken){
+            case "Red":
+                playerTokenImage = new ImageIcon("A12Red.png");
+                break;
+            case "Orange":
+                playerTokenImage = new ImageIcon("A12Orange.png");
+                break;
+            case "Green":
+                playerTokenImage = new ImageIcon("A12Green.png");
+                break;
+            case "Blue":
+                playerTokenImage = new ImageIcon("A12Blue.png");
+                break;
+            case "Yellow":
+                playerTokenImage = new ImageIcon("A12Yellow.png");
+                break;
+            case "Pink":
+                playerTokenImage = new ImageIcon("A12Pink.png");
+                break;
+            case "Purple":
+                playerTokenImage = new ImageIcon("A12Purple.png");
+                break;
+            case "Black":
+                playerTokenImage = new ImageIcon("A12Black.png");
+                break;
+        }
+        return playerTokenImage;
     }
 }

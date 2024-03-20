@@ -11,12 +11,19 @@ public class GameInfo extends JPanel {
     public Color player2Color = new Color(32,56,100);
     private JLabel player1TurnLabel;
     private JLabel player2TurnLabel;
+    private String player1Name = "Player 1";
+    private String player2Name = "Player 2";
+    private String player1TokenColor;
+    private String player2TokenColor;
     /**
      * Constructor for GameInfo.
      */
 
-    public GameInfo() {
-
+    public GameInfo(String player1Name, String player2Name, String player1Token, String player2Token) {
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
+        this.player1TokenColor = player1Token;
+        this.player2TokenColor = player2Token;
     }
 
 
@@ -73,7 +80,7 @@ public class GameInfo extends JPanel {
         player1.setBackground(new Color(32,56,100));
         player1.setPreferredSize(new Dimension(175,250));
 
-        ImageIcon myImage = new ImageIcon("A12Red2.png");
+        ImageIcon myImage = new ImageIcon(imageCases2(player1TokenColor).getImage());
 
         JLabel imageLabel = new JLabel();
         imageLabel.setIcon(myImage);
@@ -81,7 +88,8 @@ public class GameInfo extends JPanel {
         JLabel player1Label = new JLabel();
         player1Label.setIcon(myImage);
 
-        JLabel nameLabel = new JLabel("Steve");
+
+        JLabel nameLabel = new JLabel(player1Name);
         nameLabel.setForeground(new Color(124, 150, 199));
         nameLabel.setFont(new Font("Calibri", Font.BOLD, 50));
 
@@ -112,7 +120,9 @@ public class GameInfo extends JPanel {
         JPanel player2 = new JPanel();
         player2.setBackground(new Color(32,56,100));
         player2.setPreferredSize(new Dimension(175,250));
-        ImageIcon myImage = new ImageIcon("A12Black2.png");
+
+
+        ImageIcon myImage = new ImageIcon(imageCases2(player2TokenColor).getImage());
 
         JLabel imageLabel = new JLabel();
         imageLabel.setIcon(myImage);
@@ -120,7 +130,7 @@ public class GameInfo extends JPanel {
         JLabel player1Label = new JLabel();
         player1Label.setIcon(myImage);
 
-        JLabel nameLabel = new JLabel("Ved");
+        JLabel nameLabel = new JLabel(player2Name);
         nameLabel.setVerticalTextPosition(JLabel.BOTTOM);
         nameLabel.setForeground(new Color(124, 150, 199));
         nameLabel.setFont(new Font("Calibri", Font.BOLD, 50));
@@ -195,4 +205,34 @@ public class GameInfo extends JPanel {
         return player2TurnLabel;
     }
 
+    private ImageIcon imageCases2(String playerToken){
+        ImageIcon playerTokenImage = null;
+        switch (playerToken){ //"Red", "Orange", "Green", "Blue", "Yellow", "Pink", "Purple", "Black"
+            case "Red":
+                playerTokenImage = new ImageIcon("A12Red2.png");
+                break;
+            case "Orange":
+                playerTokenImage = new ImageIcon("A12Orange2.png");
+                break;
+            case "Green":
+                playerTokenImage = new ImageIcon("A12Green2.png");
+                break;
+            case "Blue":
+                playerTokenImage = new ImageIcon("A12Blue2.png");
+                break;
+            case "Yellow":
+                playerTokenImage = new ImageIcon("A12Yellow2.png");
+                break;
+            case "Pink":
+                playerTokenImage = new ImageIcon("A12Pink2.png");
+                break;
+            case "Purple":
+                playerTokenImage = new ImageIcon("A12Purple2.png");
+                break;
+            case "Black":
+                playerTokenImage = new ImageIcon("A12Black2.png");
+                break;
+        }
+        return playerTokenImage;
+    }
 }
