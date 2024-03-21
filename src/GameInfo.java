@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 /**
  * GameInfo class is a part of the Connect-4 game UI, responsible for displaying
  * player information, game time, and other relevant game status information.
@@ -11,10 +13,31 @@ public class GameInfo extends JPanel {
     public Color player2Color = new Color(32,56,100);
     private JLabel player1TurnLabel;
     private JLabel player2TurnLabel;
-    private String player1Name = "Player 1";
-    private String player2Name = "Player 2";
+    private String player1Name ;
+    private String player2Name;
     private String player1TokenColor;
     private String player2TokenColor;
+
+
+
+    private Locale currentLocale;
+    private ResourceBundle messages;
+
+    private JLabel roundLabel;
+    private JLabel instructionLabel;
+    private JLabel timer1Label;
+    private JLabel timer2Label;
+
+
+    // Class-level label components for Player 1
+    private JLabel nameLabelPlayer1;
+    private JLabel winLabelPlayer1;
+    private JLabel turnLabelPlayer1;
+
+    //Class-level label components for Player 2
+    private JLabel nameLabelPlayer2;
+    private JLabel winLabelPlayer2;
+    private JLabel turnLabelPlayer2;
     /**
      * Constructor for GameInfo.
      */
@@ -24,8 +47,63 @@ public class GameInfo extends JPanel {
         this.player2Name = player2Name;
         this.player1TokenColor = player1Token;
         this.player2TokenColor = player2Token;
+
+
+        roundLabel = new JLabel();
+        instructionLabel = new JLabel();
+        timer1Label = new JLabel();
+        timer2Label = new JLabel();
+        nameLabelPlayer1 = new JLabel();
+        winLabelPlayer1 = new JLabel();
+        turnLabelPlayer1 = new JLabel();
+        nameLabelPlayer2 = new JLabel();
+        winLabelPlayer2 = new JLabel();
+        turnLabelPlayer2 = new JLabel();
+        initComponents();
+
+
+        currentLocale = new Locale("en", "CA");
+        this.messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
+        updateText();
+    }
+    /**
+     * Initialize and add GUI components.
+     * This method should be defined to add components like labels to the panels.
+     */
+    private void initComponents() {
+        // Your existing setup for components
+        // Example:
+        // JPanel panel = new JPanel();
+        // panel.add(roundLabel);
+        // this.add(panel); // Add panel to the GameInfo JPanel
     }
 
+    // Method to switch to a new locale and update the text
+    public void switchLanguage(String languageCode, String countryCode) {
+        this.currentLocale = new Locale(languageCode, countryCode);
+        this.messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
+        updateText(); // Update the text components with new locale
+    }
+
+    // Method to update all text components with values from the resource bundle
+    public void updateText() {
+        // Assuming you have JLabels for round, instruction, etc.
+        roundLabel.setText(messages.getString("round") + " 1.");
+        instructionLabel.setText(messages.getString("clickToPlay"));
+        timer1Label.setText(messages.getString("timer") + ": 22s");
+        // Update other text elements in a similar fashion
+
+
+        // Update the text for Player 1 information
+//        nameLabelPlayer1.setText(messages.getString("player1Name"));
+        winLabelPlayer1.setText(messages.getString("player1Wins"));
+        turnLabelPlayer1.setText(messages.getString("player1Turn"));
+
+        // Update the text for Player 2 information
+//        nameLabelPlayer2.setText(messages.getString("player2Name"));
+        winLabelPlayer2.setText(messages.getString("player2Wins"));
+        turnLabelPlayer2.setText(messages.getString("player2Turn"));
+    }
 
     /**
      * Creates and returns a JLayeredPane which contains the main components of game info.
@@ -80,32 +158,28 @@ public class GameInfo extends JPanel {
         player1.setBackground(new Color(32,56,100));
         player1.setPreferredSize(new Dimension(175,250));
 
-        ImageIcon myImage = new ImageIcon(imageCases2(player1TokenColor).getImage());
+        ImageIcon myImagePlayer1 = new ImageIcon(imageCases2(player1TokenColor).getImage());
+        JLabel imageLabelPlayer1 = new JLabel(myImagePlayer1);
 
-        JLabel imageLabel = new JLabel();
-        imageLabel.setIcon(myImage);
+        // Initialize the class-level labels here
+        nameLabelPlayer1 = new JLabel(player1Name); // Initialized with default text
+        nameLabelPlayer1.setForeground(new Color(124, 150, 199));
+        nameLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 50));
 
-        JLabel player1Label = new JLabel();
-        player1Label.setIcon(myImage);
+        winLabelPlayer1 = new JLabel("0 Win"); // Initialized with default text
+        winLabelPlayer1.setForeground(new Color(124, 150, 199));
+        winLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 35));
 
+        turnLabelPlayer1 = new JLabel("Your Turn"); // Initialized with default text
+        turnLabelPlayer1.setForeground(color);
+        turnLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 30));
 
-        JLabel nameLabel = new JLabel(player1Name);
-        nameLabel.setForeground(new Color(124, 150, 199));
-        nameLabel.setFont(new Font("Calibri", Font.BOLD, 50));
-
-        JLabel winLabel = new JLabel("0 Win");
-        winLabel.setForeground(new Color(124, 150, 199));
-        winLabel.setFont(new Font("Calibri", Font.BOLD, 35));
-
-        JLabel turnLabel = new JLabel("Your Turn");
-        turnLabel.setForeground(color);
-        turnLabel.setFont(new Font("Calibri", Font.BOLD, 30));
-
-        player1.add(imageLabel);
-        player1.add(nameLabel);
-        player1.add(winLabel);
-        player1.add(turnLabel);
-        player1TurnLabel = turnLabel;
+        // Add to the panel
+        player1.add(imageLabelPlayer1);
+        player1.add(nameLabelPlayer1);
+        player1.add(winLabelPlayer1);
+        player1.add(turnLabelPlayer1);
+        player1TurnLabel = turnLabelPlayer1;
 
         return player1;
     }
@@ -121,34 +195,33 @@ public class GameInfo extends JPanel {
         player2.setBackground(new Color(32,56,100));
         player2.setPreferredSize(new Dimension(175,250));
 
+        ImageIcon myImagePlayer2 = new ImageIcon(imageCases2(player2TokenColor).getImage());
+        JLabel imageLabelPlayer2 = new JLabel(myImagePlayer2);
 
-        ImageIcon myImage = new ImageIcon(imageCases2(player2TokenColor).getImage());
+        player2.add(imageLabelPlayer2);
 
-        JLabel imageLabel = new JLabel();
-        imageLabel.setIcon(myImage);
 
-        JLabel player1Label = new JLabel();
-        player1Label.setIcon(myImage);
+        //JLabel nameLabel = new JLabel("Ved");
+        nameLabelPlayer2 = new JLabel(player2Name);
+        nameLabelPlayer2.setVerticalTextPosition(JLabel.BOTTOM);
+        nameLabelPlayer2.setForeground(new Color(124, 150, 199));
+        nameLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 50));
 
-        JLabel nameLabel = new JLabel(player2Name);
-        nameLabel.setVerticalTextPosition(JLabel.BOTTOM);
-        nameLabel.setForeground(new Color(124, 150, 199));
-        nameLabel.setFont(new Font("Calibri", Font.BOLD, 50));
+        //JLabel winLabel = new JLabel("0 Win");
+        winLabelPlayer2 = new JLabel(" 0 Win");
+        winLabelPlayer2.setForeground(new Color(124, 150, 199));
+        winLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 35));
 
-        JLabel winLabel = new JLabel("0 Win");
-        winLabel.setForeground(new Color(124, 150, 199));
-        winLabel.setFont(new Font("Calibri", Font.BOLD, 35));
+        //JLabel turnLabel = new JLabel("Your Turn");
+        turnLabelPlayer2 = new JLabel("Your Turn");
+        turnLabelPlayer2.setForeground(color);
+        turnLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 30));
 
-        JLabel turnLabel = new JLabel("Your Turn");
-        turnLabel.setForeground(color);
-        turnLabel.setFont(new Font("Calibri", Font.BOLD, 30));
-
-        player2.add(imageLabel);
-        player2.add(nameLabel);
-        player2.add(winLabel);
-        player2.add(turnLabel);
-        player2TurnLabel = turnLabel;
-
+        player2.add(imageLabelPlayer2);
+        player2.add(nameLabelPlayer2);
+        player2.add(winLabelPlayer2);
+        player2.add(turnLabelPlayer2);
+        player2TurnLabel = turnLabelPlayer2;
         return player2;
     }
 
@@ -163,37 +236,41 @@ public class GameInfo extends JPanel {
         timeInfo.setBackground(new Color(32,56,100));
         timeInfo.setPreferredSize(new Dimension(355, 250));
 
-        JLabel round = new JLabel();
-        round.setText("Round 1.");
-        round.setHorizontalAlignment(JLabel.LEFT);
-        round.setForeground(new Color(124, 150, 199));
-        round.setFont(new Font("Calibri", Font.BOLD, 40));
+        //JLabel round = new JLabel();
+        //roundLabel.setText("Round 1.");
+        roundLabel = new JLabel("Round 1."); // Default text, will be updated later
+        roundLabel.setHorizontalAlignment(JLabel.LEFT);
+        roundLabel.setForeground(new Color(124, 150, 199));
+        roundLabel.setFont(new Font("Calibri", Font.BOLD, 40));
 
 
-        JLabel instruction = new JLabel();
-        instruction.setText("Click on a column to make your move.");
-        instruction.setForeground(new Color(124, 150, 199));
-        instruction.setFont(new Font("Calibri", Font.BOLD, 20));
-        instruction.setHorizontalAlignment(SwingConstants.LEFT);
+        //JLabel instruction = new JLabel();
+        instructionLabel = new JLabel("Click on a column to make your move.");
+        //instruction.setText("Click on a column to make your move.");
+        instructionLabel.setForeground(new Color(124, 150, 199));
+        instructionLabel.setFont(new Font("Calibri", Font.BOLD, 20));
+        instructionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JLabel timer1 = new JLabel();
-        timer1.setText("Timer: 22s");
-        timer1.setForeground(new Color(124, 150, 199));
-        timer1.setFont(new Font("Calibri", Font.BOLD, 40));
-        timer1.setHorizontalAlignment(SwingConstants.LEFT);
+        //JLabel timer1 = new JLabel();
+        //timer1.setText("Timer: 22s");
+        timer1Label = new JLabel("Timer: 22s"); // Default text, will be updated later
+        timer1Label.setForeground(new Color(124, 150, 199));
+        timer1Label.setFont(new Font("Calibri", Font.BOLD, 40));
+        timer1Label.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JLabel timer2 = new JLabel();
-        timer2.setText("Game time: 3m 11s");
-        timer2.setForeground(new Color(124, 150, 199));
-        timer2.setFont(new Font("Calibri", Font.BOLD, 30));
-        timer2.setHorizontalAlignment(SwingConstants.LEFT);
+        //JLabel timer2 = new JLabel();
+        //timer2.setText("Game time: 3m 11s");
+        timer2Label = new JLabel("Game time: 3m 11s"); // Default text, will be updated later
+        timer2Label.setForeground(new Color(124, 150, 199));
+        timer2Label.setFont(new Font("Calibri", Font.BOLD, 30));
+        timer2Label.setHorizontalAlignment(SwingConstants.LEFT);
 
 
-        timeInfo.add(round);
-        timeInfo.add(instruction);
+        timeInfo.add(roundLabel);
+        timeInfo.add(instructionLabel);
         timeInfo.add(Box.createRigidArea(new Dimension(350,50)));
-        timeInfo.add(timer1);
-        timeInfo.add(timer2);
+        timeInfo.add(timer1Label);
+        timeInfo.add(timer2Label);
 
         return timeInfo;
     }

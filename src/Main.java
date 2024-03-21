@@ -16,7 +16,7 @@ public class Main {
         GameBoard myBoard = new GameBoard(model, player1Token, player2Token); // Pass the model to GameBoard
         Controller controller = new Controller(model, myBoard, gameInfo); // Create instance of the Connect4Controller
 
-        MenuBar myBar = new MenuBar();
+        MenuBar myBar = new MenuBar(gameInfo);
         Header connect4 = new Header();
         ChatBox myChat = new ChatBox();
 
