@@ -84,7 +84,7 @@ public class StartGame implements ActionListener {
 
 
     private JTextField Player1Name(){
-        JTextField player1Name = new JTextField();
+        JTextField player1Name = new JTextField("Player 1");
         player1Name.setPreferredSize(new Dimension(150, 30));
         player1Name.setBackground(new Color(180,199,231));
         player1Name.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
@@ -92,7 +92,7 @@ public class StartGame implements ActionListener {
     }
 
     private JTextField Player2Name(){
-        JTextField player2Name = new JTextField();
+        JTextField player2Name = new JTextField("Player 2");
         player2Name.setPreferredSize(new Dimension(150, 30));
         player2Name.setBackground(new Color(180,199,231));
         player2Name.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));

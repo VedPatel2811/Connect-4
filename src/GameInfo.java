@@ -3,15 +3,23 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 /**
  * GameInfo class is a part of the Connect-4 game UI, responsible for displaying
  * player information, game time, and other relevant game status information.
  * This class extends JPanel and creates a layered layout to organize this information.
  */
 public class GameInfo extends JPanel {
+    public Color player1Color = Color.YELLOW;
+    public Color player2Color = new Color(32,56,100);
+    private JLabel player1TurnLabel;
+    private JLabel player2TurnLabel;
+    private String player1Name ;
+    private String player2Name;
+    private String player1TokenColor;
+    private String player2TokenColor;
 
-    // You could set this to English by default
+
+
     private Locale currentLocale;
     private ResourceBundle messages;
 
@@ -30,13 +38,16 @@ public class GameInfo extends JPanel {
     private JLabel nameLabelPlayer2;
     private JLabel winLabelPlayer2;
     private JLabel turnLabelPlayer2;
-
-
-
     /**
      * Constructor for GameInfo.
      */
-    public GameInfo() {
+
+    public GameInfo(String player1Name, String player2Name, String player1Token, String player2Token) {
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
+        this.player1TokenColor = player1Token;
+        this.player2TokenColor = player2Token;
+
 
         roundLabel = new JLabel();
         instructionLabel = new JLabel();
@@ -48,15 +59,13 @@ public class GameInfo extends JPanel {
         nameLabelPlayer2 = new JLabel();
         winLabelPlayer2 = new JLabel();
         turnLabelPlayer2 = new JLabel();
-
         initComponents();
 
 
         currentLocale = new Locale("en", "CA");
         this.messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
-        updateText(); /* Initialize text components with values from resource bundle */
+        updateText();
     }
-
     /**
      * Initialize and add GUI components.
      * This method should be defined to add components like labels to the panels.
@@ -86,18 +95,15 @@ public class GameInfo extends JPanel {
 
 
         // Update the text for Player 1 information
-        nameLabelPlayer1.setText(messages.getString("player1Name"));
+//        nameLabelPlayer1.setText(messages.getString("player1Name"));
         winLabelPlayer1.setText(messages.getString("player1Wins"));
         turnLabelPlayer1.setText(messages.getString("player1Turn"));
 
         // Update the text for Player 2 information
-        nameLabelPlayer2.setText(messages.getString("player2Name"));
+//        nameLabelPlayer2.setText(messages.getString("player2Name"));
         winLabelPlayer2.setText(messages.getString("player2Wins"));
         turnLabelPlayer2.setText(messages.getString("player2Turn"));
     }
-
-
-
 
     /**
      * Creates and returns a JLayeredPane which contains the main components of game info.
@@ -110,7 +116,7 @@ public class GameInfo extends JPanel {
         JLayeredPane baseLayer = new JLayeredPane();
         baseLayer.setBorder(new EmptyBorder(0,25,0,50));
 
-        JPanel basePanel = BasePanel();
+        JPanel basePanel = BasePanel(player1Color, player2Color);
 
         baseLayer.setLayout(new FlowLayout());
         baseLayer.setPreferredSize(new Dimension(425, 610));
@@ -125,14 +131,14 @@ public class GameInfo extends JPanel {
      *
      * @return JPanel The base panel containing all sub-panels for game info.
      */
-    private JPanel BasePanel(){
+    private JPanel BasePanel(Color color, Color color2){
         JPanel basePanel = new JPanel();
         basePanel.setPreferredSize(new Dimension(425, 560));
         basePanel.setBackground(new Color(68,114,196));
         basePanel.setBorder(new EmptyBorder(25,25,25,25));
 
-        JPanel player1 = Player1();
-        JPanel player2 = Player2();
+        JPanel player1 = Player1(color);
+        JPanel player2 = Player2(color2);
         JPanel timeInfo = TimeInfo();
 
         basePanel.add(player1);
@@ -147,38 +153,33 @@ public class GameInfo extends JPanel {
      *
      * @return JPanel The panel containing Player 1's information.
      */
-    private JPanel Player1(){
+    private JPanel Player1(Color color){
         JPanel player1 = new JPanel();
         player1.setBackground(new Color(32,56,100));
         player1.setPreferredSize(new Dimension(175,250));
 
-        ImageIcon myImagePlayer1 = new ImageIcon("A12Red2.png");
+        ImageIcon myImagePlayer1 = new ImageIcon(imageCases2(player1TokenColor).getImage());
         JLabel imageLabelPlayer1 = new JLabel(myImagePlayer1);
 
-        player1.add(imageLabelPlayer1);
-
         // Initialize the class-level labels here
-        nameLabelPlayer1 = new JLabel("Steve"); // Initialized with default text
+        nameLabelPlayer1 = new JLabel(player1Name); // Initialized with default text
         nameLabelPlayer1.setForeground(new Color(124, 150, 199));
         nameLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 50));
-        player1.add(nameLabelPlayer1);
 
         winLabelPlayer1 = new JLabel("0 Win"); // Initialized with default text
         winLabelPlayer1.setForeground(new Color(124, 150, 199));
         winLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 35));
-        player1.add(winLabelPlayer1);
 
         turnLabelPlayer1 = new JLabel("Your Turn"); // Initialized with default text
-        turnLabelPlayer1.setForeground(Color.YELLOW);
+        turnLabelPlayer1.setForeground(color);
         turnLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 30));
-        player1.add(turnLabelPlayer1);
 
         // Add to the panel
         player1.add(imageLabelPlayer1);
         player1.add(nameLabelPlayer1);
         player1.add(winLabelPlayer1);
         player1.add(turnLabelPlayer1);
-
+        player1TurnLabel = turnLabelPlayer1;
 
         return player1;
     }
@@ -189,19 +190,19 @@ public class GameInfo extends JPanel {
      *
      * @return JPanel The panel containing Player 2's information.
      */
-    private JPanel Player2(){
+    private JPanel Player2(Color color){
         JPanel player2 = new JPanel();
         player2.setBackground(new Color(32,56,100));
         player2.setPreferredSize(new Dimension(175,250));
 
-        ImageIcon myImagePlayer2 = new ImageIcon("A12Black2.png");
+        ImageIcon myImagePlayer2 = new ImageIcon(imageCases2(player2TokenColor).getImage());
         JLabel imageLabelPlayer2 = new JLabel(myImagePlayer2);
 
         player2.add(imageLabelPlayer2);
 
 
         //JLabel nameLabel = new JLabel("Ved");
-        nameLabelPlayer2 = new JLabel("Ved");
+        nameLabelPlayer2 = new JLabel(player2Name);
         nameLabelPlayer2.setVerticalTextPosition(JLabel.BOTTOM);
         nameLabelPlayer2.setForeground(new Color(124, 150, 199));
         nameLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 50));
@@ -213,14 +214,14 @@ public class GameInfo extends JPanel {
 
         //JLabel turnLabel = new JLabel("Your Turn");
         turnLabelPlayer2 = new JLabel("Your Turn");
-        turnLabelPlayer2.setForeground(Color.YELLOW);
+        turnLabelPlayer2.setForeground(color);
         turnLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 30));
 
         player2.add(imageLabelPlayer2);
         player2.add(nameLabelPlayer2);
         player2.add(winLabelPlayer2);
         player2.add(turnLabelPlayer2);
-
+        player2TurnLabel = turnLabelPlayer2;
         return player2;
     }
 
@@ -274,7 +275,41 @@ public class GameInfo extends JPanel {
         return timeInfo;
     }
 
+    public JLabel getPlayer1TurnLabel() {
+        return player1TurnLabel;
+    }
+    public JLabel getPlayer2TurnLabel() {
+        return player2TurnLabel;
+    }
 
-
-
+    private ImageIcon imageCases2(String playerToken){
+        ImageIcon playerTokenImage = null;
+        switch (playerToken){ //"Red", "Orange", "Green", "Blue", "Yellow", "Pink", "Purple", "Black"
+            case "Red":
+                playerTokenImage = new ImageIcon("A12Red2.png");
+                break;
+            case "Orange":
+                playerTokenImage = new ImageIcon("A12Orange2.png");
+                break;
+            case "Green":
+                playerTokenImage = new ImageIcon("A12Green2.png");
+                break;
+            case "Blue":
+                playerTokenImage = new ImageIcon("A12Blue2.png");
+                break;
+            case "Yellow":
+                playerTokenImage = new ImageIcon("A12Yellow2.png");
+                break;
+            case "Pink":
+                playerTokenImage = new ImageIcon("A12Pink2.png");
+                break;
+            case "Purple":
+                playerTokenImage = new ImageIcon("A12Purple2.png");
+                break;
+            case "Black":
+                playerTokenImage = new ImageIcon("A12Black2.png");
+                break;
+        }
+        return playerTokenImage;
+    }
 }
