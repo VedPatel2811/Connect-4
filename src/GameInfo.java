@@ -13,10 +13,10 @@ public class GameInfo extends JPanel {
     public Color player2Color = new Color(32,56,100);
     private JLabel player1TurnLabel;
     private JLabel player2TurnLabel;
-    private String player1Name ;
-    private String player2Name;
-    private String player1TokenColor;
-    private String player2TokenColor;
+    private final String player1Name ;
+    private final String player2Name;
+    private final String player1TokenColor;
+    private final String player2TokenColor;
 
 
 
