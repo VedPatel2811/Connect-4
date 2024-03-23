@@ -166,7 +166,7 @@ public class GameInfo extends JPanel {
         nameLabelPlayer1.setForeground(new Color(124, 150, 199));
         nameLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 50));
 
-        winLabelPlayer1 = new JLabel("0 Win"); // Initialized with default text
+        winLabelPlayer1 = new JLabel("Player 1"); // Initialized with default text
         winLabelPlayer1.setForeground(new Color(124, 150, 199));
         winLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 35));
 
@@ -208,7 +208,7 @@ public class GameInfo extends JPanel {
         nameLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 50));
 
         //JLabel winLabel = new JLabel("0 Win");
-        winLabelPlayer2 = new JLabel(" 0 Win");
+        winLabelPlayer2 = new JLabel("Player 2");
         winLabelPlayer2.setForeground(new Color(124, 150, 199));
         winLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 35));
 
