@@ -87,19 +87,15 @@ public class GameInfo extends JPanel {
 
     // Method to update all text components with values from the resource bundle
     public void updateText() {
-        System.out.println("updateText() is called.");
 
         // Debugging: print the values you're setting to confirm they're correct
         String roundText = messages.getString("round") + " 1.";
-        System.out.println("Round label text: " + roundText);
         roundLabel.setText(roundText);
 
         String instructionText = messages.getString("clickToPlay");
-        System.out.println("Instruction label text: " + instructionText);
         instructionLabel.setText(instructionText);
 
         String timerText = messages.getString("timer") + ": 22s";
-        System.out.println("Timer label text: " + timerText);
         timer1Label.setText(timerText);
 
         // Assuming that player names are set separately and should not be updated here
@@ -107,26 +103,21 @@ public class GameInfo extends JPanel {
         // nameLabelPlayer1.setText(player1Name); // This line remains commented out or removed
 
         String winTextPlayer1 = messages.getString("player1Wins");
-        System.out.println("Player1 win label text: " + winTextPlayer1);
         winLabelPlayer1.setText(winTextPlayer1);
 
         String turnTextPlayer1 = messages.getString("player1Turn");
-        System.out.println("Player1 turn label text: " + turnTextPlayer1);
         turnLabelPlayer1.setText(turnTextPlayer1);
 
         // Similar updates for player 2
         // nameLabelPlayer2.setText(player2Name); // This line remains commented out or removed
 
         String winTextPlayer2 = messages.getString("player2Wins");
-        System.out.println("Player2 win label text: " + winTextPlayer2);
         winLabelPlayer2.setText(winTextPlayer2);
 
         String turnTextPlayer2 = messages.getString("player2Turn");
-        System.out.println("Player2 turn label text: " + turnTextPlayer2);
         turnLabelPlayer2.setText(turnTextPlayer2);
 
         String gameTimeText = messages.getString("gameTime") + " 3m 11s";
-        System.out.println("Game time label text: " + gameTimeText);
         timer2Label.setText(gameTimeText);
 
         // Now refresh the UI
