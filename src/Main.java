@@ -17,6 +17,7 @@ public class Main {
         Controller controller = new Controller(model, myBoard, gameInfo); // Create instance of the Connect4Controller
 
         MenuBar myBar = new MenuBar(gameInfo);
+        JMenuBar menuBar = myBar.createMenuBar();
         Header connect4 = new Header();
         ChatBox myChat = new ChatBox();
 
@@ -39,7 +40,7 @@ public class Main {
         bottomPanel.add(myChat.MainChatBox());
 
         topPanel.add(connect4.ConnectHeader());
-        topPanel.add(myBar.Menu(), BorderLayout.NORTH);
+        topPanel.add(menuBar, BorderLayout.NORTH);
         myFrame.add(topPanel, BorderLayout.NORTH);
         myFrame.add(bottomPanel);
 

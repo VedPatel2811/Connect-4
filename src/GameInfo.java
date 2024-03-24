@@ -13,10 +13,10 @@ public class GameInfo extends JPanel {
     public Color player2Color = new Color(32,56,100);
     private JLabel player1TurnLabel;
     private JLabel player2TurnLabel;
-    private String player1Name ;
-    private String player2Name;
-    private String player1TokenColor;
-    private String player2TokenColor;
+    private final String player1Name ;
+    private final String player2Name;
+    private final String player1TokenColor;
+    private final String player2TokenColor;
 
 
 
@@ -82,27 +82,58 @@ public class GameInfo extends JPanel {
     public void switchLanguage(String languageCode, String countryCode) {
         this.currentLocale = new Locale(languageCode, countryCode);
         this.messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
+        System.out.println(messages.getString("round")); // Should print "Manche" after switching to French
         updateText(); // Update the text components with new locale
     }
 
     // Method to update all text components with values from the resource bundle
     public void updateText() {
-        // Assuming you have JLabels for round, instruction, etc.
-        roundLabel.setText(messages.getString("round") + " 1.");
-        instructionLabel.setText(messages.getString("clickToPlay"));
-        timer1Label.setText(messages.getString("timer") + ": 22s");
-        // Update other text elements in a similar fashion
+        System.out.println("updateText() is called.");
 
+        // Debugging: print the values you're setting to confirm they're correct
+        String roundText = messages.getString("round") + " 1.";
+        System.out.println("Round label text: " + roundText);
+        roundLabel.setText(roundText);
 
-        // Update the text for Player 1 information
-//        nameLabelPlayer1.setText(messages.getString("player1Name"));
-        winLabelPlayer1.setText(messages.getString("player1Wins"));
-        turnLabelPlayer1.setText(messages.getString("player1Turn"));
+        String instructionText = messages.getString("clickToPlay");
+        System.out.println("Instruction label text: " + instructionText);
+        instructionLabel.setText(instructionText);
 
-        // Update the text for Player 2 information
-//        nameLabelPlayer2.setText(messages.getString("player2Name"));
-        winLabelPlayer2.setText(messages.getString("player2Wins"));
-        turnLabelPlayer2.setText(messages.getString("player2Turn"));
+        String timerText = messages.getString("timer") + ": 22s";
+        System.out.println("Timer label text: " + timerText);
+        timer1Label.setText(timerText);
+
+        // Assuming that player names are set separately and should not be updated here
+        // since they are not to be translated
+        // nameLabelPlayer1.setText(player1Name); // This line remains commented out or removed
+
+        String winTextPlayer1 = messages.getString("player1Wins");
+        System.out.println("Player1 win label text: " + winTextPlayer1);
+        winLabelPlayer1.setText(winTextPlayer1);
+
+        String turnTextPlayer1 = messages.getString("player1Turn");
+        System.out.println("Player1 turn label text: " + turnTextPlayer1);
+        turnLabelPlayer1.setText(turnTextPlayer1);
+
+        // Similar updates for player 2
+        // nameLabelPlayer2.setText(player2Name); // This line remains commented out or removed
+
+        String winTextPlayer2 = messages.getString("player2Wins");
+        System.out.println("Player2 win label text: " + winTextPlayer2);
+        winLabelPlayer2.setText(winTextPlayer2);
+
+        String turnTextPlayer2 = messages.getString("player2Turn");
+        System.out.println("Player2 turn label text: " + turnTextPlayer2);
+        turnLabelPlayer2.setText(turnTextPlayer2);
+
+        String gameTimeText = messages.getString("gameTime") + " 3m 11s";
+        System.out.println("Game time label text: " + gameTimeText);
+        timer2Label.setText(gameTimeText);
+
+        // Now refresh the UI
+        this.revalidate();
+        this.repaint();
+
     }
 
     /**
@@ -162,14 +193,17 @@ public class GameInfo extends JPanel {
         JLabel imageLabelPlayer1 = new JLabel(myImagePlayer1);
 
         // Initialize the class-level labels here
+        //nameLabelPlayer1 = new JLabel(messages.getString("player1Name")); // Set text from ResourceBundle
         nameLabelPlayer1 = new JLabel(player1Name); // Initialized with default text
         nameLabelPlayer1.setForeground(new Color(124, 150, 199));
         nameLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 50));
 
+       // winLabelPlayer1 = new JLabel(messages.getString("player1Wins")); // Set text from ResourceBundle
         winLabelPlayer1 = new JLabel("Player 1"); // Initialized with default text
         winLabelPlayer1.setForeground(new Color(124, 150, 199));
         winLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 35));
 
+        //turnLabelPlayer1 = new JLabel(messages.getString("player1Turn")); // Set text from ResourceBundle
         turnLabelPlayer1 = new JLabel("Your Turn"); // Initialized with default text
         turnLabelPlayer1.setForeground(color);
         turnLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 30));
@@ -203,17 +237,20 @@ public class GameInfo extends JPanel {
 
         //JLabel nameLabel = new JLabel("Ved");
         nameLabelPlayer2 = new JLabel(player2Name);
+       // nameLabelPlayer2 = new JLabel(messages.getString("player2Name")); // Set text from ResourceBundle
         nameLabelPlayer2.setVerticalTextPosition(JLabel.BOTTOM);
         nameLabelPlayer2.setForeground(new Color(124, 150, 199));
         nameLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 50));
 
         //JLabel winLabel = new JLabel("0 Win");
         winLabelPlayer2 = new JLabel("Player 2");
+       // winLabelPlayer2 = new JLabel(messages.getString("player1Wins")); // Set text from ResourceBundle
         winLabelPlayer2.setForeground(new Color(124, 150, 199));
         winLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 35));
 
         //JLabel turnLabel = new JLabel("Your Turn");
         turnLabelPlayer2 = new JLabel("Your Turn");
+        //turnLabelPlayer2 = new JLabel(messages.getString("player1Turn")); // Set text from ResourceBundle
         turnLabelPlayer2.setForeground(color);
         turnLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 30));
 
