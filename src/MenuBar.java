@@ -65,10 +65,12 @@ public class MenuBar {
         englishItem.addActionListener(e -> {
             System.out.println("Switching to English");
             switchLanguage("en", "CA");
+            gameInfo.switchLanguage("en", "CA");
         });
         frenchItem.addActionListener(e -> {
             System.out.println("Switching to French");
             switchLanguage("fr", "CA");
+            gameInfo.switchLanguage("fr", "CA");
         });
 
         updateTexts();

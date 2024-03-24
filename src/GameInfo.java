@@ -82,7 +82,6 @@ public class GameInfo extends JPanel {
     public void switchLanguage(String languageCode, String countryCode) {
         this.currentLocale = new Locale(languageCode, countryCode);
         this.messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
-        System.out.println(messages.getString("round")); // Should print "Manche" after switching to French
         updateText(); // Update the text components with new locale
     }
 
