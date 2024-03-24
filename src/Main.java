@@ -15,6 +15,11 @@ public class Main {
         Model model = new Model(); // Create instance of the Connect4Model
         GameBoard myBoard = new GameBoard(model, player1Token, player2Token); // Pass the model to GameBoard
         Controller controller = new Controller(model, myBoard, gameInfo, startGame); // Create instance of the Connect4Controller
+        // Inside your main method or where you initialize your game components
+        //GameBoard gameBoard = new GameBoard(model, "Red", "Yellow");
+        ControllableTimer timer = new ControllableTimer(myBoard);
+        timer.setDaemon(true); // Optional: makes the thread a daemon
+        timer.start();
 
         MenuBar myBar = new MenuBar(gameInfo);
         JMenuBar menuBar = myBar.createMenuBar();

@@ -16,6 +16,8 @@ public class GameBoard {
     private final ImageIcon player1Icon; // Icon for Player 1
     private final ImageIcon player2Icon; // Icon for Player 2
 
+    private JLabel timerLabel;
+
     /**
      * Constructor for GameBoard.
      * It calls the MainGameBoard method to initialize the game board.
@@ -25,7 +27,24 @@ public class GameBoard {
         this.basePanel = MainGameBoard(); // Initialize basePanel
         this.player1Icon = new ImageIcon(imageCases(player1Token).getImage()); // Load image for Player 1
         this.player2Icon = new ImageIcon(imageCases(player2Token).getImage()); // Load image for Player 2
+        timerLabel = new JLabel("00:00");
+        timerLabel.setFont(new Font("Serif", Font.BOLD, 18)); // Set the font size as needed.
+        timerLabel.setForeground(Color.WHITE); // Set the text color as needed.
+        this.add(timerLabel); // Add the timer label to the GameBoard or a panel within GameBoard.
     }
+
+    // Method to update the timer display
+    public void setTime(int elapsedTime) {
+        // Convert the elapsedTime to minutes and seconds
+        int minutes = elapsedTime / 60;
+        int seconds = elapsedTime % 60;
+
+        // Update the timerLabel text
+        EventQueue.invokeLater(() -> {
+            timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
+        });
+    }
+
     /**
      * Creates and returns a JPanel object configured as the main game board for Connect-4.
      * The method sets up a grid layout for the game, customizes its appearance,
