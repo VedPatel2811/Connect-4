@@ -7,14 +7,14 @@ public class Main {
     public static void main(String[] args) {
 
         StartGame startGame = new StartGame();
-        startGame.StartMenu();
+        startGame.StartMenu(startGame);
 
     }
-    public void StartMainGame(String name1, String name2, String player1Token, String player2Token){
+    public void StartMainGame(String name1, String name2, String player1Token, String player2Token, StartGame startGame){
         GameInfo gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
         Model model = new Model(); // Create instance of the Connect4Model
         GameBoard myBoard = new GameBoard(model, player1Token, player2Token); // Pass the model to GameBoard
-        Controller controller = new Controller(model, myBoard, gameInfo); // Create instance of the Connect4Controller
+        Controller controller = new Controller(model, myBoard, gameInfo, startGame); // Create instance of the Connect4Controller
 
         MenuBar myBar = new MenuBar(gameInfo);
         JMenuBar menuBar = myBar.createMenuBar();
