@@ -18,13 +18,15 @@ public class StartGame implements ActionListener {
     public ArrayList<String> colors = new ArrayList<>(Arrays.asList("Red", "Orange", "Green", "Blue", "Yellow", "Pink", "Purple", "Black"));
     public JComboBox<String> player1ColorBox;
     public JComboBox<String> player2ColorBox;
+    private StartGame startGameClass;
 
 
     StartGame(){
 
     }
 
-    public JFrame StartMenu(){
+    public JFrame StartMenu(StartGame startGameClass){
+        this.startGameClass = startGameClass;
         baseStartPanel = new JFrame();
         baseStartPanel.getContentPane().setBackground(new Color(143, 170, 220));
 
@@ -36,18 +38,18 @@ public class StartGame implements ActionListener {
         player1Name = Player1Name();
         player2Name = Player2Name();
         startGame = StartGame();
-        player1ColorBox = ColorSelection();
-        player2ColorBox = ColorSelection();
+        player1ColorBox = ColorSelection1();
+        player2ColorBox = ColorSelection2();
         startGame.addActionListener(this);
         player1ColorBox.addActionListener(this);
         player2ColorBox.addActionListener(this);
 
         baseStartPanel.add(new JLabel("Player 1 Name "));
         baseStartPanel.add(player1Name);
-        baseStartPanel.add(new JLabel("Player 2 Name "));
-        baseStartPanel.add(player2Name);
         baseStartPanel.add(new JLabel("Player 1 Color"));
         baseStartPanel.add(player1ColorBox);
+        baseStartPanel.add(new JLabel("Player 2 Name "));
+        baseStartPanel.add(player2Name);
         baseStartPanel.add(new JLabel("Player 2 Color"));
         baseStartPanel.add(player2ColorBox);
         baseStartPanel.add(startGame);
@@ -77,7 +79,7 @@ public class StartGame implements ActionListener {
 
             baseStartPanel.dispose();
             Main main = new Main();
-            main.StartMainGame(name1, name2, player1Token, player2Token);
+            main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass);
 
         }
     }
@@ -99,11 +101,20 @@ public class StartGame implements ActionListener {
         return player2Name;
     }
 
-    private JComboBox<String> ColorSelection() {
+    private JComboBox<String> ColorSelection1() {
         JComboBox<String> colorBox = new JComboBox<>(colors.toArray(new String[0]));
         colorBox.setPreferredSize(new Dimension(150, 30));
         colorBox.setBackground(new Color(180,199,231));
         colorBox.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
+        colorBox.setSelectedItem("Red");
+        return colorBox;
+    }
+    private JComboBox<String> ColorSelection2() {
+        JComboBox<String> colorBox = new JComboBox<>(colors.toArray(new String[1]));
+        colorBox.setPreferredSize(new Dimension(150, 30));
+        colorBox.setBackground(new Color(180,199,231));
+        colorBox.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
+        colorBox.setSelectedItem("Black");
         return colorBox;
     }
 

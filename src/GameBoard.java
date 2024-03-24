@@ -103,7 +103,7 @@ public class GameBoard {
         label.setIcon(icon);
     }
 
-    public void showWinner(int player) {
+    public void showWinner(String player) {
         String message = player + " Wins the game!";
         JOptionPane.showMessageDialog(null, message, "Winner", JOptionPane.INFORMATION_MESSAGE);
         resetBoard();

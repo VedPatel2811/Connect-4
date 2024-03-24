@@ -59,23 +59,11 @@ public class GameInfo extends JPanel {
         nameLabelPlayer2 = new JLabel();
         winLabelPlayer2 = new JLabel();
         turnLabelPlayer2 = new JLabel();
-        initComponents();
 
 
         currentLocale = new Locale("en", "CA");
         this.messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
         updateText();
-    }
-    /**
-     * Initialize and add GUI components.
-     * This method should be defined to add components like labels to the panels.
-     */
-    private void initComponents() {
-        // Your existing setup for components
-        // Example:
-        // JPanel panel = new JPanel();
-        // panel.add(roundLabel);
-        // this.add(panel); // Add panel to the GameInfo JPanel
     }
 
     // Method to switch to a new locale and update the text

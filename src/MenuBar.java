@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.event.KeyEvent;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
