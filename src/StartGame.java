@@ -5,26 +5,83 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+/**
+ * Represents the start menu for the Connect Four game.
+ * Allows players to enter their names and select their token colors before starting the game.
+ */
 public class StartGame implements ActionListener {
+    /**
+     * The token selected for Player 1.
+     */
     private String player1Token;
-    private String  player2Token;
+
+    /**
+     * The token selected for Player 2.
+     */
+    private String player2Token;
+
+    /**
+     * The name entered for Player 1.
+     */
     private String name1;
+
+    /**
+     * The name entered for Player 2.
+     */
     private String name2;
+
+    /**
+     * The button to start the game.
+     */
     private JButton startGame;
+
+    /**
+     * The base panel for the start menu.
+     */
     private JFrame baseStartPanel;
+
+    /**
+     * The text field for entering Player 1's name.
+     */
     private JTextField player1Name;
+
+    /**
+     * The text field for entering Player 2's name.
+     */
     private JTextField player2Name;
+
+    /**
+     * The list of available colors for players.
+     */
     public ArrayList<String> colors = new ArrayList<>(Arrays.asList("Red", "Orange", "Green", "Blue", "Yellow", "Pink", "Purple", "Black"));
+
+    /**
+     * The combo box for selecting Player 1's color.
+     */
     public JComboBox<String> player1ColorBox;
+
+    /**
+     * The combo box for selecting Player 2's color.
+     */
     public JComboBox<String> player2ColorBox;
+
+    /**
+     * The instance of the StartGame class.
+     */
     private StartGame startGameClass;
 
 
-    StartGame(){
+    /**
+     * Constructs a StartGame object.
+     */
+    StartGame(){}
 
-    }
-
+    /**
+     * Displays the start menu for the game.
+     *
+     * @param startGameClass The instance of the StartGame class
+     * @return The JFrame containing the start menu
+     */
     public JFrame StartMenu(StartGame startGameClass){
         this.startGameClass = startGameClass;
         baseStartPanel = new JFrame();
@@ -62,6 +119,10 @@ public class StartGame implements ActionListener {
         return baseStartPanel;
     }
 
+    /**
+     * Handle actions performed on components
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==player1ColorBox){
@@ -84,7 +145,11 @@ public class StartGame implements ActionListener {
         }
     }
 
-
+    /**
+     * Creates a text field for entering Player 1's name.
+     *
+     * @return The JTextField for Player 1's name
+     */
     private JTextField Player1Name(){
         JTextField player1Name = new JTextField("Player 1");
         player1Name.setPreferredSize(new Dimension(150, 30));
@@ -93,6 +158,11 @@ public class StartGame implements ActionListener {
         return player1Name;
     }
 
+    /**
+     * Creates a text field for entering Player 2's name.
+     *
+     * @return The JTextField for Player 2's name
+     */
     private JTextField Player2Name(){
         JTextField player2Name = new JTextField("Player 2");
         player2Name.setPreferredSize(new Dimension(150, 30));
@@ -101,6 +171,11 @@ public class StartGame implements ActionListener {
         return player2Name;
     }
 
+    /**
+     * Creates a combo box for selecting Player 1's token color.
+     *
+     * @return The JComboBox for selecting Player 1's token color
+     */
     private JComboBox<String> ColorSelection1() {
         JComboBox<String> colorBox = new JComboBox<>(colors.toArray(new String[0]));
         colorBox.setPreferredSize(new Dimension(150, 30));
@@ -109,6 +184,12 @@ public class StartGame implements ActionListener {
         colorBox.setSelectedItem("Red");
         return colorBox;
     }
+
+    /**
+     * Creates a combo box for selecting Player 2's token color.
+     *
+     * @return The JComboBox for selecting Player 2's token color
+     */
     private JComboBox<String> ColorSelection2() {
         JComboBox<String> colorBox = new JComboBox<>(colors.toArray(new String[1]));
         colorBox.setPreferredSize(new Dimension(150, 30));
@@ -118,6 +199,11 @@ public class StartGame implements ActionListener {
         return colorBox;
     }
 
+    /**
+     * Creates a button for starting the game.
+     *
+     * @return The JButton for starting the game
+     */
     private JButton StartGame(){
         JButton startButton = new JButton("Start Game");
         startButton.setBackground(new Color(53, 90, 156));
@@ -126,10 +212,21 @@ public class StartGame implements ActionListener {
         startButton.setPreferredSize(new Dimension(100,30));
         return startButton;
     }
+
+    /**
+     * Gets the name of Player 1.
+     *
+     * @return The name of Player 1
+     */
     public String getName1() {
         return name1;
     }
 
+    /**
+     * Gets the name of Player 2.
+     *
+     * @return The name of Player 2
+     */
     public String getName2() {
         return name2;
     }

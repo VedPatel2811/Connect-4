@@ -1,3 +1,7 @@
+/**
+ * Represents the model for the Connect Four game.
+ * This class contains the game logic and state, including the game board, current player, and methods for placing tokens, checking for winners, and resetting the board.
+ */
 public class Model {
     private final int ROWS = 6;
     private final int COLUMNS = 7;
@@ -7,11 +11,20 @@ public class Model {
     private int[][] board;
     private int currentPlayer;
 
+    /**
+     * Constructs a Model object.
+     * Initializes the game board and sets the current player to PLAYER1.
+     */
     public Model(){
         board = new int[ROWS][COLUMNS];
         currentPlayer = PLAYER1;
     }
-
+    /**
+     * Places a token in the specified column.
+     *
+     * @param col The column to place the token in
+     * @return True if the token was successfully placed, false otherwise
+     */
     public boolean placeToken(int col){
         if (col<0 || col>=COLUMNS || board[0][col] != EMPTY){
             return false; //column is invalid or column is not empty
@@ -24,6 +37,12 @@ public class Model {
         }
         return false;
     }
+
+    /**
+     * Checks for a winner on the game board.
+     *
+     * @return True if there is a winner, false otherwise
+     */
     public boolean checkForWinner(){
         for(int row = 0; row<ROWS; row++){ //just check for horizontal win
             for (int col = 0; col<=COLUMNS-4; col++){
@@ -55,6 +74,11 @@ public class Model {
         }
         return false;
     }
+    /**
+     * Checks if the game board is full.
+     *
+     * @return True if the board is full, false otherwise
+     */
     public boolean isColumnFull(){
         for (int row = 0; row<ROWS; row++){
             for(int col = 0; col<COLUMNS; col++){
@@ -65,9 +89,17 @@ public class Model {
         }
         return true;
     }
+    /**
+     * Gets the current player.
+     *
+     * @return The current player (PLAYER1 or PLAYER2)
+     */
     public int getCurrentPlayer(){
         return currentPlayer;
     }
+    /**
+     * Changes the current player.
+     */
     public void changeCurrentPlayer(){
         if(currentPlayer==PLAYER1){
             currentPlayer=PLAYER2;
@@ -75,9 +107,19 @@ public class Model {
             currentPlayer=PLAYER1;
         }
     }
+    /**
+     * Gets the chip at the specified row and column on the game board.
+     *
+     * @param row The row index
+     * @param col The column index
+     * @return The value of the chip at the specified position
+     */
     public int getChipAt(int row, int col) {
         return board[row][col];
     }
+    /**
+     * Resets the game board and sets the current player to PLAYER1.
+     */
     public void resetBoard() {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {

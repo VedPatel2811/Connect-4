@@ -24,7 +24,6 @@ public class Header {
      *
      * @return JLabel The customized header label for the Connect-4 game.
      */
-
     public JLabel ConnectHeader(){
         JLabel title = new JLabel();
         title.setText("CONNECT 4");
@@ -33,7 +32,6 @@ public class Header {
         title.setVerticalAlignment(JLabel.TOP);
         title.setForeground(new Color(53,90,155));
         title.setFont(new Font("Calibri", BOLD,90));
-        //myFrame.add(title, BorderLayout.NORTH);
         return title;
     }
 }
