@@ -2,16 +2,9 @@ import javax.swing.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-
 /**
- * MenuBar class for creating a menu bar in a Connect-4 game UI.
- * This class is responsible for creating and managing the menu bar
- * displayed at the top of the game window. It includes menus for
- * file operations, game controls, network settings, language preferences,
- * and help options.
+ *
  */
-
-
 public class MenuBar {
 
     private final GameInfo gameInfo;
@@ -23,26 +16,45 @@ public class MenuBar {
     private JMenu networkMenu;
     private JMenu languageMenu;
     private JMenu helpMenu;
-    private JMenuItem saveItem;
-    private JMenuItem loadItem;
-    private JMenuItem exitItem;
-    private JMenuItem endGameItem;
-    private JMenuItem rulesItem;
-    private JMenuItem connectItem;
-    private JMenuItem frenchItem;
-    private JMenuItem englishItem;
-    private JMenuItem updateItem;
-    private JMenuItem infoItem;
+    public JMenuItem saveItem;
+    public JMenuItem loadItem;
+    public JMenuItem exitItem;
+    public JMenuItem resetGame;
+    public JMenuItem rulesItem;
+    public JMenuItem connectItem;
+    public JMenuItem frenchItem;
+    public JMenuItem englishItem;
+    public JMenuItem updateItem;
+    public JMenuItem infoItem;
+
+    private ImageIcon saveIcon;
+    private ImageIcon loadIcon;
+    private ImageIcon exitIcon;
+    private ImageIcon engIcon;
+    private ImageIcon frIcon;
+
+
     /**
-     * Constructor for MenuBar.
+     *
+     * @param gameInfo
      */
     public MenuBar(GameInfo gameInfo) {
         this.gameInfo = gameInfo;
         currentLocale = Locale.getDefault(); // or set your default Locale
         messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
+
+        saveIcon = new ImageIcon("piciconabt.gif");
+        loadIcon = new ImageIcon("piciconload.gif");
+        exitIcon = new ImageIcon("piciconext.gif");
+        engIcon = new ImageIcon("piciconeng.gif");
+        frIcon = new ImageIcon("piciconfra.gif");
+
         initializeMenus();
     }
 
+    /**
+     *
+     */
     private void initializeMenus() {
         fileMenu = new JMenu();
         gameMenu = new JMenu();
@@ -53,13 +65,20 @@ public class MenuBar {
         saveItem = new JMenuItem();
         loadItem = new JMenuItem();
         exitItem = new JMenuItem();
-        endGameItem = new JMenuItem();
+        resetGame = new JMenuItem();
         rulesItem = new JMenuItem();
         connectItem = new JMenuItem();
         frenchItem = new JMenuItem();
         englishItem = new JMenuItem();
         updateItem = new JMenuItem();
         infoItem = new JMenuItem();
+
+        saveItem = new JMenuItem(messages.getString("save"), saveIcon);
+        loadItem = new JMenuItem(messages.getString("load"), loadIcon);
+        exitItem = new JMenuItem(messages.getString("exit"), exitIcon);
+
+        frenchItem = new JMenuItem(messages.getString("french"), frIcon);
+        englishItem = new JMenuItem(messages.getString("english"), engIcon);
 
         englishItem.addActionListener(e -> {
             switchLanguage("en", "CA");
@@ -73,11 +92,14 @@ public class MenuBar {
         updateTexts();
     }
 
-
+    /**
+     *
+     * @return
+     */
     public JMenuBar createMenuBar() {
         // Assemble your JMenuBar and return it
 
-            // Create a new JMenuBar
+        // Create a new JMenuBar
         JMenuBar menuBar = new JMenuBar();
 
 
@@ -85,7 +107,7 @@ public class MenuBar {
         fileMenu.add(loadItem);
         fileMenu.add(exitItem);
 
-        gameMenu.add(endGameItem);
+        gameMenu.add(resetGame);
         gameMenu.add(rulesItem);
 
         networkMenu.add(connectItem);
@@ -105,7 +127,11 @@ public class MenuBar {
         return menuBar;
     }
 
-
+    /**
+     *
+     * @param languageCode
+     * @param countryCode
+     */
     public void switchLanguage(String languageCode, String countryCode) {
         // Update currentLocale, messages, and call updateTexts()
         currentLocale = new Locale(languageCode, countryCode);
@@ -114,6 +140,9 @@ public class MenuBar {
         gameInfo.updateText();
     }
 
+    /**
+     *
+     */
     private void updateTexts() {
         // Update the texts of all menus and menu items
         fileMenu.setText(messages.getString("file"));
@@ -125,7 +154,7 @@ public class MenuBar {
         saveItem.setText(messages.getString("save"));
         loadItem.setText(messages.getString("load"));
         exitItem.setText(messages.getString("exit"));
-        endGameItem.setText(messages.getString("endGame"));
+        resetGame.setText(messages.getString("resetGame"));
         rulesItem.setText(messages.getString("rules"));
         connectItem.setText(messages.getString("connectPlayer"));
         frenchItem.setText(messages.getString("french"));
@@ -133,14 +162,4 @@ public class MenuBar {
         updateItem.setText(messages.getString("checkForUpdate"));
         infoItem.setText(messages.getString("info"));
     }
-
-
-    /**
-     * Creates and returns a JMenuBar object with all necessary menus and items.
-     * The menu bar includes "File", "Game", "Network", "Language", and "Help" menus,
-     * each containing relevant menu items for the Connect-4 game.
-     *
-     * @return JMenuBar The menu bar with all menus and items added.
-     */
-
 }

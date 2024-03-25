@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.ResourceBundle;
 /**
@@ -17,27 +19,28 @@ public class GameInfo extends JPanel {
     private final String player2Name;
     private final String player1TokenColor;
     private final String player2TokenColor;
-
-
-
     private Locale currentLocale;
     private ResourceBundle messages;
-
     private JLabel roundLabel;
     private JLabel instructionLabel;
-    private JLabel timer1Label;
-    private JLabel timer2Label;
-
-
-    // Class-level label components for Player 1
+    public JLabel timer1Label;
+    public JLabel timer2Label;
     private JLabel nameLabelPlayer1;
     private JLabel winLabelPlayer1;
     private JLabel turnLabelPlayer1;
-
-    //Class-level label components for Player 2
     private JLabel nameLabelPlayer2;
     private JLabel winLabelPlayer2;
     private JLabel turnLabelPlayer2;
+    public int playerTurnTime = 40; // 40 seconds for each player's turn
+    public int gameTime = 240; // 4 minutes for the game
+
+    public int round = 1;
+    private Timer gameTimer; // Timer for game time
+    private int elapsedTime; // Elapsed time in seconds
+
+    private Timer playerTurnTimer; // Timer for game time
+    private int elapsedTime2; // Elapsed time in seconds
+
     /**
      * Constructor for GameInfo.
      */
@@ -59,11 +62,26 @@ public class GameInfo extends JPanel {
         nameLabelPlayer2 = new JLabel();
         winLabelPlayer2 = new JLabel();
         turnLabelPlayer2 = new JLabel();
-
-
         currentLocale = new Locale("en", "CA");
         this.messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
         updateText();
+
+        gameTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                elapsedTime++; // Increment elapsed time by 1 second
+                updateGameTime(elapsedTime); // Update game time label
+            }
+        });
+        gameTimer.start(); // Start the timer
+        playerTurnTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                elapsedTime2++; // Increment elapsed time by 1 second
+                updatePlayerTurnTime(elapsedTime2); // Update game time label
+            }
+        });
+        playerTurnTimer.start(); // Start the timer
     }
 
     // Method to switch to a new locale and update the text
@@ -77,13 +95,13 @@ public class GameInfo extends JPanel {
     public void updateText() {
 
         // Debugging: print the values you're setting to confirm they're correct
-        String roundText = messages.getString("round") + " 1.";
+        String roundText = messages.getString("round") + " "+round;
         roundLabel.setText(roundText);
 
         String instructionText = messages.getString("clickToPlay");
         instructionLabel.setText(instructionText);
 
-        String timerText = messages.getString("timer") + ": 22s";
+        String timerText = messages.getString("timer") + ": " + playerTurnTime + "s";
         timer1Label.setText(timerText);
 
         // Assuming that player names are set separately and should not be updated here
@@ -105,7 +123,7 @@ public class GameInfo extends JPanel {
         String turnTextPlayer2 = messages.getString("player2Turn");
         turnLabelPlayer2.setText(turnTextPlayer2);
 
-        String gameTimeText = messages.getString("gameTime") + " 3m 11s";
+        String gameTimeText = messages.getString("gameTime") + formatTime(gameTime);
         timer2Label.setText(gameTimeText);
 
         // Now refresh the UI
@@ -176,7 +194,7 @@ public class GameInfo extends JPanel {
         nameLabelPlayer1.setForeground(new Color(124, 150, 199));
         nameLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 50));
 
-       // winLabelPlayer1 = new JLabel(messages.getString("player1Wins")); // Set text from ResourceBundle
+        // winLabelPlayer1 = new JLabel(messages.getString("player1Wins")); // Set text from ResourceBundle
         winLabelPlayer1 = new JLabel("Player 1"); // Initialized with default text
         winLabelPlayer1.setForeground(new Color(124, 150, 199));
         winLabelPlayer1.setFont(new Font("Calibri", Font.BOLD, 35));
@@ -215,14 +233,14 @@ public class GameInfo extends JPanel {
 
         //JLabel nameLabel = new JLabel("Ved");
         nameLabelPlayer2 = new JLabel(player2Name);
-       // nameLabelPlayer2 = new JLabel(messages.getString("player2Name")); // Set text from ResourceBundle
+        // nameLabelPlayer2 = new JLabel(messages.getString("player2Name")); // Set text from ResourceBundle
         nameLabelPlayer2.setVerticalTextPosition(JLabel.BOTTOM);
         nameLabelPlayer2.setForeground(new Color(124, 150, 199));
         nameLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 50));
 
         //JLabel winLabel = new JLabel("0 Win");
         winLabelPlayer2 = new JLabel("Player 2");
-       // winLabelPlayer2 = new JLabel(messages.getString("player1Wins")); // Set text from ResourceBundle
+        // winLabelPlayer2 = new JLabel(messages.getString("player1Wins")); // Set text from ResourceBundle
         winLabelPlayer2.setForeground(new Color(124, 150, 199));
         winLabelPlayer2.setFont(new Font("Calibri", Font.BOLD, 35));
 
@@ -253,7 +271,7 @@ public class GameInfo extends JPanel {
 
         //JLabel round = new JLabel();
         //roundLabel.setText("Round 1.");
-        roundLabel = new JLabel("Round 1."); // Default text, will be updated later
+        roundLabel = new JLabel("Round " + round); // Default text, will be updated later
         roundLabel.setHorizontalAlignment(JLabel.LEFT);
         roundLabel.setForeground(new Color(124, 150, 199));
         roundLabel.setFont(new Font("Calibri", Font.BOLD, 40));
@@ -268,14 +286,14 @@ public class GameInfo extends JPanel {
 
         //JLabel timer1 = new JLabel();
         //timer1.setText("Timer: 22s");
-        timer1Label = new JLabel("Timer: 22s"); // Default text, will be updated later
+        timer1Label = new JLabel("Timer: "+playerTurnTime+"s"); // Default text, will be updated later
         timer1Label.setForeground(new Color(124, 150, 199));
         timer1Label.setFont(new Font("Calibri", Font.BOLD, 40));
         timer1Label.setHorizontalAlignment(SwingConstants.LEFT);
 
         //JLabel timer2 = new JLabel();
         //timer2.setText("Game time: 3m 11s");
-        timer2Label = new JLabel("Game time: 3m 11s"); // Default text, will be updated later
+        timer2Label = new JLabel("Game time: " + formatTime(gameTime));// Default text, will be updated later
         timer2Label.setForeground(new Color(124, 150, 199));
         timer2Label.setFont(new Font("Calibri", Font.BOLD, 30));
         timer2Label.setHorizontalAlignment(SwingConstants.LEFT);
@@ -327,4 +345,91 @@ public class GameInfo extends JPanel {
         }
         return playerTokenImage;
     }
+
+    /**
+     * Format the game time in minutes and seconds.
+     */
+    public String formatTime(int seconds) {
+        int minutes = seconds / 60;
+        int remainingSeconds = seconds % 60;
+        return String.format("%dm %ds", minutes, remainingSeconds);
+    }
+
+    public void updateGameTime(int elapsedTime) {
+        int remainingTime = gameTime - elapsedTime;
+        if (remainingTime < 0) {
+            remainingTime = 0; // Ensure the time is non-negative
+            gameTimer.stop(); // Stop the timer if time runs out
+            // Optionally, you can handle end of game logic here
+        }
+        timer2Label.setText("Game time: " + formatTime(remainingTime));
+    }
+
+    public void setTime(int elapsedTime) {
+        this.gameTime = elapsedTime; // Update the game time
+
+        // Update the timer label with the formatted time
+        String gameTimeText = messages.getString("gameTime") + formatTime(gameTime);
+        timer2Label.setText(gameTimeText);
+
+        // Now refresh the UI
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void stopGameTimer() {
+        if (gameTimer != null) {
+            gameTimer.stop();
+        }
+    }
+    public void resetGameTimer(int initialTimeInSeconds) {
+        elapsedTime = 0;
+        if (gameTimer != null) {
+            gameTimer.stop();
+        }
+        gameTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                elapsedTime++; // Increment elapsed time by 1 second
+                updateGameTime(elapsedTime); // Update game time label
+            }
+        });
+        gameTimer.start(); // Start the timer
+    }
+    public void startPlayerTurnTimer() {
+        playerTurnTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                elapsedTime2++; // Increment elapsed time by 1 second
+                updatePlayerTurnTime(elapsedTime2); // Update player turn time label
+            }
+        });
+        playerTurnTimer.start(); // Start the timer
+    }
+
+    public void stopPlayerTurnTimer() {
+        if (playerTurnTimer != null) {
+            playerTurnTimer.stop();
+        }
+    }
+
+    public void resetPlayerTurnTimer(int initialTimeInSeconds) {
+        elapsedTime2 = 0;
+        if (playerTurnTimer != null) {
+            playerTurnTimer.stop();
+        }
+        startPlayerTurnTimer();
+    }
+
+    public void updatePlayerTurnTime(int elapsedTime) {
+        int remainingTime = playerTurnTime - elapsedTime;
+        if (remainingTime < 0) {
+            remainingTime = 0; // Ensure the time is non-negative
+            playerTurnTimer.stop(); // Stop the timer if time runs out
+            // Optionally, you can handle end of turn logic here
+        }
+        timer1Label.setText("Timer: " + remainingTime + "s");
+    }
+
+
 }

@@ -20,8 +20,6 @@ import java.awt.EventQueue;
 
 class ControllableTimer extends Thread
 {
-
-    private final GameBoard board;
     /** Resumes operation. */
     static final int START = 1;
 
@@ -38,7 +36,7 @@ class ControllableTimer extends Thread
     private int elapsed=0;
 
     //Reference to YOUR class.  You may need to change the reference.
-    //View view=null;
+    GameInfo view=null;
 
     /**
      This method permits external control of the timer.
@@ -53,9 +51,9 @@ class ControllableTimer extends Thread
      You may need to edit it.  This is a reference to your class that displays the timer.
      */
 
-    public ControllableTimer (GameBoard board)
+    public ControllableTimer (GameInfo remoteView)
     {
-        this.board = board;
+        view = remoteView;
     }
 
     /**
@@ -131,7 +129,7 @@ class ControllableTimer extends Thread
                 @Override
                 public void run()
                 { 	//setTime method is part of your code.  Either modify this, or add an appropriate convenience method.
-                    board.setTime(++elapsed);
+                    view.setTime(++elapsed);
                 }
             }); //End EventQueue
 
