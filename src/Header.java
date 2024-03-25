@@ -35,5 +35,5 @@ public class Header {
         title.setFont(new Font("Calibri", BOLD,90));
         //myFrame.add(title, BorderLayout.NORTH);
         return title;
-    }
+}
 }

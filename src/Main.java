@@ -14,12 +14,17 @@ public class Main {
         GameInfo gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
         Model model = new Model(); // Create instance of the Connect4Model
         GameBoard myBoard = new GameBoard(model, player1Token, player2Token); // Pass the model to GameBoard
-        Controller controller = new Controller(model, myBoard, gameInfo, startGame); // Create instance of the Connect4Controller
+
+
 
         MenuBar myBar = new MenuBar(gameInfo);
         JMenuBar menuBar = myBar.createMenuBar();
         Header connect4 = new Header();
         ChatBox myChat = new ChatBox();
+
+        Controller controller = new Controller(model, myBoard, gameInfo, startGame, myBar); // Create instance of the Connect4Controller
+        // Inside your main method or where you initialize your game components
+        //GameBoard gameBoard = new GameBoard(model, "Red", "Yellow");
 
         // Set up the main window
         JFrame myFrame = new JFrame();
@@ -45,7 +50,7 @@ public class Main {
         myFrame.add(bottomPanel);
 
         myFrame.setDefaultCloseOperation(myFrame.EXIT_ON_CLOSE);
-        myFrame.setPreferredSize(new Dimension(930, 540));
+        myFrame.setPreferredSize(new Dimension(1920, 1080));
         myFrame.setTitle("CONNECT 4");
         myFrame.getContentPane().setBackground(new Color(143, 170, 220));
         ImageIcon image = new ImageIcon("A12Logo.png");

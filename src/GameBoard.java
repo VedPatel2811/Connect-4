@@ -1,37 +1,41 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * GameBoard class for creating the main game board for a Connect-4 game UI.
- * This class is responsible for setting up the game grid, which includes
- * the layout, background, borders, and individual game cells.
+ * Represents the game board panel where the Connect Four game is displayed and played.
+ * This panel contains the grid layout for the game board and handles UI updates based on the game model.
  */
-
-public class GameBoard {
+public class GameBoard extends JPanel{
     private final Model model;
     private final JPanel basePanel; // Define basePanel here
     private final ImageIcon player1Icon; // Icon for Player 1
     private final ImageIcon player2Icon; // Icon for Player 2
 
+
+
     /**
-     * Constructor for GameBoard.
-     * It calls the MainGameBoard method to initialize the game board.
+     * Constructs a GameBoard object with the specified game model and player tokens.
+     *
+     * @param model        The game model containing the logic for the Connect Four game
+     * @param player1Token The token representing Player 1's game piece
+     * @param player2Token The token representing Player 2's game piece
      */
     GameBoard(Model model,String player1Token, String player2Token) {
         this.model = model;
         this.basePanel = MainGameBoard(); // Initialize basePanel
         this.player1Icon = new ImageIcon(imageCases(player1Token).getImage()); // Load image for Player 1
         this.player2Icon = new ImageIcon(imageCases(player2Token).getImage()); // Load image for Player 2
+
     }
+
+
+
     /**
-     * Creates and returns a JPanel object configured as the main game board for Connect-4.
-     * The method sets up a grid layout for the game, customizes its appearance,
-     * and populates it with buttons representing the game coins.
+     * Creates and returns the main game board panel with a grid layout.
      *
-     * @return JPanel The main game board panel with all game cells added.
+     * @return The main game board panel
      */
     public JPanel MainGameBoard() {
         JPanel basePanel = new JPanel();
@@ -60,10 +64,18 @@ public class GameBoard {
         return basePanel;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getBasePanel() {
         return basePanel;
     }
 
+    /**
+     *
+     * @param listener
+     */
     public void addChipDropListener(ActionListener listener) {
         // Add ActionListener to buttons
         Component[] components = basePanel.getComponents();
@@ -72,6 +84,11 @@ public class GameBoard {
         }
     }
 
+    /**
+     *
+     * @param button
+     * @return
+     */
     public int getColumn(JButton button) {
         // Determine column index from button's position
         Component[] components = basePanel.getComponents();
@@ -83,6 +100,9 @@ public class GameBoard {
         return -1; // Not found
     }
 
+    /**
+     *
+     */
     public void updateBoard() {
         // Update UI based on model
         for (int row = 0; row < 6; row++) {
@@ -97,24 +117,40 @@ public class GameBoard {
         }
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @param icon
+     */
     private void setIconAt(int row, int col, ImageIcon icon) {
         JButton button = (JButton) basePanel.getComponent(row * 7 + col);
         JLabel label = (JLabel) button.getComponent(0);
         label.setIcon(icon);
     }
 
+    /**
+     *
+     * @param player
+     */
     public void showWinner(String player) {
         String message = player + " Wins the game!";
         JOptionPane.showMessageDialog(null, message, "Winner", JOptionPane.INFORMATION_MESSAGE);
         resetBoard();
     }
 
+    /**
+     *
+     */
     public void showDraw() {
         String message = "The Game is Draw!";
         JOptionPane.showMessageDialog(null, message, "Draw", JOptionPane.INFORMATION_MESSAGE);
         resetBoard();
     }
 
+    /**
+     *
+     */
     public void resetBoard() {
         model.resetBoard();
         for (Component component : basePanel.getComponents()) {
@@ -125,6 +161,12 @@ public class GameBoard {
             }
         }
     }
+
+    /**
+     *
+     * @param playerToken
+     * @return
+     */
     private ImageIcon imageCases(String playerToken){
         ImageIcon playerTokenImage = null;
         switch (playerToken){
