@@ -3,40 +3,132 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- *
+ * Represents the menu bar for the Connect Four game application.
+ * This class handles the creation of menu items, switching languages, and updating text based on the current locale.
  */
 public class MenuBar {
 
+    /**
+     * The game information object.
+     */
     private final GameInfo gameInfo;
+
+    /**
+     * The resource bundle for localized messages.
+     */
     private ResourceBundle messages;
+
+    /**
+     * The current locale for language settings.
+     */
     private Locale currentLocale;
 
+    /**
+     * The file menu.
+     */
     private JMenu fileMenu;
+
+    /**
+     * The game menu.
+     */
     private JMenu gameMenu;
+
+    /**
+     * The network menu.
+     */
     private JMenu networkMenu;
+
+    /**
+     * The language menu.
+     */
     private JMenu languageMenu;
+
+    /**
+     * The help menu.
+     */
     private JMenu helpMenu;
+
+    /**
+     * The menu item for saving.
+     */
     public JMenuItem saveItem;
+
+    /**
+     * The menu item for loading.
+     */
     public JMenuItem loadItem;
+
+    /**
+     * The menu item for exiting.
+     */
     public JMenuItem exitItem;
+
+    /**
+     * The menu item for resetting the game.
+     */
     public JMenuItem resetGame;
+
+    /**
+     * The menu item for viewing rules.
+     */
     public JMenuItem rulesItem;
+
+    /**
+     * The menu item for connecting to a network.
+     */
     public JMenuItem connectItem;
+
+    /**
+     * The menu item for selecting French language.
+     */
     public JMenuItem frenchItem;
+
+    /**
+     * The menu item for selecting English language.
+     */
     public JMenuItem englishItem;
+
+    /**
+     * The menu item for updating.
+     */
     public JMenuItem updateItem;
+
+    /**
+     * The menu item for viewing information.
+     */
     public JMenuItem infoItem;
 
-    private ImageIcon saveIcon;
-    private ImageIcon loadIcon;
-    private ImageIcon exitIcon;
-    private ImageIcon engIcon;
-    private ImageIcon frIcon;
+    /**
+     * The icon for the save menu item.
+     */
+    private final ImageIcon saveIcon;
+
+    /**
+     * The icon for the load menu item.
+     */
+    private final ImageIcon loadIcon;
+
+    /**
+     * The icon for the exit menu item.
+     */
+    private final ImageIcon exitIcon;
+
+    /**
+     * The icon for the English language menu item.
+     */
+    private final ImageIcon engIcon;
+
+    /**
+     * The icon for the French language menu item.
+     */
+    private final ImageIcon frIcon;
+
 
 
     /**
+     * Constructs a MenuBar object with the specified game information.
      *
-     * @param gameInfo
+     * @param gameInfo The game information
      */
     public MenuBar(GameInfo gameInfo) {
         this.gameInfo = gameInfo;
@@ -53,7 +145,7 @@ public class MenuBar {
     }
 
     /**
-     *
+     * Initializes the menus and menu items.
      */
     private void initializeMenus() {
         fileMenu = new JMenu();
@@ -93,8 +185,9 @@ public class MenuBar {
     }
 
     /**
+     * Creates and returns the menu bar.
      *
-     * @return
+     * @return The created menu bar
      */
     public JMenuBar createMenuBar() {
         // Assemble your JMenuBar and return it
@@ -128,9 +221,10 @@ public class MenuBar {
     }
 
     /**
+     * Switches the language of the application.
      *
-     * @param languageCode
-     * @param countryCode
+     * @param languageCode The language code
+     * @param countryCode  The country code
      */
     public void switchLanguage(String languageCode, String countryCode) {
         // Update currentLocale, messages, and call updateTexts()
@@ -141,7 +235,7 @@ public class MenuBar {
     }
 
     /**
-     *
+     * Updates the texts of all menus and menu items based on the current locale.
      */
     private void updateTexts() {
         // Update the texts of all menus and menu items

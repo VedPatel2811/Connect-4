@@ -8,10 +8,26 @@ import java.awt.event.ActionListener;
  * This panel contains the grid layout for the game board and handles UI updates based on the game model.
  */
 public class GameBoard extends JPanel{
+    /**
+     * The game model containing the logic for the Connect Four game.
+     */
     private final Model model;
+
+    /**
+     * The base panel of the game board.
+     */
     private final JPanel basePanel; // Define basePanel here
+
+    /**
+     * The icon representing Player 1's game piece.
+     */
     private final ImageIcon player1Icon; // Icon for Player 1
+
+    /**
+     * The icon representing Player 2's game piece.
+     */
     private final ImageIcon player2Icon; // Icon for Player 2
+
 
 
 
@@ -65,16 +81,16 @@ public class GameBoard extends JPanel{
     }
 
     /**
-     *
-     * @return
+     * Retrieves the base panel containing the game board.
+     * @return The base panel containing the game board
      */
     public JPanel getBasePanel() {
         return basePanel;
     }
 
     /**
-     *
-     * @param listener
+     * Adds an ActionListener to all buttons in the game board panel.
+     * @param listener listener The ActionListener to be added
      */
     public void addChipDropListener(ActionListener listener) {
         // Add ActionListener to buttons
@@ -85,9 +101,9 @@ public class GameBoard extends JPanel{
     }
 
     /**
-     *
-     * @param button
-     * @return
+     * Retrieves the column index corresponding to the specified button.
+     * @param button The button whose column index is to be determined
+     * @return The column index of the button, or -1 if not found
      */
     public int getColumn(JButton button) {
         // Determine column index from button's position
@@ -101,7 +117,7 @@ public class GameBoard extends JPanel{
     }
 
     /**
-     *
+     * Updates the game board UI based on the model.
      */
     public void updateBoard() {
         // Update UI based on model
@@ -118,10 +134,10 @@ public class GameBoard extends JPanel{
     }
 
     /**
-     *
-     * @param row
-     * @param col
-     * @param icon
+     * Sets the icon at the specified row and column on the game board.
+     * @param row The row index
+     * @param col The column index
+     * @param icon The icon to be set
      */
     private void setIconAt(int row, int col, ImageIcon icon) {
         JButton button = (JButton) basePanel.getComponent(row * 7 + col);
@@ -130,8 +146,8 @@ public class GameBoard extends JPanel{
     }
 
     /**
-     *
-     * @param player
+     * Displays a message indicating the winner of the game.
+     * @param player The name of the winning player
      */
     public void showWinner(String player) {
         String message = player + " Wins the game!";
@@ -140,7 +156,7 @@ public class GameBoard extends JPanel{
     }
 
     /**
-     *
+     * Displays a message indicating that the game ended in a draw.
      */
     public void showDraw() {
         String message = "The Game is Draw!";
@@ -149,13 +165,14 @@ public class GameBoard extends JPanel{
     }
 
     /**
-     *
+     * Resets the game board by clearing all icons and resetting the game model.
      */
     public void resetBoard() {
         model.resetBoard();
         for (Component component : basePanel.getComponents()) {
             if (component instanceof JButton) {
-                JButton button = (JButton) component;
+                JButton button;
+                button = (JButton) component;
                 JLabel label = (JLabel) button.getComponent(0);
                 label.setIcon(new ImageIcon("A12Blank.png"));
             }
@@ -163,9 +180,9 @@ public class GameBoard extends JPanel{
     }
 
     /**
-     *
-     * @param playerToken
-     * @return
+     * Generates an image icon based on the provided player token.
+     * @param playerToken The player's token
+     * @return The corresponding image icon
      */
     private ImageIcon imageCases(String playerToken){
         ImageIcon playerTokenImage = null;
@@ -193,6 +210,8 @@ public class GameBoard extends JPanel{
                 break;
             case "Black":
                 playerTokenImage = new ImageIcon("A12Black.png");
+                break;
+            default:
                 break;
         }
         return playerTokenImage;

@@ -1,15 +1,39 @@
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * Main class for the Connect 4 game application.
+ * This class contains the main method for launching the game and initializing its components.
+ */
 public class Main {
 
+    /**
+     * Default Constructor
+     */
+    Main(){}
+    /**
+     * Main method to start the Connect 4 game.
+     *
+     * @param args Command-line arguments (not used)
+     */
     public static void main(String[] args) {
 
+        SplashScreen splashScreen = new SplashScreen();
+        splashScreen.showSplashScreen();
         StartGame startGame = new StartGame();
         startGame.StartMenu(startGame);
 
     }
+
+    /**
+     * Starts the main game with specified player names, player tokens, and game components.
+     *
+     * @param name1        The name of player 1
+     * @param name2        The name of player 2
+     * @param player1Token The token for player 1
+     * @param player2Token The token for player 2
+     * @param startGame    The instance of StartGame class
+     */
     public void StartMainGame(String name1, String name2, String player1Token, String player2Token, StartGame startGame){
         GameInfo gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
         Model model = new Model(); // Create instance of the Connect4Model
@@ -23,8 +47,6 @@ public class Main {
         ChatBox myChat = new ChatBox();
 
         Controller controller = new Controller(model, myBoard, gameInfo, startGame, myBar); // Create instance of the Connect4Controller
-        // Inside your main method or where you initialize your game components
-        //GameBoard gameBoard = new GameBoard(model, "Red", "Yellow");
 
         // Set up the main window
         JFrame myFrame = new JFrame();
