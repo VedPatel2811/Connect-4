@@ -76,13 +76,65 @@ public class StartGame implements ActionListener {
      */
     StartGame(){}
 
+    public JFrame StartGameFrame(){
+        JFrame startGame = new JFrame();
+        startGame.getContentPane().setBackground(new Color(143, 170, 220));
+        startGame.setDefaultCloseOperation(startGame.EXIT_ON_CLOSE);
+        startGame.setPreferredSize(new Dimension(300, 205));
+        startGame.setLayout(new FlowLayout());
+
+        Font font = new Font("Calibri", Font.BOLD, 20);
+        JButton offlineOption = new JButton();
+        offlineOption.setPreferredSize(new Dimension(250, 75));
+        offlineOption.setBackground(new Color(53, 90, 155));
+        offlineOption.setFont(font);
+        JButton onlineOption = new JButton();
+        onlineOption.setPreferredSize(new Dimension(250, 75));
+        onlineOption.setBackground(new Color(53, 90, 155));
+        onlineOption.setFont(font);
+        JLabel offlineLabel = new JLabel("Play Offline");
+        offlineLabel.setForeground(Color.YELLOW);
+        offlineLabel.setFont(font);
+        JLabel onlineLabel = new JLabel("Play Online");
+        onlineLabel.setForeground(Color.YELLOW);
+        onlineLabel.setFont(font);
+
+
+        offlineOption.add(offlineLabel);
+        onlineOption.add(onlineLabel);
+
+        offlineOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startGame.dispose();
+                Offline(StartGame.this);
+            }
+        });
+
+        onlineOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startGame.dispose();
+                Online(StartGame.this);
+            }
+        });
+
+        startGame.add(offlineOption);
+        startGame.add(onlineOption);
+
+        startGame.pack();
+        startGame.setVisible(true);
+
+        return startGame;
+    }
+
     /**
      * Displays the start menu for the game.
      *
      * @param startGameClass The instance of the StartGame class
      * @return The JFrame containing the start menu
      */
-    public JFrame StartMenu(StartGame startGameClass){
+    public JFrame Offline(StartGame startGameClass){
         this.startGameClass = startGameClass;
         baseStartPanel = new JFrame();
         baseStartPanel.getContentPane().setBackground(new Color(143, 170, 220));
@@ -119,6 +171,62 @@ public class StartGame implements ActionListener {
         return baseStartPanel;
     }
 
+    public JFrame Online(StartGame startGame){
+        JFrame onlineFrame = new JFrame();
+        onlineFrame.getContentPane().setBackground(new Color(143, 170, 220));
+        onlineFrame.setDefaultCloseOperation(onlineFrame.EXIT_ON_CLOSE);
+        onlineFrame.setPreferredSize(new Dimension(300, 205));
+        onlineFrame.setLayout(new FlowLayout());
+
+        Font font = new Font("Calibri", Font.BOLD, 20);
+        JButton hostButton = new JButton();
+        hostButton.setPreferredSize(new Dimension(250, 75));
+        hostButton.setBackground(new Color(53, 90, 155));
+        hostButton.setFont(font);
+        JButton clientButton = new JButton();
+        clientButton.setPreferredSize(new Dimension(250, 75));
+        clientButton.setBackground(new Color(53, 90, 155));
+        clientButton.setFont(font);
+        JLabel hostLabel = new JLabel("Host The Game");
+        hostLabel.setForeground(Color.YELLOW);
+        hostLabel.setFont(font);
+        JLabel clientLabel = new JLabel("Join the Game");
+        clientLabel.setForeground(Color.YELLOW);
+        clientLabel.setFont(font);
+
+
+        hostButton.add(hostLabel);
+        clientButton.add(clientLabel);
+
+        hostButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onlineFrame.dispose();
+                Offline(StartGame.this);
+            }
+        });
+
+        clientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onlineFrame.dispose();
+                Online(StartGame.this);
+            }
+        });
+
+        onlineFrame.add(hostButton);
+        onlineFrame.add(clientButton);
+
+        onlineFrame.pack();
+        onlineFrame.setVisible(true);
+
+        return onlineFrame;
+    }
+
+    public void HostFrame(){
+
+    }
+
     /**
      * Handle actions performed on components
      * @param e the event to be processed
@@ -150,7 +258,7 @@ public class StartGame implements ActionListener {
      *
      * @return The JTextField for Player 1's name
      */
-    private JTextField Player1Name(){
+    public JTextField Player1Name(){
         JTextField player1Name = new JTextField("Player 1");
         player1Name.setPreferredSize(new Dimension(150, 30));
         player1Name.setBackground(new Color(180,199,231));
@@ -176,7 +284,7 @@ public class StartGame implements ActionListener {
      *
      * @return The JComboBox for selecting Player 1's token color
      */
-    private JComboBox<String> ColorSelection1() {
+    public JComboBox<String> ColorSelection1() {
         JComboBox<String> colorBox = new JComboBox<>(colors.toArray(new String[0]));
         colorBox.setPreferredSize(new Dimension(150, 30));
         colorBox.setBackground(new Color(180,199,231));

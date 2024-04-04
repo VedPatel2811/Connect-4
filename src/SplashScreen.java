@@ -23,6 +23,10 @@ public class SplashScreen extends JWindow {
     private static final int DISPLAY_TIME = 3000;
 
     /**
+     * Default constructor
+     */
+    SplashScreen(){};
+    /**
      * Displays the splash screen with the project title and developer names.
      */
     public void showSplashScreen() {
