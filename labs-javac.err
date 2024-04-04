@@ -1,7 +1,32 @@
-src\Main.java:52: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
+warning: [path] Invalid filename: lib/*
+src\Main.java:74: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
         myFrame.setDefaultCloseOperation(myFrame.EXIT_ON_CLOSE);
                                                 ^
-C:\Users\Siavash\Connect-4\src\GameInfo.java:12: warning: [serial] serializable class GameInfo has no definition of serialVersionUID
+src\StartGame.java:90: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
+        baseStartPanel.setDefaultCloseOperation(baseStartPanel.EXIT_ON_CLOSE);
+                                                              ^
+src\SplashScreen.java:10: warning: [serial] serializable class SplashScreen has no definition of serialVersionUID
+public class SplashScreen extends JWindow {
+       ^
+src\GameInfo.java:153: warning: [deprecation] Locale(String,String) in Locale has been deprecated
+        currentLocale = new Locale("en", "CA");
+                        ^
+src\GameInfo.java:167: warning: [deprecation] Locale(String,String) in Locale has been deprecated
+        this.currentLocale = new Locale(languageCode, countryCode);
+                             ^
+src\GameInfo.java:12: warning: [serial] serializable class GameInfo has no definition of serialVersionUID
 public class GameInfo extends JPanel {
        ^
-2 warnings
+src\GameInfo.java:61: warning: [serial] non-transient instance field of a serializable class declared with a non-serializable type
+    private ResourceBundle messages;
+                           ^
+src\GameBoard.java:10: warning: [serial] serializable class GameBoard has no definition of serialVersionUID
+public class GameBoard extends JPanel{
+       ^
+src\GameBoard.java:14: warning: [serial] non-transient instance field of a serializable class declared with a non-serializable type
+    private final Model model;
+                        ^
+src\MenuBar.java:231: warning: [deprecation] Locale(String,String) in Locale has been deprecated
+        currentLocale = new Locale(languageCode, countryCode);
+                        ^
+11 warnings
