@@ -68,7 +68,7 @@ public class GameBoard extends JPanel{
             gameCoins.setBackground(new Color(68, 114, 196));
             gameCoins.setBorder(null);
             JLabel imageLabel = new JLabel();
-            imageLabel.setIcon(new ImageIcon("A12Blank.png")); // Initially set to "A12Blank.png"
+            imageLabel.setIcon(new ImageIcon("resources/A12Blank.png")); // Initially set to "A12Blank.png"
             imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
             imageLabel.setVerticalAlignment(SwingConstants.CENTER);
             gameCoins.add(imageLabel, BorderLayout.CENTER);
@@ -174,7 +174,7 @@ public class GameBoard extends JPanel{
                 JButton button;
                 button = (JButton) component;
                 JLabel label = (JLabel) button.getComponent(0);
-                label.setIcon(new ImageIcon("A12Blank.png"));
+                label.setIcon(new ImageIcon("resources/A12Blank.png"));
             }
         }
     }
@@ -188,28 +188,28 @@ public class GameBoard extends JPanel{
         ImageIcon playerTokenImage = null;
         switch (playerToken){
             case "Red":
-                playerTokenImage = new ImageIcon("A12Red.png");
+                playerTokenImage = new ImageIcon("resources/A12Red.png");
                 break;
             case "Orange":
-                playerTokenImage = new ImageIcon("A12Orange.png");
+                playerTokenImage = new ImageIcon("resources/A12Orange.png");
                 break;
             case "Green":
-                playerTokenImage = new ImageIcon("A12Green.png");
+                playerTokenImage = new ImageIcon("resources/A12Green.png");
                 break;
             case "Blue":
-                playerTokenImage = new ImageIcon("A12Blue.png");
+                playerTokenImage = new ImageIcon("resources/A12Blue.png");
                 break;
             case "Yellow":
-                playerTokenImage = new ImageIcon("A12Yellow.png");
+                playerTokenImage = new ImageIcon("resources/A12Yellow.png");
                 break;
             case "Pink":
-                playerTokenImage = new ImageIcon("A12Pink.png");
+                playerTokenImage = new ImageIcon("resources/A12Pink.png");
                 break;
             case "Purple":
-                playerTokenImage = new ImageIcon("A12Purple.png");
+                playerTokenImage = new ImageIcon("resources/A12Purple.png");
                 break;
             case "Black":
-                playerTokenImage = new ImageIcon("A12Black.png");
+                playerTokenImage = new ImageIcon("resources/A12Black.png");
                 break;
             default:
                 break;

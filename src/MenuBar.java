@@ -135,11 +135,11 @@ public class MenuBar {
         currentLocale = Locale.getDefault(); // or set your default Locale
         messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
 
-        saveIcon = new ImageIcon("piciconabt.gif");
-        loadIcon = new ImageIcon("piciconload.gif");
-        exitIcon = new ImageIcon("piciconext.gif");
-        engIcon = new ImageIcon("piciconeng.gif");
-        frIcon = new ImageIcon("piciconfra.gif");
+        saveIcon = new ImageIcon("resources/piciconabt.gif");
+        loadIcon = new ImageIcon("resources/piciconload.gif");
+        exitIcon = new ImageIcon("resources/piciconext.gif");
+        engIcon = new ImageIcon("resources/piciconeng.gif");
+        frIcon = new ImageIcon("resources/piciconfra.gif");
 
         initializeMenus();
     }

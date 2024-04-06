@@ -412,28 +412,28 @@ public class GameInfo extends JPanel {
         ImageIcon playerTokenImage = null;
         switch (playerToken){ //"Red", "Orange", "Green", "Blue", "Yellow", "Pink", "Purple", "Black"
             case "Red":
-                playerTokenImage = new ImageIcon("A12Red2.png");
+                playerTokenImage = new ImageIcon("resources/A12Red2.png");
                 break;
             case "Orange":
-                playerTokenImage = new ImageIcon("A12Orange2.png");
+                playerTokenImage = new ImageIcon("resources/A12Orange2.png");
                 break;
             case "Green":
-                playerTokenImage = new ImageIcon("A12Green2.png");
+                playerTokenImage = new ImageIcon("resources/A12Green2.png");
                 break;
             case "Blue":
-                playerTokenImage = new ImageIcon("A12Blue2.png");
+                playerTokenImage = new ImageIcon("resources/A12Blue2.png");
                 break;
             case "Yellow":
-                playerTokenImage = new ImageIcon("A12Yellow2.png");
+                playerTokenImage = new ImageIcon("resources/A12Yellow2.png");
                 break;
             case "Pink":
-                playerTokenImage = new ImageIcon("A12Pink2.png");
+                playerTokenImage = new ImageIcon("resources/A12Pink2.png");
                 break;
             case "Purple":
-                playerTokenImage = new ImageIcon("A12Purple2.png");
+                playerTokenImage = new ImageIcon("resources/A12Purple2.png");
                 break;
             case "Black":
-                playerTokenImage = new ImageIcon("A12Black2.png");
+                playerTokenImage = new ImageIcon("resources/A12Black2.png");
                 break;
         }
         return playerTokenImage;

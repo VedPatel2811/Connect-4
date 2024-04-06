@@ -39,8 +39,6 @@ public class Main {
         Model model = new Model(); // Create instance of the Connect4Model
         GameBoard myBoard = new GameBoard(model, player1Token, player2Token); // Pass the model to GameBoard
 
-
-
         MenuBar myBar = new MenuBar(gameInfo);
         JMenuBar menuBar = myBar.createMenuBar();
         Header connect4 = new Header();
@@ -66,16 +64,20 @@ public class Main {
         bottomPanel.add(myBoard.getBasePanel()); // Use getBasePanel() to get the game board panel
         bottomPanel.add(myChat.MainChatBox());
 
+        // Wrap the bottom panel in a scroll pane
+        JScrollPane scrollPane = new JScrollPane(bottomPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Always show vertical scrollbar
+
         topPanel.add(connect4.ConnectHeader());
         topPanel.add(menuBar, BorderLayout.NORTH);
         myFrame.add(topPanel, BorderLayout.NORTH);
-        myFrame.add(bottomPanel);
+        myFrame.add(scrollPane); // Add scroll pane instead of bottom panel directly
 
         myFrame.setDefaultCloseOperation(myFrame.EXIT_ON_CLOSE);
         myFrame.setPreferredSize(new Dimension(1920, 1080));
         myFrame.setTitle("CONNECT 4");
         myFrame.getContentPane().setBackground(new Color(143, 170, 220));
-        ImageIcon image = new ImageIcon("A12Logo.png");
+        ImageIcon image = new ImageIcon("resources/A12Logo.png");
         myFrame.setIconImage(image.getImage());
         myFrame.pack();
         myFrame.setVisible(true);

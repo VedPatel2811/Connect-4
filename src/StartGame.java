@@ -70,6 +70,23 @@ public class StartGame implements ActionListener {
      */
     private StartGame startGameClass;
 
+    public int hostPort;
+    public int clientPort;
+
+    private JTextField hostPortField;
+    private JTextField clientPortField;
+
+    public JLabel status;
+    public JTextField address;
+    public String hostAddress;
+
+    private JButton hostButton;
+    private JButton clientButton;
+    private JButton cancel;
+    private JFrame clientFrame;
+    private JFrame hostFrame;
+
+
 
     /**
      * Constructs a StartGame object.
@@ -146,7 +163,7 @@ public class StartGame implements ActionListener {
 
         player1Name = Player1Name();
         player2Name = Player2Name();
-        startGame = StartGame();
+        startGame = Button("Start Game");
         player1ColorBox = ColorSelection1();
         player2ColorBox = ColorSelection2();
         startGame.addActionListener(this);
@@ -163,7 +180,7 @@ public class StartGame implements ActionListener {
         baseStartPanel.add(player2ColorBox);
         baseStartPanel.add(startGame);
 
-        ImageIcon image = new ImageIcon("A12Logo.png");
+        ImageIcon image = new ImageIcon("resources/A12Logo.png");
         baseStartPanel.setIconImage(image.getImage());
         baseStartPanel.pack();
         baseStartPanel.setVisible(true);
@@ -202,7 +219,7 @@ public class StartGame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onlineFrame.dispose();
-                Offline(StartGame.this);
+                HostFrame();
             }
         });
 
@@ -210,7 +227,7 @@ public class StartGame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onlineFrame.dispose();
-                Online(StartGame.this);
+                ClientFrame();
             }
         });
 
@@ -224,7 +241,136 @@ public class StartGame implements ActionListener {
     }
 
     public void HostFrame(){
+        hostFrame = new JFrame();
+        hostFrame.getContentPane().setBackground(new Color(143, 170, 220));
+        hostFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        hostFrame.setPreferredSize(new Dimension(300, 250));
 
+        hostFrame.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        player1Name = Player1Name();
+        player1ColorBox = ColorSelection1();
+        player1ColorBox.addActionListener(this);
+        hostPortField = getPort();
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        hostFrame.add(new JLabel("Name: "), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        hostFrame.add(player1Name, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        hostFrame.add(new JLabel("Color: "), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        hostFrame.add(player1ColorBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        hostFrame.add(new JLabel("Port: "), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        hostFrame.add(hostPortField, gbc);
+
+        status = new JLabel("Status: ");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        hostFrame.add(status, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        hostButton = Button("Host");
+        hostButton.addActionListener(this);
+        hostFrame.add(hostButton, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        cancel = Button("Cancel");
+        cancel.addActionListener(this);
+        hostFrame.add(cancel, gbc);
+
+        hostFrame.pack();
+        hostFrame.setVisible(true);
+    }
+
+    public void ClientFrame(){
+        clientFrame = new JFrame();
+        clientFrame.getContentPane().setBackground(new Color(143, 170, 220));
+        clientFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        clientFrame.setPreferredSize(new Dimension(300, 275));
+
+        clientFrame.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        player2Name = Player1Name();
+        player2ColorBox = ColorSelection1();
+        player2ColorBox.addActionListener(this);
+        clientPortField = getPort();
+        address = address();
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        clientFrame.add(new JLabel("Name: "), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        clientFrame.add(player2Name, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        clientFrame.add(new JLabel("Color: "), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        clientFrame.add(player2ColorBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        clientFrame.add(new JLabel("Address: "), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        clientFrame.add(address,gbc);
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        clientFrame.add(new JLabel("Port: "), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        clientFrame.add(clientPortField, gbc);
+
+        status = new JLabel("Status: ");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        clientFrame.add(status, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        clientButton = Button("Connect");
+        clientButton.addActionListener(this);
+        clientFrame.add(clientButton, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        cancel = Button("Cancel");
+        cancel.addActionListener(this);
+        clientFrame.add(cancel, gbc);
+
+        clientFrame.pack();
+        clientFrame.setVisible(true);
     }
 
     /**
@@ -242,6 +388,47 @@ public class StartGame implements ActionListener {
             player2Token=(String) player2ColorBox.getSelectedItem();
             colors.remove(player2Token);
         }
+        if (player1Token == null) {
+            player1Token = "Red"; // Default value if player1Token is still null
+        }
+        if (player2Token == null) {
+            player2Token = "Black"; // Default value if player2Token is still null
+        }
+        if(e.getSource()==hostButton){
+            name1 = player1Name.getText();
+            try {
+                hostPort = Integer.parseInt(hostPortField.getText());
+                hostFrame.dispose();
+            } catch (NumberFormatException ex) {
+                status.setText("Status: Invalid Port");
+            }
+
+        }
+        if(e.getSource()==clientButton){
+            name2 = player2Name.getText();
+
+            try {
+                hostAddress = address.getText();
+                try {
+                    clientPort = Integer.parseInt(clientPortField.getText());
+                    clientFrame.dispose();
+                } catch (NumberFormatException ex) {
+                    status.setText("Status: Invalid Port");
+                }
+            } catch (NumberFormatException ex) {
+                status.setText("Status: Invalid Address");
+            }
+
+
+        }
+        if (e.getSource()==cancel){
+            if(clientFrame!=null){
+                clientFrame.dispose();
+            } else if (hostFrame!=null) {
+                hostFrame.dispose();
+            }
+            StartGameFrame();
+        }
         if(e.getSource()==startGame){
             name1 = player1Name.getText();
             name2 = player2Name.getText();
@@ -251,6 +438,22 @@ public class StartGame implements ActionListener {
             main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass);
 
         }
+    }
+
+    public JTextField address(){
+        JTextField address = new JTextField();
+        address.setPreferredSize(new Dimension(150, 30));
+        address.setBackground(new Color(180,199,231));
+        address.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
+        return address;
+    }
+
+    public JTextField getPort(){
+        JTextField port = new JTextField("9999");
+        port.setPreferredSize(new Dimension(150, 30));
+        port.setBackground(new Color(180,199,231));
+        port.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
+        return port;
     }
 
     /**
@@ -288,8 +491,8 @@ public class StartGame implements ActionListener {
         JComboBox<String> colorBox = new JComboBox<>(colors.toArray(new String[0]));
         colorBox.setPreferredSize(new Dimension(150, 30));
         colorBox.setBackground(new Color(180,199,231));
-        colorBox.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
-        colorBox.setSelectedItem("Red");
+        colorBox.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));colorBox.setSelectedItem("Red");
+        colorBox.setSelectedIndex(0);
         return colorBox;
     }
 
@@ -303,7 +506,7 @@ public class StartGame implements ActionListener {
         colorBox.setPreferredSize(new Dimension(150, 30));
         colorBox.setBackground(new Color(180,199,231));
         colorBox.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
-        colorBox.setSelectedItem("Black");
+        colorBox.setSelectedIndex(7);
         return colorBox;
     }
 
@@ -312,8 +515,8 @@ public class StartGame implements ActionListener {
      *
      * @return The JButton for starting the game
      */
-    private JButton StartGame(){
-        JButton startButton = new JButton("Start Game");
+    private JButton Button(String buttonName){
+        JButton startButton = new JButton(buttonName);
         startButton.setBackground(new Color(53, 90, 156));
         startButton.setForeground(Color.YELLOW);
         startButton.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
