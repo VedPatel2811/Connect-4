@@ -1,17 +1,12 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.IOException;
 
 /**
  * A class representing a chat box GUI component.
  */
 public class ChatBox {
 
-    private JTextArea textArea;
-    private JTextArea chatBox;
-    private Network server;
-    private Network client;
     /**
      * Constructs a new ChatBox instance.
      */
@@ -23,10 +18,7 @@ public class ChatBox {
      * Constructs and returns the main chat box component.
      * @return The main chat box component.
      */
-    public JLayeredPane MainChatBox(Network server, Network client){
-        this.server=server;
-        this.client=client;
-
+    public JLayeredPane MainChatBox(){
         // Create a layered pane to hold different components
         JLayeredPane baseChatLayer = new JLayeredPane();
         baseChatLayer.setLayout(new FlowLayout());
@@ -44,14 +36,12 @@ public class ChatBox {
         savedChatPanel.setBackground(new Color(143,170,220));
 
         // Example saved chat text
-        textArea = new JTextArea();
-        textArea.setEditable(false); // Disable editing of chat history
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        JLabel textArea = new JLabel();
+        textArea.setText("<html>Steve had played column 3. <br> Ved had played column 4.</html>");
         savedChatPanel.add(textArea);
 
         // Text area for new messages
-        chatBox = new JTextArea("Chat");
+        JTextArea chatBox = new JTextArea("Chat");
         chatBox.setPreferredSize(new Dimension(305,50));
         chatBox.setBackground(Color.white);
         chatBox.setBorder(BorderFactory.createLineBorder(new Color(68,114,196),5));
@@ -59,12 +49,8 @@ public class ChatBox {
         // Button to send messages
         JButton sendButton = new JButton("Send");
         sendButton.setBackground(Color.red);
-        sendButton.setPreferredSize(new Dimension(80, 50));
-        sendButton.setBorder(BorderFactory.createLineBorder(new Color(68, 114, 196), 5));
-        sendButton.addActionListener(e -> {
-            sendMessage(chatBox.getText());
-            chatBox.setText("");
-        });
+        sendButton.setPreferredSize(new Dimension(80,50));
+        sendButton.setBorder(BorderFactory.createLineBorder(new Color(68,114,196),5));
 
         // Add components to the base panel
         basePanel.add(savedChatPanel);
@@ -77,31 +63,4 @@ public class ChatBox {
         return baseChatLayer;
     }
 
-    public void sendMessage(String message) {
-        if (!message.isEmpty()) {
-            if (server != null) {
-                server.sendMessage(message);
-            } else if (client != null) {
-                client.sendMessage(message);
-            }
-            appendMessage("You: " + message);
-        }
-    }
-
-    public void receiveMessage() {
-        String message;
-        if (server != null) {
-            message = server.receiveMessage();
-        } else {
-            message = client.receiveMessage();
-        }
-        appendMessage("Opponent: " + message);
-    }
-
-    public void appendMessage(String message) {
-        SwingUtilities.invokeLater(() -> {
-            textArea.append(message + "\n");
-            textArea.setCaretPosition(textArea.getDocument().getLength()); // Scroll to the bottom
-        });
-    }
 }

@@ -34,7 +34,7 @@ public class Main {
      * @param player2Token The token for player 2
      * @param startGame    The instance of StartGame class
      */
-    public void StartMainGame(String name1, String name2, String player1Token, String player2Token, StartGame startGame, ChatBox myChat, Server server, Client client) {
+    public void StartMainGame(String name1, String name2, String player1Token, String player2Token, StartGame startGame){
         GameInfo gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
         Model model = new Model(); // Create instance of the Connect4Model
         GameBoard myBoard = new GameBoard(model, player1Token, player2Token); // Pass the model to GameBoard
@@ -42,12 +42,9 @@ public class Main {
         MenuBar myBar = new MenuBar(gameInfo);
         JMenuBar menuBar = myBar.createMenuBar();
         Header connect4 = new Header();
+        ChatBox myChat = new ChatBox();
 
-        // Create instances of Network for server and client
-        Network networkServer = new Network(server.clientSocket, true, model, myChat);
-        Network networkClient = new Network(client.socket, false, model, myChat);
-
-        Controller controller = new Controller(model, myBoard, gameInfo, startGame, myBar, networkServer, networkClient); // Pass network instances to the controller
+        Controller controller = new Controller(model, myBoard, gameInfo, startGame, myBar); // Create instance of the Connect4Controller
 
         // Set up the main window
         JFrame myFrame = new JFrame();
@@ -65,7 +62,7 @@ public class Main {
 
         bottomPanel.add(gameInfo.GameInfoPanel());
         bottomPanel.add(myBoard.getBasePanel()); // Use getBasePanel() to get the game board panel
-        bottomPanel.add(myChat.MainChatBox(networkServer, networkClient));
+        bottomPanel.add(myChat.MainChatBox());
 
         // Wrap the bottom panel in a scroll pane
         JScrollPane scrollPane = new JScrollPane(bottomPanel);
@@ -87,5 +84,4 @@ public class Main {
 
         myBoard.addChipDropListener(controller.new PlaceToken());
     }
-
 }

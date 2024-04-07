@@ -72,7 +72,7 @@ public class Network {
                 break;
             case 4:
                 // Process chat message
-                chatBox.appendMessage(data); // Update chat box with received message
+                //chatBox.appendMessage(data); // Update chat box with received message
                 break;
             // Add cases for other protocols as needed
             default:

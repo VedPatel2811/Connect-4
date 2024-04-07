@@ -1,60 +1,35 @@
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server {
     private ServerSocket serverSocket;
-    public Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
-    private ChatBox chatBox;
+    private Socket clientSocket;
+    private int port;
 
-    public Server(int port, ChatBox chatBox) {
+    public Server(int port) {
+        this.port = port;
+    }
+
+    public void startServer() {
         try {
             serverSocket = new ServerSocket(port);
-            chatBox.appendMessage("Waiting for client to connect...");
-            clientSocket = serverSocket.accept();
-            chatBox.appendMessage("Client connected!");
-
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-            this.chatBox = chatBox;
-            startListening();
+            System.out.println("Server started. Waiting for client to connect...");
+            clientSocket = serverSocket.accept(); // Waits for client connection
+            System.out.println("Client connected.");
         } catch (IOException e) {
-            chatBox.appendMessage("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void sendMessage(String message) {
-        out.println(message);
+    public Socket getClientSocket() {
+        return clientSocket;
     }
 
-    public String receiveMessage() throws IOException {
-        return in.readLine();
-    }
-
-    public void startListening() {
-        new Thread(() -> {
-            try {
-                while (true) {
-                    String message = receiveMessage();
-                    chatBox.sendMessage(message);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
-    public void close() {
+    public void closeServer() {
         try {
-            in.close();
-            out.close();
-            clientSocket.close();
             serverSocket.close();
         } catch (IOException e) {
-            chatBox.appendMessage("Error closing server: " + e.getMessage());
             e.printStackTrace();
         }
     }
