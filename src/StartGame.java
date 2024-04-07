@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -85,13 +87,18 @@ public class StartGame implements ActionListener {
     private JButton cancel;
     private JFrame clientFrame;
     private JFrame hostFrame;
-
-
+    private Main main;
+    private ChatBox chatBox;
+    private Server server;
+    private Client client;
 
     /**
      * Constructs a StartGame object.
      */
-    StartGame(){}
+    StartGame(){
+        main = new Main();
+        chatBox = new ChatBox();
+    }
 
     public JFrame StartGameFrame(){
         JFrame startGame = new JFrame();
@@ -244,7 +251,7 @@ public class StartGame implements ActionListener {
         hostFrame = new JFrame();
         hostFrame.getContentPane().setBackground(new Color(143, 170, 220));
         hostFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        hostFrame.setPreferredSize(new Dimension(300, 250));
+        hostFrame.setPreferredSize(new Dimension(400, 250));
 
         hostFrame.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -280,9 +287,9 @@ public class StartGame implements ActionListener {
         gbc.gridy = 2;
         hostFrame.add(hostPortField, gbc);
 
-        status = new JLabel("Status: ");
         gbc.gridx = 0;
         gbc.gridy = 3;
+        status = new JLabel("Status: ");
         hostFrame.add(status, gbc);
 
         gbc.gridx = 0;
@@ -305,7 +312,7 @@ public class StartGame implements ActionListener {
         clientFrame = new JFrame();
         clientFrame.getContentPane().setBackground(new Color(143, 170, 220));
         clientFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        clientFrame.setPreferredSize(new Dimension(300, 275));
+        clientFrame.setPreferredSize(new Dimension(400, 275));
 
         clientFrame.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -352,9 +359,9 @@ public class StartGame implements ActionListener {
         gbc.gridy = 3;
         clientFrame.add(clientPortField, gbc);
 
-        status = new JLabel("Status: ");
         gbc.gridx = 0;
         gbc.gridy = 4;
+        status = new JLabel("Status: ");
         clientFrame.add(status, gbc);
 
         gbc.gridx = 0;
@@ -394,32 +401,31 @@ public class StartGame implements ActionListener {
         if (player2Token == null) {
             player2Token = "Black"; // Default value if player2Token is still null
         }
-        if(e.getSource()==hostButton){
+        if (e.getSource() == hostButton) {
             name1 = player1Name.getText();
             try {
                 hostPort = Integer.parseInt(hostPortField.getText());
-                hostFrame.dispose();
+                server = new Server(hostPort, chatBox);
+                connectedStartGame();
             } catch (NumberFormatException ex) {
                 status.setText("Status: Invalid Port");
             }
-
         }
-        if(e.getSource()==clientButton){
-            name2 = player2Name.getText();
 
+        if (e.getSource() == clientButton) {
+            name2 = player2Name.getText();
             try {
                 hostAddress = address.getText();
                 try {
                     clientPort = Integer.parseInt(clientPortField.getText());
-                    clientFrame.dispose();
+                    client = new Client(hostAddress, clientPort, chatBox);
+                    connectedStartGame();
                 } catch (NumberFormatException ex) {
                     status.setText("Status: Invalid Port");
                 }
             } catch (NumberFormatException ex) {
                 status.setText("Status: Invalid Address");
             }
-
-
         }
         if (e.getSource()==cancel){
             if(clientFrame!=null){
@@ -434,14 +440,18 @@ public class StartGame implements ActionListener {
             name2 = player2Name.getText();
 
             baseStartPanel.dispose();
-            Main main = new Main();
-            main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass);
+
+            main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass, chatBox,null, null);
 
         }
     }
 
+    private void connectedStartGame(){
+        main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass, chatBox,server, client);
+    }
+
     public JTextField address(){
-        JTextField address = new JTextField();
+        JTextField address = new JTextField("localhost");
         address.setPreferredSize(new Dimension(150, 30));
         address.setBackground(new Color(180,199,231));
         address.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
@@ -449,7 +459,7 @@ public class StartGame implements ActionListener {
     }
 
     public JTextField getPort(){
-        JTextField port = new JTextField("9999");
+        JTextField port = new JTextField("4999");
         port.setPreferredSize(new Dimension(150, 30));
         port.setBackground(new Color(180,199,231));
         port.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));

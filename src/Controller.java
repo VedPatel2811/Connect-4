@@ -16,6 +16,8 @@ public class Controller {
 
     private Timer playerTurnTimer; // Timer for game time
     private int elapsedTime2; // Elapsed time in seconds
+    private Network networkServer;
+    private Network networkClient;
 
     /**
      * Constructs a Controller object with references to various components.
@@ -26,11 +28,13 @@ public class Controller {
      * @param startGame The start game view.
      * @param menuBar   The menu bar view.
      */
-    public Controller(Model model, GameBoard view, GameInfo gameInfo, StartGame startGame, MenuBar menuBar){
+    public Controller(Model model, GameBoard view, GameInfo gameInfo, StartGame startGame, MenuBar menuBar, Network networkServer, Network networkClient){
         this.model = model;
         this.view = view;
         this.gameInfo = gameInfo;
         this.startGame = startGame;
+        this.networkClient = networkClient;
+        this.networkServer=networkServer;
 
         // Initialize menu bar actions
         menuBar.exitItem.addActionListener(new ExitButtonListener());

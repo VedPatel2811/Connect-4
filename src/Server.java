@@ -1,35 +1,61 @@
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
 
 public class Server {
     private ServerSocket serverSocket;
-    private Socket clientSocket;
-    private int port;
+    public Socket clientSocket;
+    private PrintWriter out;
+    private BufferedReader in;
+    private ChatBox chatBox;
 
-    public Server(int port){
-
+    public Server(int port, ChatBox chatBox) {
         try {
             serverSocket = new ServerSocket(port);
-            System.out.println("Sever is running" + port);
+            chatBox.appendMessage("Waiting for client to connect...");
+            clientSocket = serverSocket.accept();
+            chatBox.appendMessage("Client connected!");
+
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+            this.chatBox = chatBox;
+            startListening();
         } catch (IOException e) {
-            System.out.println("Could not listen on port " + port);
-            System.exit(-1);
+            chatBox.appendMessage("Error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public void start(){
+    public void sendMessage(String message) {
+        out.println(message);
+    }
 
-        while (true) {
+    public String receiveMessage() throws IOException {
+        return in.readLine();
+    }
+
+    public void startListening() {
+        new Thread(() -> {
             try {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("A client has connected.");
-                // Create a new thread for each client (or use a thread pool for efficiency)
-                //new Thread(new Server(clientSocket)).start();
+                while (true) {
+                    String message = receiveMessage();
+                    chatBox.sendMessage(message);
+                }
             } catch (IOException e) {
-                System.out.println("Accept failed.");
-                System.exit(-1);
+                e.printStackTrace();
             }
+        }).start();
+    }
+
+    public void close() {
+        try {
+            in.close();
+            out.close();
+            clientSocket.close();
+            serverSocket.close();
+        } catch (IOException e) {
+            chatBox.appendMessage("Error closing server: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
