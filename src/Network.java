@@ -10,13 +10,16 @@ public class Network {
     private BufferedReader in;
     private boolean isServer;
     private Model model;
-    private ChatBox chatBox;
+    public ChatBox chatBox;
+    private StartGame startGame;
 
-    public Network(Socket socket, boolean isServer, Model model, ChatBox chatBox) {
+    public Network(Socket socket, boolean isServer, Model model, StartGame startGame) {
         this.socket = socket;
         this.isServer = isServer;
         this.model = model;
-        this.chatBox = chatBox;
+        chatBox = new ChatBox(this);
+        startGame.chatBox=chatBox;
+        this.startGame = startGame;
         try {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -63,8 +66,11 @@ public class Network {
                 // Notify model or view about disconnection
                 break;
             case 2:
-                // Process player identification message
-                // Update player name in model or view
+                if (isServer) {
+                    startGame.name2=data;
+                } else {
+                    startGame.name1=data;
+                }
                 break;
             case 3:
                 // Process move message
@@ -72,9 +78,14 @@ public class Network {
                 break;
             case 4:
                 // Process chat message
-                //chatBox.appendMessage(data); // Update chat box with received message
+                chatBox.appendMessage("Opponent: "+data); // Update chat box with received message
                 break;
-            // Add cases for other protocols as needed
+            case 5:
+                if(isServer){
+                    startGame.player2Token=data;
+                }else {
+                    startGame.player1Token=data;
+                }
             default:
                 // Handle unknown protocol
         }

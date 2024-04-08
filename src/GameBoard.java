@@ -212,6 +212,7 @@ public class GameBoard extends JPanel{
                 playerTokenImage = new ImageIcon("resources/A12Black.png");
                 break;
             default:
+
                 break;
         }
         return playerTokenImage;

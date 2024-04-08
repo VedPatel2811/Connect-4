@@ -13,22 +13,22 @@ public class StartGame implements ActionListener {
     /**
      * The token selected for Player 1.
      */
-    private String player1Token;
+    public String player1Token;
 
     /**
      * The token selected for Player 2.
      */
-    private String player2Token;
+    public String player2Token;
 
     /**
      * The name entered for Player 1.
      */
-    private String name1;
+    public String name1;
 
     /**
      * The name entered for Player 2.
      */
-    private String name2;
+    public String name2;
 
     /**
      * The button to start the game.
@@ -87,13 +87,19 @@ public class StartGame implements ActionListener {
     private JFrame hostFrame;
     private Server gameServer;
     private Client gameClient;
+    public Network network;
+    public Model model;
+    public ChatBox chatBox;
 
 
 
     /**
      * Constructs a StartGame object.
      */
-    StartGame(){}
+    StartGame(){
+        model = new Model();
+
+    }
 
     public JFrame StartGameFrame(){
         JFrame startGame = new JFrame();
@@ -314,8 +320,8 @@ public class StartGame implements ActionListener {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(5, 5, 5, 5);
 
-        player2Name = Player1Name();
-        player2ColorBox = ColorSelection1();
+        player2Name = Player2Name();
+        player2ColorBox = ColorSelection2();
         player2ColorBox.addActionListener(this);
         clientPortField = getPort();
         address = address();
@@ -383,25 +389,29 @@ public class StartGame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==player1ColorBox){
             player1Token=(String) player1ColorBox.getSelectedItem();
-            colors.remove(player1Token);
+            //colors.remove(player1Token);
             //player2ColorBox.setModel(new DefaultComboBoxModel<>(colors.toArray(new String[0])));
         }
         if(e.getSource()==player2ColorBox){
             player2Token=(String) player2ColorBox.getSelectedItem();
-            colors.remove(player2Token);
+            //colors.remove(player2Token);
         }
-        if (player1Token == null) {
-            player1Token = "Red"; // Default value if player1Token is still null
-        }
-        if (player2Token == null) {
-            player2Token = "Black"; // Default value if player2Token is still null
-        }
+
         if(e.getSource()==hostButton){
             name1 = player1Name.getText();
             try {
                 hostPort = Integer.parseInt(hostPortField.getText());
-                startServer();
+                gameServer = new Server(hostPort, this);
+                gameServer.startServer();
                 hostFrame.dispose();
+                Main main = new Main();
+                if(player1Token==null){
+                    player1Token="Red";
+                }
+                if(player2Token==null){
+                    player2Token="Black";
+                }
+                main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass, model, chatBox);
             } catch (NumberFormatException ex) {
                 status.setText("Status: Invalid Port");
             }
@@ -414,16 +424,24 @@ public class StartGame implements ActionListener {
                 hostAddress = address.getText();
                 try {
                     clientPort = Integer.parseInt(clientPortField.getText());
-                    connectToServer();
+                    gameClient = new Client(hostAddress, clientPort, this);
+                    gameClient.connectToServer();
                     clientFrame.dispose();
+                    Main main = new Main();
+                    if(player1Token==null){
+                        player1Token="Red";
+                    }
+                    if(player2Token==null){
+                        player2Token="Black";
+                    }
+
+                    main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass, model, chatBox);
                 } catch (NumberFormatException ex) {
                     status.setText("Status: Invalid Port");
                 }
             } catch (NumberFormatException ex) {
                 status.setText("Status: Invalid Address");
             }
-
-
         }
         if (e.getSource()==cancel){
             if(clientFrame!=null){
@@ -436,15 +454,16 @@ public class StartGame implements ActionListener {
         if(e.getSource()==startGame){
             name1 = player1Name.getText();
             name2 = player2Name.getText();
-
+            if (player1Token == null) {
+                player1Token = "Red"; // Default value if player1Token is still null
+            }
+            if (player2Token == null) {
+                player2Token = "Black"; // Default value if player2Token is still null
+            }
             baseStartPanel.dispose();
             Main main = new Main();
-            main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass);
+            main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass, model, chatBox);
 
-        }
-        if (e.getSource() == hostButton || e.getSource() == clientButton) {
-            Main main = new Main();
-            main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass);
         }
     }
 
@@ -532,32 +551,13 @@ public class StartGame implements ActionListener {
         return startButton;
     }
 
-    /**
-     * Gets the name of Player 1.
-     *
-     * @return The name of Player 1
-     */
-    public String getName1() {
-        return name1;
-    }
-
-    /**
-     * Gets the name of Player 2.
-     *
-     * @return The name of Player 2
-     */
-    public String getName2() {
-        return name2;
-    }
 
     public void startServer() {
-        gameServer = new Server(hostPort);
-        gameServer.startServer();
+
     }
 
     public void connectToServer() {
-        gameClient = new Client(hostAddress, clientPort);
-        gameClient.connectToServer();
+
     }
 
     public void closeServer() {
@@ -571,5 +571,4 @@ public class StartGame implements ActionListener {
             gameClient.closeConnection();
         }
     }
-
 }
