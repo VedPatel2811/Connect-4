@@ -211,9 +211,9 @@ public class Controller {
                 if (model.checkForWinner()) {
                     int currentPlayer = model.getCurrentPlayer();
                     if(currentPlayer == 1) {
-                        view.showWinner(startGame.getName1());
+                        view.showWinner(startGame.name1);
                     } else {
-                        view.showWinner(startGame.getName2());
+                        view.showWinner(startGame.name2);
                     }
                     gameInfo.getPlayer1TurnLabel().setForeground(Color.YELLOW);
                     gameInfo.getPlayer2TurnLabel().setForeground(new Color(32,56,100));
