@@ -195,6 +195,7 @@ public class StartGame implements ActionListener {
         clientLabel.setFont(font);
 
 
+
         hostButton.add(hostLabel);
         clientButton.add(clientLabel);
 
