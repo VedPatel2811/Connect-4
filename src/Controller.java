@@ -13,6 +13,7 @@ public class Controller {
     private final StartGame startGame;
     private Timer gameTimer; // Timer for game time
     private int elapsedTime; // Elapsed time in seconds
+
     private Timer playerTurnTimer; // Timer for game time
     private int elapsedTime2; // Elapsed time in seconds
 

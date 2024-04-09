@@ -1,13 +1,19 @@
 warning: [path] Invalid filename: lib/*
-src\Main.java:74: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
+src\Main.java:76: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
         myFrame.setDefaultCloseOperation(myFrame.EXIT_ON_CLOSE);
                                                 ^
-src\StartGame.java:90: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
+src\StartGame.java:107: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
+        startGame.setDefaultCloseOperation(startGame.EXIT_ON_CLOSE);
+                                                    ^
+src\StartGame.java:167: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
         baseStartPanel.setDefaultCloseOperation(baseStartPanel.EXIT_ON_CLOSE);
                                                               ^
-src\SplashScreen.java:10: warning: [serial] serializable class SplashScreen has no definition of serialVersionUID
-public class SplashScreen extends JWindow {
-       ^
+src\StartGame.java:202: warning: [static] static variable should be qualified by type name, WindowConstants, instead of by an expression
+        onlineFrame.setDefaultCloseOperation(onlineFrame.EXIT_ON_CLOSE);
+                                                        ^
+src\Network.java:89: warning: [fallthrough] possible fall-through into case
+            default:
+            ^
 src\GameInfo.java:153: warning: [deprecation] Locale(String,String) in Locale has been deprecated
         currentLocale = new Locale("en", "CA");
                         ^
@@ -29,4 +35,4 @@ src\GameBoard.java:14: warning: [serial] non-transient instance field of a seria
 src\MenuBar.java:231: warning: [deprecation] Locale(String,String) in Locale has been deprecated
         currentLocale = new Locale(languageCode, countryCode);
                         ^
-11 warnings
+13 warnings

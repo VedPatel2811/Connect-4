@@ -33,5 +33,5 @@ public class Header {
         title.setForeground(new Color(53,90,155));
         title.setFont(new Font("Calibri", BOLD,90));
         return title;
-}
+    }
 }

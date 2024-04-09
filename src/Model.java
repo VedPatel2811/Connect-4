@@ -16,7 +16,7 @@ public class Model {
      * Initializes the game board and sets the current player to PLAYER1.
      */
     public Model(){
-        board = new int[ROWS][COLUMNS]; /*  new method */
+        board = new int[ROWS][COLUMNS];
         currentPlayer = PLAYER1;
     }
     /**

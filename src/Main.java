@@ -36,7 +36,7 @@ public class Main {
      */
     public void StartMainGame(String name1, String name2, String player1Token, String player2Token, StartGame startGame, Model model, ChatBox myChat){
         GameInfo gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
-         // Create instance of the Connect4Model
+        // Create instance of the Connect4Model
         GameBoard myBoard = new GameBoard(model, player1Token, player2Token); // Pass the model to GameBoard
 
         MenuBar myBar = new MenuBar(gameInfo);
