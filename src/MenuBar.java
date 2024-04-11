@@ -76,7 +76,11 @@ public class MenuBar {
     /**
      * The menu item for connecting to a network.
      */
+    public JMenuItem hostItem;
+
     public JMenuItem connectItem;
+
+    public JMenuItem disconnectItem;
 
     /**
      * The menu item for selecting French language.
@@ -159,7 +163,9 @@ public class MenuBar {
         exitItem = new JMenuItem();
         resetGame = new JMenuItem();
         rulesItem = new JMenuItem();
-        connectItem = new JMenuItem();
+        hostItem = new JMenuItem();
+        connectItem=new JMenuItem();
+        disconnectItem=new JMenuItem();
         frenchItem = new JMenuItem();
         englishItem = new JMenuItem();
         updateItem = new JMenuItem();
@@ -203,7 +209,9 @@ public class MenuBar {
         gameMenu.add(resetGame);
         gameMenu.add(rulesItem);
 
+        networkMenu.add(hostItem);
         networkMenu.add(connectItem);
+        networkMenu.add(disconnectItem);
 
         languageMenu.add(frenchItem);
         languageMenu.add(englishItem);
@@ -250,7 +258,11 @@ public class MenuBar {
         exitItem.setText(messages.getString("exit"));
         resetGame.setText(messages.getString("resetGame"));
         rulesItem.setText(messages.getString("rules"));
-        connectItem.setText(messages.getString("connectPlayer"));
+
+        hostItem.setText(messages.getString("host"));
+        connectItem.setText(messages.getString("connect"));
+        disconnectItem.setText(messages.getString("disconnect"));
+
         frenchItem.setText(messages.getString("french"));
         englishItem.setText(messages.getString("english"));
         updateItem.setText(messages.getString("checkForUpdate"));

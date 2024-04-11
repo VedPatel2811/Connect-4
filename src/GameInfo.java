@@ -53,7 +53,7 @@ public class GameInfo extends JPanel {
     /**
      * The current locale used for localization.
      */
-    private Locale currentLocale;
+    public Locale currentLocale;
 
     /**
      * Resource bundle for internationalization.

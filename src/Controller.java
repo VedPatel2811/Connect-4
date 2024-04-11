@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
+
 /**
  * Controller class responsible for handling user interactions and game logic.
  */
@@ -42,7 +44,9 @@ public class Controller {
         menuBar.infoItem.addActionListener(new GameInfoListener());
         menuBar.saveItem.addActionListener(new NextUpdate());
         menuBar.loadItem.addActionListener(new NextUpdate());
-        menuBar.connectItem.addActionListener(new NextUpdate());
+        menuBar.hostItem.addActionListener(new HostGame());
+        menuBar.connectItem.addActionListener(new ConnectGame());
+        menuBar.disconnectItem.addActionListener(new DisconnectGame());
 
         // Initialize game timer
         gameTimer = new Timer(1000, new ActionListener() {
@@ -73,10 +77,40 @@ public class Controller {
         playerTurnTimer.start(); // Start the timer
     }
 
+    class HostGame implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            network.sendMessage("1#0");
+            startGame.main.myFrame.dispose();
+            startGame.HostFrame();
+        }
+
+    }
+
+    class ConnectGame implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            network.sendMessage("1#0");
+            startGame.main.myFrame.dispose();
+            startGame.ClientFrame();
+        }
+
+    }
+
+    class DisconnectGame implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            network.sendMessage("1#0");
+            startGame.main.myFrame.dispose();
+            System.exit(0);
+        }
+
+    }
+
     /**
      * ActionListener for the exit button.
      */
-    static class ExitButtonListener implements ActionListener {
+    class ExitButtonListener implements ActionListener {
         /**
          * Show confirmation dialog
          * @param e the event to be processed
@@ -87,6 +121,7 @@ public class Controller {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the game?",
                     "Exit Game", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
+                network.sendMessage("1#0");
                 System.exit(0);
             }
         }
@@ -133,16 +168,21 @@ public class Controller {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the game?",
                     "Exit Game", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
-                view.resetBoard();
-                gameInfo.getPlayer1TurnLabel().setForeground(Color.YELLOW);
-                gameInfo.getPlayer2TurnLabel().setForeground(new Color(32,56,100));
-                gameInfo.updateText();
-                stopGameTimer(); // Stop the old timer
-                resetGameTimer(); // Reset game timer to 4 minutes
-                stopPlayerTurnTimer();
-                resetPlayerTurnTimer();
+                network.sendMessage("6#0");
+                resetGame();
             }
         }
+    }
+
+    public void resetGame(){
+        view.resetBoard();
+        gameInfo.getPlayer1TurnLabel().setForeground(Color.YELLOW);
+        gameInfo.getPlayer2TurnLabel().setForeground(new Color(32,56,100));
+        gameInfo.updateText();
+        stopGameTimer(); // Stop the old timer
+        resetGameTimer(); // Reset game timer to 4 minutes
+        stopPlayerTurnTimer();
+        resetPlayerTurnTimer();
     }
 
     /**
@@ -343,7 +383,12 @@ public class Controller {
             resetPlayerTurnTimer();
 
         }
-        gameInfo.timer2Label.setText("Game time: " + gameInfo.formatTime(remainingTime));
+        if(gameInfo.currentLocale.getLanguage().equals("en")){
+            gameInfo.timer2Label.setText("Game time: " + gameInfo.formatTime(remainingTime));
+        }else {
+            gameInfo.timer2Label.setText("Temps de jeu: " + gameInfo.formatTime(remainingTime));
+        }
+
     }
 
     /**
@@ -363,6 +408,11 @@ public class Controller {
             model.changeCurrentPlayer(); // Change the player turn
             resetPlayerTurnTimer();
         }
-        gameInfo.timer1Label.setText("Timer: " + remainingTime + "s");
+        if(gameInfo.currentLocale.getLanguage().equals("en")){
+            gameInfo.timer1Label.setText("Timer: " + remainingTime + "s");
+        }else {
+            gameInfo.timer1Label.setText("Minuteur: " + remainingTime + "s");
+        }
+
     }
 }

@@ -85,14 +85,15 @@ public class StartGame implements ActionListener {
     private JButton cancel;
     private JFrame clientFrame;
     private JFrame hostFrame;
-    private Server gameServer;
-    private Client gameClient;
+    public Server gameServer;
+    public Client gameClient;
     public Model model;
     public ChatBox chatBox;
     public GameBoard myBoard;
     public GameInfo gameInfo;
     public MenuBar myBar;
     public Controller controller;
+    public Main main;
 
 
 
@@ -323,7 +324,7 @@ public class StartGame implements ActionListener {
                     @Override
                     protected void done() {
                         hostFrame.dispose();
-                        Main main = new Main();
+                        main = new Main();
                         if (player1Token == null) {
                             player1Token = "Red";
                         }
@@ -334,7 +335,7 @@ public class StartGame implements ActionListener {
                         gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
                         myBar = new MenuBar(gameInfo);
                         controller = new Controller(model, myBoard, gameInfo, instance, myBar, gameServer.network);
-                        main.StartMainGame(myBoard, gameInfo, controller, myBar, chatBox);
+                        main.StartMainGame(myBoard, gameInfo, controller, myBar, chatBox, instance);
                     }
                 };
                 worker.execute();
@@ -353,7 +354,7 @@ public class StartGame implements ActionListener {
                     gameClient = new Client(hostAddress, clientPort, this);
                     gameClient.connectToServer();
                     clientFrame.dispose();
-                    Main main = new Main();
+                    main = new Main();
                     if(player1Token==null){
                         player1Token="Red";
                     }
@@ -364,7 +365,7 @@ public class StartGame implements ActionListener {
                     gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
                     myBar = new MenuBar(gameInfo);
                     controller = new Controller(model, myBoard, gameInfo, this, myBar, gameClient.network);
-                    main.StartMainGame(myBoard,gameInfo, controller, myBar, chatBox);
+                    main.StartMainGame(myBoard,gameInfo, controller, myBar, chatBox, this);
                 } catch (NumberFormatException ex) {
                     status.setText("Status: Invalid Port");
                 }

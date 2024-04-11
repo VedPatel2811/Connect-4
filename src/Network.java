@@ -69,7 +69,9 @@ public class Network {
 
         switch (protocolId) {
             case 1:
-
+                startGame.gameServer.closeServer();
+                startGame.gameClient.closeConnection();
+                System.exit(0);
                 break;
             case 2:
                 if (isServer) {
@@ -107,6 +109,9 @@ public class Network {
                 }else {
                     startGame.player1Token=data;
                 }
+                break;
+            case 6:
+                startGame.controller.resetGame();
             default:
                 // Handle unknown protocol
         }

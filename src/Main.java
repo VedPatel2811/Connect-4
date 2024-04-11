@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Main class for the Connect 4 game application.
@@ -7,6 +9,7 @@ import java.awt.*;
  */
 public class Main {
 
+    public JFrame myFrame;
     /**
      * Default Constructor
      */
@@ -26,13 +29,13 @@ public class Main {
     }
 
 
-    public void StartMainGame(GameBoard myBoard, GameInfo gameInfo, Controller controller, MenuBar myBar, ChatBox myChat){
+    public void StartMainGame(GameBoard myBoard, GameInfo gameInfo, Controller controller, MenuBar myBar, ChatBox myChat, StartGame startGame){
 
         JMenuBar menuBar = myBar.createMenuBar();
         Header connect4 = new Header();
 
         // Set up the main window
-        JFrame myFrame = new JFrame();
+        myFrame = new JFrame();
         myFrame.setLayout(new BorderLayout());
 
         // Top panel to hold the header and menu
@@ -61,6 +64,12 @@ public class Main {
 
 
         myFrame.setDefaultCloseOperation(myFrame.EXIT_ON_CLOSE);
+        myFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
         myFrame.setPreferredSize(new Dimension(1920, 1080));
         myFrame.setTitle("CONNECT 4");
         myFrame.getContentPane().setBackground(new Color(143, 170, 220));

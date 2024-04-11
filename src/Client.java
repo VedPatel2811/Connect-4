@@ -61,6 +61,7 @@ public class Client {
     public void closeConnection() {
         try {
             socket.close();
+            network.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
