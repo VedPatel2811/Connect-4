@@ -7,8 +7,7 @@ public class Server {
     public Socket clientSocket;
     private int port;
     private StartGame startGame;
-    private Network network; // Declare network object here
-
+    public Network network;
     public Server(int port, StartGame startGame) {
         this.port = port;
         this.startGame=startGame;
@@ -16,14 +15,12 @@ public class Server {
 
     public void startServer() {
         try {
+
             serverSocket = new ServerSocket(port);
             System.out.println("Server started. Waiting for client to connect...");
             clientSocket = serverSocket.accept(); // Waits for client connection
             System.out.println("Client connected.");
-
-            // Initialize network object here
             network = new Network(clientSocket, true, startGame.model, startGame);
-
             network.sendMessage("2#"+startGame.name1);
             if(startGame.player1Token==null){
                 network.sendMessage(("5#Red"));

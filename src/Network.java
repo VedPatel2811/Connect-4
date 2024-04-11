@@ -9,6 +9,7 @@ public class Network {
     private PrintWriter out;
     private BufferedReader in;
     private boolean isServer;
+    public int localPlayer;
     private Model model;
     public ChatBox chatBox;
     private StartGame startGame;
@@ -26,6 +27,12 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if(isServer){
+            localPlayer = 1;
+        }else {
+            localPlayer = 2;
+        }
+
     }
 
     // Method to send a message to the connected peer
@@ -62,8 +69,7 @@ public class Network {
 
         switch (protocolId) {
             case 1:
-                // Process disconnection message
-                // Notify model or view about disconnection
+
                 break;
             case 2:
                 if (isServer) {
@@ -73,12 +79,27 @@ public class Network {
                 }
                 break;
             case 3:
-                // Process move message
-                // Update game state in model or view
+                int column = Integer.parseInt(data);
+                if(model.getCurrentPlayer()!=localPlayer){
+                    model.placeToken(column);
+                    startGame.myBoard.updateBoard();
+                    if (model.checkForWinner()) {
+                        startGame.controller.taskForWinner();
+                    } else if (model.isColumnFull()) {
+                        startGame.controller.view.showDraw();
+                    } else {
+                        startGame.controller.notTaskForWinner();
+                    }
+                }
+
                 break;
             case 4:
-                // Process chat message
-                chatBox.appendMessage("Opponent: "+data); // Update chat box with received message
+                if(isServer){
+                    chatBox.appendMessage(startGame.name2 + " : " +data); // Update chat box with received message
+                }else {
+                    chatBox.appendMessage(startGame.name1 + " : " +data); // Update chat box with received message
+                }
+
                 break;
             case 5:
                 if(isServer){

@@ -87,9 +87,12 @@ public class StartGame implements ActionListener {
     private JFrame hostFrame;
     private Server gameServer;
     private Client gameClient;
-    public Network network;
     public Model model;
     public ChatBox chatBox;
+    public GameBoard myBoard;
+    public GameInfo gameInfo;
+    public MenuBar myBar;
+    public Controller controller;
 
 
 
@@ -99,101 +102,6 @@ public class StartGame implements ActionListener {
     StartGame(){
         model = new Model();
 
-    }
-
-    public JFrame StartGameFrame(){
-        JFrame startGame = new JFrame();
-        startGame.getContentPane().setBackground(new Color(143, 170, 220));
-        startGame.setDefaultCloseOperation(startGame.EXIT_ON_CLOSE);
-        startGame.setPreferredSize(new Dimension(300, 205));
-        startGame.setLayout(new FlowLayout());
-
-        Font font = new Font("Calibri", Font.BOLD, 20);
-        JButton offlineOption = new JButton();
-        offlineOption.setPreferredSize(new Dimension(250, 75));
-        offlineOption.setBackground(new Color(53, 90, 155));
-        offlineOption.setFont(font);
-        JButton onlineOption = new JButton();
-        onlineOption.setPreferredSize(new Dimension(250, 75));
-        onlineOption.setBackground(new Color(53, 90, 155));
-        onlineOption.setFont(font);
-        JLabel offlineLabel = new JLabel("Play Offline");
-        offlineLabel.setForeground(Color.YELLOW);
-        offlineLabel.setFont(font);
-        JLabel onlineLabel = new JLabel("Play Online");
-        onlineLabel.setForeground(Color.YELLOW);
-        onlineLabel.setFont(font);
-
-
-        offlineOption.add(offlineLabel);
-        onlineOption.add(onlineLabel);
-
-        offlineOption.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startGame.dispose();
-                Offline(StartGame.this);
-            }
-        });
-
-        onlineOption.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startGame.dispose();
-                Online(StartGame.this);
-            }
-        });
-
-        startGame.add(offlineOption);
-        startGame.add(onlineOption);
-
-        startGame.pack();
-        startGame.setVisible(true);
-
-        return startGame;
-    }
-
-    /**
-     * Displays the start menu for the game.
-     *
-     * @param startGameClass The instance of the StartGame class
-     * @return The JFrame containing the start menu
-     */
-    public JFrame Offline(StartGame startGameClass){
-        this.startGameClass = startGameClass;
-        baseStartPanel = new JFrame();
-        baseStartPanel.getContentPane().setBackground(new Color(143, 170, 220));
-
-        baseStartPanel.setDefaultCloseOperation(baseStartPanel.EXIT_ON_CLOSE);
-        baseStartPanel.setPreferredSize(new Dimension(300, 225));
-
-        baseStartPanel.setLayout(new FlowLayout());
-
-        player1Name = Player1Name();
-        player2Name = Player2Name();
-        startGame = Button("Start Game");
-        player1ColorBox = ColorSelection1();
-        player2ColorBox = ColorSelection2();
-        startGame.addActionListener(this);
-        player1ColorBox.addActionListener(this);
-        player2ColorBox.addActionListener(this);
-
-        baseStartPanel.add(new JLabel("Player 1 Name "));
-        baseStartPanel.add(player1Name);
-        baseStartPanel.add(new JLabel("Player 1 Color"));
-        baseStartPanel.add(player1ColorBox);
-        baseStartPanel.add(new JLabel("Player 2 Name "));
-        baseStartPanel.add(player2Name);
-        baseStartPanel.add(new JLabel("Player 2 Color"));
-        baseStartPanel.add(player2ColorBox);
-        baseStartPanel.add(startGame);
-
-        ImageIcon image = new ImageIcon("resources/A12Logo.png");
-        baseStartPanel.setIconImage(image.getImage());
-        baseStartPanel.pack();
-        baseStartPanel.setVisible(true);
-
-        return baseStartPanel;
     }
 
     public JFrame Online(StartGame startGame){
@@ -252,7 +160,7 @@ public class StartGame implements ActionListener {
         hostFrame = new JFrame();
         hostFrame.getContentPane().setBackground(new Color(143, 170, 220));
         hostFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        hostFrame.setPreferredSize(new Dimension(300, 250));
+        hostFrame.setPreferredSize(new Dimension(350, 250));
 
         hostFrame.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -313,7 +221,7 @@ public class StartGame implements ActionListener {
         clientFrame = new JFrame();
         clientFrame.getContentPane().setBackground(new Color(143, 170, 220));
         clientFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        clientFrame.setPreferredSize(new Dimension(300, 275));
+        clientFrame.setPreferredSize(new Dimension(350, 275));
 
         clientFrame.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -399,19 +307,37 @@ public class StartGame implements ActionListener {
 
         if(e.getSource()==hostButton){
             name1 = player1Name.getText();
+            status.setText("Status: Waiting for Client");
+            StartGame instance = this;
             try {
                 hostPort = Integer.parseInt(hostPortField.getText());
-                gameServer = new Server(hostPort, this);
-                gameServer.startServer();
-                hostFrame.dispose();
-                Main main = new Main();
-                if(player1Token==null){
-                    player1Token="Red";
-                }
-                if(player2Token==null){
-                    player2Token="Black";
-                }
-                main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass, model, chatBox);
+                // Start network operations in a separate thread
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        gameServer = new Server(hostPort, instance);
+                        gameServer.startServer();
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        hostFrame.dispose();
+                        Main main = new Main();
+                        if (player1Token == null) {
+                            player1Token = "Red";
+                        }
+                        if (player2Token == null) {
+                            player2Token = "Black";
+                        }
+                        myBoard = new GameBoard(model, player1Token, player2Token);
+                        gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
+                        myBar = new MenuBar(gameInfo);
+                        controller = new Controller(model, myBoard, gameInfo, instance, myBar, gameServer.network);
+                        main.StartMainGame(myBoard, gameInfo, controller, myBar, chatBox);
+                    }
+                };
+                worker.execute();
             } catch (NumberFormatException ex) {
                 status.setText("Status: Invalid Port");
             }
@@ -434,8 +360,11 @@ public class StartGame implements ActionListener {
                     if(player2Token==null){
                         player2Token="Black";
                     }
-
-                    main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass, model, chatBox);
+                    myBoard = new GameBoard(model, player1Token, player2Token);
+                    gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
+                    myBar = new MenuBar(gameInfo);
+                    controller = new Controller(model, myBoard, gameInfo, this, myBar, gameClient.network);
+                    main.StartMainGame(myBoard,gameInfo, controller, myBar, chatBox);
                 } catch (NumberFormatException ex) {
                     status.setText("Status: Invalid Port");
                 }
@@ -448,23 +377,11 @@ public class StartGame implements ActionListener {
                 clientFrame.dispose();
             } else if (hostFrame!=null) {
                 hostFrame.dispose();
+                gameServer.closeServer();
             }
-            StartGameFrame();
+            Online(this);
         }
-        if(e.getSource()==startGame){
-            name1 = player1Name.getText();
-            name2 = player2Name.getText();
-            if (player1Token == null) {
-                player1Token = "Red"; // Default value if player1Token is still null
-            }
-            if (player2Token == null) {
-                player2Token = "Black"; // Default value if player2Token is still null
-            }
-            baseStartPanel.dispose();
-            Main main = new Main();
-            main.StartMainGame(name1, name2, player1Token, player2Token, startGameClass, model, chatBox);
 
-        }
     }
 
     public JTextField address(){

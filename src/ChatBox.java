@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.awt.Font.BOLD;
+
 /**
  * A class representing a chat box GUI component.
  */
@@ -44,9 +46,12 @@ public class ChatBox {
         // Example saved chat text
         chatTextArea = new JTextArea();
         chatTextArea.setBackground(new Color(143,170,220));
+        chatTextArea.setFont(new Font("Calibri", BOLD,18));
+        chatTextArea.setForeground(Color.yellow);
         chatTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatTextArea);
-        scrollPane.setPreferredSize(new Dimension(380, 535));
+        scrollPane.setPreferredSize(new Dimension(385, 535));
+        scrollPane.setBorder(null);
         savedChatPanel.add(scrollPane);
 
 
@@ -83,7 +88,7 @@ public class ChatBox {
     private void sendMessage(String message) {
         if (!message.isEmpty()) {
             network.sendMessage("4#" + message); // Protocol 4 is for chat messages
-            appendMessage("You: " + message); // Add the sent message to the chat box
+            appendMessage("You : " + message); // Add the sent message to the chat box
         }
     }
 

@@ -7,7 +7,7 @@ public class Client {
     private String serverAddress;
     private int port;
     private StartGame startGame;
-    private Network network;
+    public Network network;
 
     public Client(String serverAddress, int port, StartGame startGame) {
         this.serverAddress = serverAddress;

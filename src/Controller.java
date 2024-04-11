@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
  */
 public class Controller {
     private final Model model;
-    private final GameBoard view;
+    public final GameBoard view;
     private final GameInfo gameInfo;
     private final StartGame startGame;
     private Timer gameTimer; // Timer for game time
@@ -16,6 +16,7 @@ public class Controller {
 
     private Timer playerTurnTimer; // Timer for game time
     private int elapsedTime2; // Elapsed time in seconds
+    private Network network;
 
     /**
      * Constructs a Controller object with references to various components.
@@ -26,11 +27,12 @@ public class Controller {
      * @param startGame The start game view.
      * @param menuBar   The menu bar view.
      */
-    public Controller(Model model, GameBoard view, GameInfo gameInfo, StartGame startGame, MenuBar menuBar){
+    public Controller(Model model, GameBoard view, GameInfo gameInfo, StartGame startGame, MenuBar menuBar, Network network){
         this.model = model;
         this.view = view;
         this.gameInfo = gameInfo;
         this.startGame = startGame;
+        this.network = network;
 
         // Initialize menu bar actions
         menuBar.exitItem.addActionListener(new ExitButtonListener());
@@ -207,39 +209,49 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             JButton button = (JButton) e.getSource();
             int col = view.getColumn(button);
-            if (model.placeToken(col)) {
-                view.updateBoard();
-                if (model.checkForWinner()) {
-                    int currentPlayer = model.getCurrentPlayer();
-                    if(currentPlayer == 1) {
-                        view.showWinner(startGame.name1);
+            if(model.getCurrentPlayer() == network.localPlayer){
+                if (model.placeToken(col)) {
+                    view.updateBoard();
+                    network.sendMessage("3#"+col);
+                    if (model.checkForWinner()) {
+                        taskForWinner();
+                    } else if (model.isColumnFull()) {
+                        view.showDraw();
                     } else {
-                        view.showWinner(startGame.name2);
+                        notTaskForWinner();
                     }
-                    gameInfo.getPlayer1TurnLabel().setForeground(Color.YELLOW);
-                    gameInfo.getPlayer2TurnLabel().setForeground(new Color(32,56,100));
-                    gameInfo.round++;
-                    gameInfo.updateText();
-                    stopGameTimer(); // Stop the old timer
-                    resetGameTimer(); // Reset game timer to 4 minutes
-                    stopPlayerTurnTimer();
-                    resetPlayerTurnTimer();
-                } else if (model.isColumnFull()) {
-                    view.showDraw();
-                } else {
-                    Color tempColor = gameInfo.player1Color;
-                    gameInfo.player1Color = gameInfo.player2Color;
-                    gameInfo.player2Color = tempColor;
-                    gameInfo.getPlayer1TurnLabel().setForeground(gameInfo.player1Color);
-                    gameInfo.getPlayer2TurnLabel().setForeground(gameInfo.player2Color);
-                    stopPlayerTurnTimer(); // Stop the old player turn timer
-                    resetPlayerTurnTimer(); //
-                    model.changeCurrentPlayer(); // Change the player
                 }
             }
+
         }
     }
 
+    public void taskForWinner(){
+        int currentPlayer = model.getCurrentPlayer();
+        if(currentPlayer == 1) {
+            view.showWinner(startGame.name1);
+        } else {
+            view.showWinner(startGame.name2);
+        }
+        gameInfo.getPlayer1TurnLabel().setForeground(Color.YELLOW);
+        gameInfo.getPlayer2TurnLabel().setForeground(new Color(32,56,100));
+        gameInfo.round++;
+        gameInfo.updateText();
+        stopGameTimer(); // Stop the old timer
+        resetGameTimer(); // Reset game timer to 4 minutes
+        stopPlayerTurnTimer();
+        resetPlayerTurnTimer();
+    }
+    public void notTaskForWinner(){
+        Color tempColor = gameInfo.player1Color;
+        gameInfo.player1Color = gameInfo.player2Color;
+        gameInfo.player2Color = tempColor;
+        gameInfo.getPlayer1TurnLabel().setForeground(gameInfo.player1Color);
+        gameInfo.getPlayer2TurnLabel().setForeground(gameInfo.player2Color);
+        stopPlayerTurnTimer(); // Stop the old player turn timer
+        resetPlayerTurnTimer(); //
+        model.changeCurrentPlayer(); // Change the player
+    }
     /**
      * Stops the game timer.
      */
@@ -320,7 +332,16 @@ public class Controller {
         if (remainingTime < 0) {
             remainingTime = 0; // Ensure the time is non-negative
             gameTimer.stop(); // Stop the timer if time runs out
-            // Optionally, you can handle end of game logic here
+            view.showDraw();
+            view.resetBoard();
+            gameInfo.getPlayer1TurnLabel().setForeground(Color.YELLOW);
+            gameInfo.getPlayer2TurnLabel().setForeground(new Color(32,56,100));
+            gameInfo.updateText();
+            stopGameTimer(); // Stop the old timer
+            resetGameTimer(); // Reset game timer to 4 minutes
+            stopPlayerTurnTimer();
+            resetPlayerTurnTimer();
+
         }
         gameInfo.timer2Label.setText("Game time: " + gameInfo.formatTime(remainingTime));
     }
@@ -333,8 +354,14 @@ public class Controller {
         int remainingTime = gameInfo.playerTurnTime - elapsedTime;
         if (remainingTime < 0) {
             remainingTime = 0; // Ensure the time is non-negative
+            Color tempColor = gameInfo.player1Color;
+            gameInfo.player1Color = gameInfo.player2Color;
+            gameInfo.player2Color = tempColor;
+            gameInfo.getPlayer1TurnLabel().setForeground(gameInfo.player1Color);
+            gameInfo.getPlayer2TurnLabel().setForeground(gameInfo.player2Color);
             playerTurnTimer.stop(); // Stop the timer if time runs out
-            // Optionally, you can handle end of turn logic here
+            model.changeCurrentPlayer(); // Change the player turn
+            resetPlayerTurnTimer();
         }
         gameInfo.timer1Label.setText("Timer: " + remainingTime + "s");
     }

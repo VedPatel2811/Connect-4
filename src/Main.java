@@ -21,30 +21,15 @@ public class Main {
         //SplashScreen splashScreen = new SplashScreen();
         //splashScreen.showSplashScreen();
         StartGame startGame = new StartGame();
-        startGame.StartGameFrame();
+        startGame.Online(startGame);
 
     }
 
-    /**
-     * Starts the main game with specified player names, player tokens, and game components.
-     *
-     * @param name1        The name of player 1
-     * @param name2        The name of player 2
-     * @param player1Token The token for player 1
-     * @param player2Token The token for player 2
-     * @param startGame    The instance of StartGame class
-     */
-    public void StartMainGame(String name1, String name2, String player1Token, String player2Token, StartGame startGame, Model model, ChatBox myChat){
-        GameInfo gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
-        // Create instance of the Connect4Model
-        GameBoard myBoard = new GameBoard(model, player1Token, player2Token); // Pass the model to GameBoard
 
-        MenuBar myBar = new MenuBar(gameInfo);
+    public void StartMainGame(GameBoard myBoard, GameInfo gameInfo, Controller controller, MenuBar myBar, ChatBox myChat){
+
         JMenuBar menuBar = myBar.createMenuBar();
         Header connect4 = new Header();
-
-
-        Controller controller = new Controller(model, myBoard, gameInfo, startGame, myBar); // Create instance of the Connect4Controller
 
         // Set up the main window
         JFrame myFrame = new JFrame();
@@ -66,12 +51,14 @@ public class Main {
 
         // Wrap the bottom panel in a scroll pane
         JScrollPane scrollPane = new JScrollPane(bottomPanel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Always show vertical scrollbar
+        //scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Always show vertical scrollbar
+        scrollPane.setBorder(null);
 
         topPanel.add(connect4.ConnectHeader());
         topPanel.add(menuBar, BorderLayout.NORTH);
         myFrame.add(topPanel, BorderLayout.NORTH);
         myFrame.add(scrollPane); // Add scroll pane instead of bottom panel directly
+
 
         myFrame.setDefaultCloseOperation(myFrame.EXIT_ON_CLOSE);
         myFrame.setPreferredSize(new Dimension(1920, 1080));
