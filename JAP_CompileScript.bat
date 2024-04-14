@@ -15,18 +15,28 @@ CLS
 :: If your code needs no external libraries, remove all references to LIBDIR
 :: in this script.
 
-SET LIBDIR=lib
 SET SRCDIR=src
 SET BINDIR=bin
 SET BINERR=labs-javac.err
-SET JARNAME="Connect 4.jar"
+SET JARNAME=Connect-4.jar
 SET JAROUT=labs-jar.out
 SET JARERR=labs-jar.err
-SET DOCDIR=doc
-SET DOCPACK=CST8221
+SET DOCDIR=JavaDoc
+SET DOCPACK=
 SET DOCERR=labs-javadoc.err
 SET MAINCLASSSRC=src\Main.java
-SET MAINCLASSBIN=bin\Main.class
+SET MAINCLASSBIN=Main
+SET IMAGES=resources
+SET BUNDLE=MessagesBundle_en_CA.properties
+SET BUNDLES=MessagesBundle_fr_CA.properties
+
+mkdir "%BINDIR%/%IMAGES%"
+
+:: Copy resource files to bin directory
+copy "%SRCDIR%\%BUNDLE%" "%BINDIR%"
+copy "%SRCDIR%\%BUNDLES%" "%BINDIR%"
+
+xcopy "%IMAGES%" "%BINDIR%/%IMAGES%" /Y
 
 @echo off
 
@@ -56,18 +66,19 @@ ECHO "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 ECHO "[LABS SCRIPT ---------------------]"
 
 ECHO "1. Compiling ......................"
-javac -Xlint -cp ".;%SRCDIR%;%LIBDIR%/*" %MAINCLASSSRC% -d %BINDIR% 2> %BINERR%
+javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC% -d %BINDIR% 2> %BINERR%
 
 ECHO "2. Creating Jar ..................."
+
 cd %BINDIR%
 jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
 cd ..
 
 ECHO "3. Creating Javadoc ..............."
-javadoc -cp ".;%BINDIR%;%LIBDIR%/*" --module-path "%LIBDIR%" -d %DOCDIR% -sourcepath %SRCDIR% -subpackages %DOCPACK% 2> %DOCERR%
+javadoc -cp ".;%BINDIR%" -d %DOCDIR% -sourcepath %SRCDIR% %MAINCLASSSRC% 2> %DOCERR%
 
 ECHO "4. Running Jar ...................."
-java --module-path "%LIBDIR%" -jar %JARNAME%
+java -jar %JARNAME%
 
 
 ECHO "[END OF SCRIPT -------------------]"

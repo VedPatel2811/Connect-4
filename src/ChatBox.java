@@ -3,7 +3,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import static java.awt.Font.BOLD;
 
 /**
@@ -11,12 +10,24 @@ import static java.awt.Font.BOLD;
  */
 public class ChatBox {
 
+    /**
+     * TextArea to display chat messages
+     */
     private JTextArea chatTextArea;
+
+    /**
+     * Button to send messages
+     */
     private JButton sendButton;
+
+    /**
+     * Network object for sending messages
+     */
     private Network network;
 
     /**
      * Constructs a new ChatBox instance.
+     * @param network The network object to use for sending messages.
      */
     ChatBox(Network network){
         this.network=network;
@@ -85,14 +96,21 @@ public class ChatBox {
         return baseChatLayer;
     }
 
+    /**
+     * Sends a message over the network.
+     * @param message The message to send.
+     */
     private void sendMessage(String message) {
         if (!message.isEmpty()) {
             network.sendMessage("4#" + message); // Protocol 4 is for chat messages
-            appendMessage("You : " + message); // Add the sent message to the chat box
+            appendMessage("You : " + message); // Add the scent message to the chat box
         }
     }
 
-    // Method to append a received message to the chat box
+    /**
+     * Appends a received message to the chat box.
+     * @param message The message to append.
+     */
     public void appendMessage(String message) {
         chatTextArea.append("\n" + message);
     }

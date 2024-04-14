@@ -2,17 +2,51 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Manages the server-side functionality of the Connect 4 game.
+ */
 public class Server {
+
+    /**
+     * The server socket used for handling incoming connections.
+     */
     private ServerSocket serverSocket;
+
+    /**
+     * The socket representing the client connection.
+     */
     public Socket clientSocket;
+
+    /**
+     * The port number on which the server listens for incoming connections.
+     */
     private int port;
+
+    /**
+     * Reference to the StartGame instance associated with the server.
+     */
     private StartGame startGame;
+
+    /**
+     * The Network object responsible for managing communication with the client.
+     */
     public Network network;
+
+
+    /**
+     * Constructs a Server object with the specified port and StartGame instance.
+     *
+     * @param port      The port number on which the server listens for connections.
+     * @param startGame Reference to the StartGame instance.
+     */
     public Server(int port, StartGame startGame) {
         this.port = port;
         this.startGame=startGame;
     }
 
+    /**
+     * Starts the server and waits for client connections.
+     */
     public void startServer() {
         try {
 
@@ -28,8 +62,6 @@ public class Server {
                 network.sendMessage(("5#"+startGame.player1Token));
             }
 
-
-
             new Thread(() -> {
                 while (true) {
                     String message = network.receiveMessage();
@@ -44,6 +76,9 @@ public class Server {
         }
     }
 
+    /**
+     * Closes the server and cleans up resources.
+     */
     public void closeServer() {
         try {
             serverSocket.close();

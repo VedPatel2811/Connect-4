@@ -49,16 +49,6 @@ public class MenuBar {
     private JMenu helpMenu;
 
     /**
-     * The menu item for saving.
-     */
-    public JMenuItem saveItem;
-
-    /**
-     * The menu item for loading.
-     */
-    public JMenuItem loadItem;
-
-    /**
      * The menu item for exiting.
      */
     public JMenuItem exitItem;
@@ -74,12 +64,18 @@ public class MenuBar {
     public JMenuItem rulesItem;
 
     /**
-     * The menu item for connecting to a network.
+     * The menu item for host a network.
      */
     public JMenuItem hostItem;
 
+    /**
+     * The menu item for join a network.
+     */
     public JMenuItem connectItem;
 
+    /**
+     * The menu item for disconnect a network.
+     */
     public JMenuItem disconnectItem;
 
     /**
@@ -101,16 +97,6 @@ public class MenuBar {
      * The menu item for viewing information.
      */
     public JMenuItem infoItem;
-
-    /**
-     * The icon for the save menu item.
-     */
-    private final ImageIcon saveIcon;
-
-    /**
-     * The icon for the load menu item.
-     */
-    private final ImageIcon loadIcon;
 
     /**
      * The icon for the exit menu item.
@@ -138,9 +124,6 @@ public class MenuBar {
         this.gameInfo = gameInfo;
         currentLocale = Locale.getDefault(); // or set your default Locale
         messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
-
-        saveIcon = new ImageIcon("resources/piciconabt.gif");
-        loadIcon = new ImageIcon("resources/piciconload.gif");
         exitIcon = new ImageIcon("resources/piciconext.gif");
         engIcon = new ImageIcon("resources/piciconeng.gif");
         frIcon = new ImageIcon("resources/piciconfra.gif");
@@ -157,9 +140,6 @@ public class MenuBar {
         networkMenu = new JMenu();
         languageMenu = new JMenu();
         helpMenu = new JMenu();
-
-        saveItem = new JMenuItem();
-        loadItem = new JMenuItem();
         exitItem = new JMenuItem();
         resetGame = new JMenuItem();
         rulesItem = new JMenuItem();
@@ -171,8 +151,6 @@ public class MenuBar {
         updateItem = new JMenuItem();
         infoItem = new JMenuItem();
 
-        saveItem = new JMenuItem(messages.getString("save"), saveIcon);
-        loadItem = new JMenuItem(messages.getString("load"), loadIcon);
         exitItem = new JMenuItem(messages.getString("exit"), exitIcon);
 
         frenchItem = new JMenuItem(messages.getString("french"), frIcon);
@@ -200,10 +178,6 @@ public class MenuBar {
 
         // Create a new JMenuBar
         JMenuBar menuBar = new JMenuBar();
-
-
-        fileMenu.add(saveItem);
-        fileMenu.add(loadItem);
         fileMenu.add(exitItem);
 
         gameMenu.add(resetGame);
@@ -236,7 +210,7 @@ public class MenuBar {
      */
     public void switchLanguage(String languageCode, String countryCode) {
         // Update currentLocale, messages, and call updateTexts()
-        currentLocale = new Locale(languageCode, countryCode);
+        currentLocale = new Locale.Builder().setLanguage(languageCode).setRegion(countryCode).build();
         messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
         updateTexts();
         gameInfo.updateText();
@@ -252,9 +226,6 @@ public class MenuBar {
         networkMenu.setText(messages.getString("network"));
         languageMenu.setText(messages.getString("language"));
         helpMenu.setText(messages.getString("help"));
-
-        saveItem.setText(messages.getString("save"));
-        loadItem.setText(messages.getString("load"));
         exitItem.setText(messages.getString("exit"));
         resetGame.setText(messages.getString("resetGame"));
         rulesItem.setText(messages.getString("rules"));

@@ -9,6 +9,9 @@ import java.awt.event.WindowEvent;
  */
 public class Main {
 
+    /**
+     * Main Frame instance
+     */
     public JFrame myFrame;
     /**
      * Default Constructor
@@ -21,49 +24,52 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        //SplashScreen splashScreen = new SplashScreen();
-        //splashScreen.showSplashScreen();
+        SplashScreen splashScreen = new SplashScreen();
+        splashScreen.showSplashScreen();
         StartGame startGame = new StartGame();
         startGame.Online(startGame);
 
     }
 
-
-    public void StartMainGame(GameBoard myBoard, GameInfo gameInfo, Controller controller, MenuBar myBar, ChatBox myChat, StartGame startGame){
+    /**
+     * Initializes and starts the main game window with the specified components.
+     *
+     * @param myBoard The game board component.
+     * @param gameInfo The game information component.
+     * @param controller The controller managing user interactions and game logic.
+     * @param myBar The menu bar component.
+     * @param myChat The chat box component.
+     */
+    public void StartMainGame(GameBoard myBoard, GameInfo gameInfo, Controller controller, MenuBar myBar, ChatBox myChat){
 
         JMenuBar menuBar = myBar.createMenuBar();
         Header connect4 = new Header();
 
-        // Set up the main window
         myFrame = new JFrame();
         myFrame.setLayout(new BorderLayout());
 
-        // Top panel to hold the header and menu
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
         topPanel.setBackground(new Color(143, 170, 220));
 
-        // Bottom panel to hold game information, game board, and chat box
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
         bottomPanel.setBackground(new Color(143, 170, 220));
 
         bottomPanel.add(gameInfo.GameInfoPanel());
-        bottomPanel.add(myBoard.getBasePanel()); // Use getBasePanel() to get the game board panel
+        bottomPanel.add(myBoard.getBasePanel());
         bottomPanel.add(myChat.MainChatBox());
 
-        // Wrap the bottom panel in a scroll pane
         JScrollPane scrollPane = new JScrollPane(bottomPanel);
-        //scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Always show vertical scrollbar
         scrollPane.setBorder(null);
 
         topPanel.add(connect4.ConnectHeader());
         topPanel.add(menuBar, BorderLayout.NORTH);
         myFrame.add(topPanel, BorderLayout.NORTH);
-        myFrame.add(scrollPane); // Add scroll pane instead of bottom panel directly
+        myFrame.add(scrollPane);
 
 
-        myFrame.setDefaultCloseOperation(myFrame.EXIT_ON_CLOSE);
+        myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         myFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

@@ -2,21 +2,53 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * A class representing a client for connecting to a server.
+ */
 public class Client {
+
+    /**
+     * Socket for communication with the server
+     */
     public Socket socket;
+
+    /**
+     * Address of the server
+     */
     private String serverAddress;
+
+    /**
+     * Port number of the server
+     */
     private int port;
+
+    /**
+     * Reference to the StartGame instance for initializing the game
+     */
     private StartGame startGame;
+
+    /**
+     * Network object for sending and receiving messages
+     */
     public Network network;
 
+    /**
+     * Constructs a new Client instance.
+     * @param serverAddress The address of the server.
+     * @param port The port number of the server.
+     * @param startGame The StartGame instance associated with this client.
+     */
     public Client(String serverAddress, int port, StartGame startGame) {
         this.serverAddress = serverAddress;
         this.port = port;
         this.startGame=startGame;
     }
 
+    /**
+     * Connects to the server.
+     */
     public void connectToServer() {
-        boolean connected = false; // Flag to track if the connection is successful
+        boolean connected = false;
 
         while (!connected) {
             try {
@@ -41,7 +73,7 @@ public class Client {
                         }
                     }
                 }).start();
-                connected = true;
+               connected = true;
             } catch (IOException e) {
                 e.printStackTrace();
                 startGame.status.setText("Status: Invalid INFO");
@@ -58,6 +90,9 @@ public class Client {
         }
     }
 
+    /**
+     * Closes the connection to the server.
+     */
     public void closeConnection() {
         try {
             socket.close();

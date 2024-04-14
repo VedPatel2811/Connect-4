@@ -2,16 +2,18 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 /**
  * Represents the game board panel where the Connect Four game is displayed and played.
  * This panel contains the grid layout for the game board and handles UI updates based on the game model.
  */
-public class GameBoard extends JPanel{
+public class GameBoard extends JPanel implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * The game model containing the logic for the Connect Four game.
      */
-    private final Model model;
+    private final transient Model model;
 
     /**
      * The base panel of the game board.
@@ -27,9 +29,6 @@ public class GameBoard extends JPanel{
      * The icon representing Player 2's game piece.
      */
     private final ImageIcon player2Icon; // Icon for Player 2
-
-
-
 
     /**
      * Constructs a GameBoard object with the specified game model and player tokens.

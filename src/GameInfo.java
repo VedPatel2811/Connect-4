@@ -10,6 +10,11 @@ import java.util.ResourceBundle;
  * This class extends JPanel and creates a layered layout to organize this information.
  */
 public class GameInfo extends JPanel {
+
+    /**
+     * Add serialVersionUID
+     */
+    private static final long serialVersionUID = 1L; // Add serialVersionUID
     /**
      * Represents the color of Player 1's token.
      */
@@ -58,7 +63,7 @@ public class GameInfo extends JPanel {
     /**
      * Resource bundle for internationalization.
      */
-    private ResourceBundle messages;
+    private transient ResourceBundle messages;
 
     /**
      * Label displaying the round number.
@@ -150,7 +155,7 @@ public class GameInfo extends JPanel {
         nameLabelPlayer2 = new JLabel();
         winLabelPlayer2 = new JLabel();
         turnLabelPlayer2 = new JLabel();
-        currentLocale = new Locale("en", "CA");
+        currentLocale = Locale.CANADA;
         this.messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
         updateText();
 
@@ -164,7 +169,7 @@ public class GameInfo extends JPanel {
      * @param countryCode  The country code (e.g., "US" for United States, "FR" for France)
      */
     public void switchLanguage(String languageCode, String countryCode) {
-        this.currentLocale = new Locale(languageCode, countryCode);
+        this.currentLocale = new Locale.Builder().setLanguage(languageCode).setRegion(countryCode).build();
         this.messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
         updateText(); // Update the text components with new locale
     }

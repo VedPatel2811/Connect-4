@@ -31,16 +31,6 @@ public class StartGame implements ActionListener {
     public String name2;
 
     /**
-     * The button to start the game.
-     */
-    private JButton startGame;
-
-    /**
-     * The base panel for the start menu.
-     */
-    private JFrame baseStartPanel;
-
-    /**
      * The text field for entering Player 1's name.
      */
     private JTextField player1Name;
@@ -66,34 +56,110 @@ public class StartGame implements ActionListener {
     public JComboBox<String> player2ColorBox;
 
     /**
-     * The instance of the StartGame class.
+     * Represents the host port for the server.
      */
-    private StartGame startGameClass;
-
     public int hostPort;
+
+    /**
+     * Represents the client port for connecting to the server.
+     */
     public int clientPort;
 
+    /**
+     * Text field for entering the host port.
+     */
     private JTextField hostPortField;
+
+    /**
+     * Text field for entering the client port.
+     */
     private JTextField clientPortField;
 
+    /**
+     * Label to display status messages.
+     */
     public JLabel status;
+
+    /**
+     * Text field for entering the host address.
+     */
     public JTextField address;
+
+    /**
+     * Stores the host address for connecting to the server.
+     */
     public String hostAddress;
 
+    /**
+     * Button for hosting a game session.
+     */
     private JButton hostButton;
+
+    /**
+     * Button for joining a game session.
+     */
     private JButton clientButton;
+
+    /**
+     * Button for canceling the game session.
+     */
     private JButton cancel;
+
+    /**
+     * Frame for the client interface.
+     */
     private JFrame clientFrame;
+
+    /**
+     * Frame for the host interface.
+     */
     private JFrame hostFrame;
+
+    /**
+     * Instance of the game server.
+     */
     public Server gameServer;
+
+    /**
+     * Instance of the game client.
+     */
     public Client gameClient;
+
+    /**
+     * Instance of the game model.
+     */
     public Model model;
+
+    /**
+     * Instance of the chat box for communication.
+     */
     public ChatBox chatBox;
+
+    /**
+     * Instance of the game board.
+     */
     public GameBoard myBoard;
+
+    /**
+     * Instance of the game information panel.
+     */
     public GameInfo gameInfo;
+
+    /**
+     * Instance of the menu bar for the game.
+     */
     public MenuBar myBar;
+
+    /**
+     * Instance of the controller for game logic.
+     */
     public Controller controller;
+
+    /**
+     * Instance of the main class for initializing the game.
+     */
     public Main main;
+
 
 
 
@@ -105,10 +171,16 @@ public class StartGame implements ActionListener {
 
     }
 
+    /**
+     * Displays the online menu for the Connect Four game, allowing players to choose between hosting and joining a game.
+     *
+     * @param startGame The StartGame instance to manage the online menu.
+     * @return The JFrame representing the online menu.
+     */
     public JFrame Online(StartGame startGame){
         JFrame onlineFrame = new JFrame();
         onlineFrame.getContentPane().setBackground(new Color(143, 170, 220));
-        onlineFrame.setDefaultCloseOperation(onlineFrame.EXIT_ON_CLOSE);
+        onlineFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         onlineFrame.setPreferredSize(new Dimension(300, 205));
         onlineFrame.setLayout(new FlowLayout());
 
@@ -157,6 +229,9 @@ public class StartGame implements ActionListener {
         return onlineFrame;
     }
 
+    /**
+     * Displays the interface for hosting a game session.
+     */
     public void HostFrame(){
         hostFrame = new JFrame();
         hostFrame.getContentPane().setBackground(new Color(143, 170, 220));
@@ -218,6 +293,9 @@ public class StartGame implements ActionListener {
         hostFrame.setVisible(true);
     }
 
+    /**
+     * Displays the interface for joining a game session.
+     */
     public void ClientFrame(){
         clientFrame = new JFrame();
         clientFrame.getContentPane().setBackground(new Color(143, 170, 220));
@@ -298,12 +376,9 @@ public class StartGame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==player1ColorBox){
             player1Token=(String) player1ColorBox.getSelectedItem();
-            //colors.remove(player1Token);
-            //player2ColorBox.setModel(new DefaultComboBoxModel<>(colors.toArray(new String[0])));
         }
         if(e.getSource()==player2ColorBox){
             player2Token=(String) player2ColorBox.getSelectedItem();
-            //colors.remove(player2Token);
         }
 
         if(e.getSource()==hostButton){
@@ -312,7 +387,6 @@ public class StartGame implements ActionListener {
             StartGame instance = this;
             try {
                 hostPort = Integer.parseInt(hostPortField.getText());
-                // Start network operations in a separate thread
                 SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
                     @Override
                     protected Void doInBackground() throws Exception {
@@ -335,7 +409,7 @@ public class StartGame implements ActionListener {
                         gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
                         myBar = new MenuBar(gameInfo);
                         controller = new Controller(model, myBoard, gameInfo, instance, myBar, gameServer.network);
-                        main.StartMainGame(myBoard, gameInfo, controller, myBar, chatBox, instance);
+                        main.StartMainGame(myBoard, gameInfo, controller, myBar, chatBox);
                     }
                 };
                 worker.execute();
@@ -365,7 +439,7 @@ public class StartGame implements ActionListener {
                     gameInfo = new GameInfo(name1, name2, player1Token, player2Token);
                     myBar = new MenuBar(gameInfo);
                     controller = new Controller(model, myBoard, gameInfo, this, myBar, gameClient.network);
-                    main.StartMainGame(myBoard,gameInfo, controller, myBar, chatBox, this);
+                    main.StartMainGame(myBoard,gameInfo, controller, myBar, chatBox);
                 } catch (NumberFormatException ex) {
                     status.setText("Status: Invalid Port");
                 }
@@ -374,17 +448,16 @@ public class StartGame implements ActionListener {
             }
         }
         if (e.getSource()==cancel){
-            if(clientFrame!=null){
-                clientFrame.dispose();
-            } else if (hostFrame!=null) {
-                hostFrame.dispose();
-                gameServer.closeServer();
-            }
-            Online(this);
+            System.exit(0);
         }
 
     }
 
+    /**
+     * Creates a JTextField for entering the server address with "localhost" as the default value.
+     *
+     * @return The JTextField for entering the server address.
+     */
     public JTextField address(){
         JTextField address = new JTextField("localhost");
         address.setPreferredSize(new Dimension(150, 30));
@@ -393,6 +466,11 @@ public class StartGame implements ActionListener {
         return address;
     }
 
+    /**
+     * Creates a JTextField for entering the port number with "4999" as the default value.
+     *
+     * @return The JTextField for entering the port number.
+     */
     public JTextField getPort(){
         JTextField port = new JTextField("4999");
         port.setPreferredSize(new Dimension(150, 30));
@@ -467,26 +545,5 @@ public class StartGame implements ActionListener {
         startButton.setBorder(BorderFactory.createLineBorder(new Color(32,56,100), 2));
         startButton.setPreferredSize(new Dimension(100,30));
         return startButton;
-    }
-
-
-    public void startServer() {
-
-    }
-
-    public void connectToServer() {
-
-    }
-
-    public void closeServer() {
-        if (gameServer != null) {
-            gameServer.closeServer();
-        }
-    }
-
-    public void closeClientConnection() {
-        if (gameClient != null) {
-            gameClient.closeConnection();
-        }
     }
 }

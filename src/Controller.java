@@ -3,21 +3,54 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
-
 /**
  * Controller class responsible for handling user interactions and game logic.
  */
 public class Controller {
-    private final Model model;
-    public final GameBoard view;
-    private final GameInfo gameInfo;
-    private final StartGame startGame;
-    private Timer gameTimer; // Timer for game time
-    private int elapsedTime; // Elapsed time in seconds
 
-    private Timer playerTurnTimer; // Timer for game time
-    private int elapsedTime2; // Elapsed time in seconds
+    /**
+     * The game model
+     */
+    private final Model model;
+
+    /**
+     * The game board view
+     */
+    public final GameBoard view;
+
+    /**
+     * The gameInformation view
+     */
+    private final GameInfo gameInfo;
+
+    /**
+     * The start game view
+     */
+    private final StartGame startGame;
+
+    /**
+     * Timer for game time
+     */
+    private Timer gameTimer;
+
+    /**
+     * Elapsed time in seconds
+     */
+    private int elapsedTime;
+
+    /**
+     * Timer for game time
+     */
+    private Timer playerTurnTimer;
+
+    /**
+     * Elapsed time in seconds
+     */
+    private int elapsedTime2;
+
+    /**
+     * The network for communication with the server
+     */
     private Network network;
 
     /**
@@ -28,6 +61,7 @@ public class Controller {
      * @param gameInfo  The game information view.
      * @param startGame The start game view.
      * @param menuBar   The menu bar view.
+     * @param network   The network object for communication.
      */
     public Controller(Model model, GameBoard view, GameInfo gameInfo, StartGame startGame, MenuBar menuBar, Network network){
         this.model = model;
@@ -42,8 +76,6 @@ public class Controller {
         menuBar.rulesItem.addActionListener(new RulesListener());
         menuBar.updateItem.addActionListener(new GameUpdateListener());
         menuBar.infoItem.addActionListener(new GameInfoListener());
-        menuBar.saveItem.addActionListener(new NextUpdate());
-        menuBar.loadItem.addActionListener(new NextUpdate());
         menuBar.hostItem.addActionListener(new HostGame());
         menuBar.connectItem.addActionListener(new ConnectGame());
         menuBar.disconnectItem.addActionListener(new DisconnectGame());
@@ -77,6 +109,9 @@ public class Controller {
         playerTurnTimer.start(); // Start the timer
     }
 
+    /**
+     * ActionListener for hosting a game.
+     */
     class HostGame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -87,6 +122,9 @@ public class Controller {
 
     }
 
+    /**
+     * ActionListener for connecting to a game.
+     */
     class ConnectGame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -97,6 +135,9 @@ public class Controller {
 
     }
 
+    /**
+     * ActionListener for disconnecting from the game.
+     */
     class DisconnectGame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -174,6 +215,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Method to reset the game
+     */
     public void resetGame(){
         view.resetBoard();
         gameInfo.getPlayer1TurnLabel().setForeground(Color.YELLOW);
@@ -195,7 +239,7 @@ public class Controller {
          */
         @Override
         public void actionPerformed(ActionEvent e){
-            JOptionPane.showMessageDialog(null, "No updates available. Your game is already up to date.\nCurrent Game Version: 1.2", "Game Update",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No updates available. Your game is already up to date.\nCurrent Game Version: 3.2", "Game Update",JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -266,6 +310,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Handles tasks when a player wins the game.
+     */
     public void taskForWinner(){
         int currentPlayer = model.getCurrentPlayer();
         if(currentPlayer == 1) {
@@ -282,6 +329,10 @@ public class Controller {
         stopPlayerTurnTimer();
         resetPlayerTurnTimer();
     }
+
+    /**
+     * Handles tasks when no player wins the game.
+     */
     public void notTaskForWinner(){
         Color tempColor = gameInfo.player1Color;
         gameInfo.player1Color = gameInfo.player2Color;
@@ -292,6 +343,7 @@ public class Controller {
         resetPlayerTurnTimer(); //
         model.changeCurrentPlayer(); // Change the player
     }
+
     /**
      * Stops the game timer.
      */
